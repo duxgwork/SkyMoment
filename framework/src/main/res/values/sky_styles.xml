@@ -1,0 +1,18 @@
+<!-- 天气和搜索界面的公共样式，集中定义颜色、文字与卡片表现。 -->
+<resources>
+    <style name="Theme.SkyMoment.Home" parent="Theme.Material3.Light.NoActionBar">
+        <item name="android:windowBackground">@color/home_background</item>
+        <item name="android:fontFamily">sans</item>
+        <item name="android:textColorPrimary">@color/home_text</item>
+        <item name="android:textColorSecondary">@color/home_secondary</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="colorPrimary">#59618C</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="colorSurface">#FFFFFF</item>
+        <item name="colorOnSurface">@color/home_text</item>
+        <item name="colorOnSurfaceVariant">@color/home_secondary</item>
+        <item name="colorOutline">#DADBE3</item>
+    </style>
+</resources>

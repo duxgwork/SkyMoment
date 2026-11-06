@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 单条历史搜索标签，文本和点击行为由搜索渲染器绑定。 -->
+<com.google.android.material.chip.Chip xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/Widget.MaterialComponents.Chip.Action"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:ellipsize="end"
+    android:focusable="true"
+    android:maxWidth="240dp"
+    android:saveEnabled="false"
+    android:singleLine="true"
+    android:textColor="@color/home_text"
+    android:textSize="14sp"
+    app:chipBackgroundColor="@android:color/white"
+    app:chipCornerRadius="16dp"
+    app:chipStrokeWidth="0dp"
+    app:ensureMinTouchTargetSize="true" />

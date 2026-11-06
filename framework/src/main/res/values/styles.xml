@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 通用界面主题与文本样式，供各模块统一使用。 -->
+<resources>
+    <style name="TextAppearance.SkyMoment.Body" parent="TextAppearance.Material3.BodyLarge" />
+</resources>

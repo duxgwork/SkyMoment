@@ -1,0 +1,5 @@
+<!-- 按启动步骤的选中状态切换文字颜色。 -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_selected="true" android:color="#59618C" />
+    <item android:color="@color/home_secondary" />
+</selector>

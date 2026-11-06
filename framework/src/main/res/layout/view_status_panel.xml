@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 通用状态面板，加载指示、消息和重试按钮由调用方传入状态。 -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <ProgressBar
+        android:id="@+id/status_progress"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:contentDescription="@string/loading"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/status_message"
+        style="@style/TextAppearance.SkyMoment.Body"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingTop="16dp"
+        android:saveEnabled="false" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/status_retry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/retry"
+        android:visibility="gone" />
+</LinearLayout>

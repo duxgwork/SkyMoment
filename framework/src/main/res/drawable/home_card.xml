@@ -1,0 +1,4 @@
+<!-- 首页卡片的圆角背景资源。 -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="#FFFFFF" /><corners android:radius="18dp" />
+</shape>

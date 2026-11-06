@@ -1,0 +1,13 @@
+<!-- 天气空态插画的矢量资源。 -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="144dp" android:height="144dp" android:viewportWidth="144" android:viewportHeight="144">
+    <path android:fillColor="#E7E9F3" android:pathData="M72,8 A64,64 0,1 1,72,136 A64,64 0,1 1,72,8" />
+    <path android:fillColor="#F2F3F9" android:pathData="M48,29 A21,21 0,1 1,48,71 A21,21 0,1 1,48,29" />
+    <path android:fillColor="#FFFFFF" android:strokeColor="#7D85A8" android:strokeWidth="2.5"
+        android:strokeLineJoin="round"
+        android:pathData="M40,93 C28,93 24,85 24,77 C24,67 32,60 42,60 C45,45 57,38 69,41 C82,43 88,52 89,63 C101,62 112,70 112,82 C112,89 108,93 100,93 Z" />
+    <path android:fillColor="#F8F9FC" android:strokeColor="#7D85A8" android:strokeWidth="2.5"
+        android:pathData="M96,76 C86,76 79,83 79,93 C79,106 96,119 96,119 C96,119 113,106 113,93 C113,83 106,76 96,76 Z" />
+    <path android:fillColor="#7D85A8" android:pathData="M96,87 A6,6 0,1 1,96,99 A6,6 0,1 1,96,87" />
+    <path android:fillColor="#B6BDD6" android:pathData="M36,107 A3,3 0,1 1,36,113 A3,3 0,1 1,36,107 M112,35 A3,3 0,1 1,112,41 A3,3 0,1 1,112,35" />
+</vector>

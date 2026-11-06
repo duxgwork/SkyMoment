@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 默认英文文案资源；资源键与其他语言保持一致，由有效语言上下文选择。 -->
+<resources>
+    <string name="navigate_back">Back</string>
+    <string name="loading">Loading…</string>
+    <string name="retry">Try again</string>
+</resources>

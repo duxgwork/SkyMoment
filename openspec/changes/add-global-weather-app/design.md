@@ -2,155 +2,123 @@
 
 ## Context
 
-动机见 [proposal.md](proposal.md)。已只读检查根构建文件、版本目录、Manifest、资源及两个模板测试：当前仅有 `:app`，Manifest 无 Activity/INTERNET 权限，无业务代码、网络库或路由库；现有测试仅验证加法及包名。当前目录不是 Git 仓库，因此本轮没有可用的 Git 差异基线。
+动机见 [proposal.md](proposal.md)。工程基础已经建立，当前拆分为九模块：XML/ViewBinding、ARouter、显式注入、StateFlow、内存会话和三语状态组件。debug/release 构建、配置缓存、14 项基础单元测试、debug UI 及混淆包路由冒烟已有证据，详见开发验证文档。
 
-配置声明 AGP 9.3.3、Gradle 9.5.0，minSdk 24、compileSdk 36.1、targetSdk 36；Gradle daemon 使用 JDK 21，源码兼容目标为 Java 11。本轮未运行构建，不能据此断言依赖已解析或版本组合可用。现有 OpenSpec 主规格为空。
+用户已确认改用 Open-Meteo，无 API Key、账户专属 Host 或后端；七日列表每天一个天气概况及高低温，不再展示独立日夜概况。最新截图改为浅灰背景、白色圆角卡片、左对齐温度及紧凑七日列表。首次启动即进入搜索与天气同屏的首页；无所选地点标签、全页刷新按钮、预报获取时间或天气来源页脚，保留当前天气获取时间和区域重试。三段切换控件仍不添加。
 
-用户已确认：只交付 Android App、客户端直连并接受明确的凭据提取风险；简繁英三语，其他系统语言回退英文；中国支持县/区，海外以可检索行政区域为准；页面采用 XML + ViewBinding。本轮没有提供和风天气专属 API Host、有效凭据或跨区域测试环境，供应商结论限于文档核验。
+工具链为 JDK 21、Gradle 9.5.0、AGP 9.3.3、compileSdk 37（满足保留的 core 1.19.0 元数据要求），minSdk 24、targetSdk 36、Java 11。Android 模块启用 desugar_jdk_libs 2.1.5。公开端点已完成本机无凭据请求，但完整区域验证未完成。
 
 ## Goals / Non-Goals
 
 **Goals:**
 
-- 用可替换的仓储接口隔离供应商，业务 UI 不接触 Retrofit DTO、鉴权或供应商错误码。
-- 用单向数据流表达独立区域的加载、内容、错误与过期状态，确保切换地点、语言和日期时结果一致。
-- 保持组件边界与依赖方向可检查；把真实 API 与构建工具链的高风险验证排在业务实现之前。
+- 供应商 DTO、网络错误与页面隔离，保留可替换仓储边界。
+- 所选地点、语言、日期与响应严格一致，两个天气区域独立完成和恢复。
+- 无凭据配置即可运行，明确公开服务限制和实际覆盖证据。
 
 **Non-Goals:**
 
-- 不建设通用插件框架、独立发布每个组件或多后端调度；不为每个卡片、模型或接口单独建模块。
-- 不把客户端混淆、NDK 或本地加密视为秘密不可提取的保证；不引入用户账户或后台服务绕开已确认的直连范围。
-- 产品范围外能力以 proposal 为准；本设计不包含生产部署和购买服务。
+- 不引入用户账户、后端、离线城市库、多源自动切换或通用插件框架。
+- 不把模型天气标为气象站观测，不补造县区译名、日夜天气或缺失预报。
+- 不自动购买商业 API 服务；当前使用公共非商业端点开发和验证。
 
 ## Decisions
 
-### 1. 八个模块及单向依赖
+### 1. 分层与显式组装
 
-| 模块 | 职责 | 可依赖的本项目模块 |
-| --- | --- | --- |
-| `:app` | Application、启动入口、依赖组装、环境配置和路由初始化 | 所有下述模块，仅此层组装实现 |
-| `:core:domain` | 纯 Kotlin 领域模型、错误类型、仓储/会话接口、日期窗口策略 | 无 |
-| `:core:network` | Retrofit/OkHttp 构建、超时、响应解析基础设施、脱敏 | 无 |
-| `:core:ui` | XML 主题与样式、加载/空/错布局和 Views、通用格式化与本地化资源 | 无 |
-| `:core:navigation` | 路由常量、Navigator 门面、ARouter 适配 | 无 |
-| `:data:weather` | 和风 DTO、映射、Geo/天气服务、仓储与当前会话实现 | domain、network |
-| `:feature:search` | 搜索 Activity、XML 布局/ViewBinding、列表适配器、ViewModel 和搜索 UI 状态 | domain、ui、navigation |
-| `:feature:weather` | 天气 Activity、XML 布局/ViewBinding、列表适配器、ViewModel 和两个天气区域 | domain、ui、navigation |
+九模块职责、直接依赖及运行时装配见 [分层架构图](../../../docs/architecture.md)。基础 UI／导航／网络层不依赖领域业务，天气展示移到 shared:weather-ui，供应商组装与协议解析由 data:weather 负责。feature 互不依赖，不引用 app 或数据实现；domain 保持纯 Kotlin/JVM。
 
-feature 之间禁止依赖，core 不得引用 feature/data/app；data 不引用 UI。使用 `implementation` 默认隐藏实现，只有接口确实需要时开放 `api`。接口放在 domain，不另建空的 API 模块；未来出现独立复用或发布需求再分拆。
+SkyMomentApplication 只在 onCreate 初始化 ARouterNavigator。AppServices 是 ARouter 缓存的进程单例，提供领域 WeatherDependencies 和 app 私有的 AppDependencies；页面经通用 ServiceLocator 获取契约，再以构造器注入 ViewModel。删除混合层次的 ApplicationServices、无消费者的 Navigator 接口和重复 ServiceFactory 封装。数据工厂共享连接池与限流门；仪器测试动态替换服务路由。生产构建不含 Fake，不额外引入 Hilt。
 
-选择显式构造器注入和 app 层小型 AppContainer，由公共接口提供 ViewModelFactory 所需依赖；业务 ViewModel 不访问全局可变服务。相较首版加入 Hilt 注解处理器，显式组装降低与现有 AGP/KAPT 的耦合；将来可替换组装方式而不改变业务接口。
+### 2. XML、状态和生命周期
 
-### 2. Kotlin、XML Views、MVVM 和 StateFlow
+AppCompatActivity / Fragment + Material Components Views + RecyclerView/ListAdapter/DiffUtil + ViewBinding。私有 MutableStateFlow、公开 StateFlow。首页 WeatherFragment 持有独立 ViewModel，搜索使用独立 Activity，并在 viewLifecycleOwner.lifecycleScope/repeatOnLifecycle(STARTED) 内幂等渲染；绑定和监听器在 onDestroyView 清理，不在重新订阅时请求。独立 Activity 路由保留 Activity 作用域的同一规则。WeatherContent 复用当前天气与预报渲染，不持有请求仓储。
 
-按用户要求采用 AppCompatActivity + XML 布局，UI 模块启用 ViewBinding，以 Material Components for Android 控件和 XML 主题/样式统一外观，使用 ConstraintLayout 组织布局。搜索结果与七日预报采用 RecyclerView + ListAdapter/DiffUtil，列表项也使用 XML/ViewBinding；通用加载、空数据、错误布局放在 core:ui，通过 include 或封装 View 复用。ViewBinding 仅用于视图访问，不承载业务逻辑；不增加 Data Binding 双向表达式。绑定方式遵循 [ViewBinding 文档](https://developer.android.com/topic/libraries/view-binding)。
+搜索输入 trim、防抖 350ms、distinct，键盘提交立即查询并合并相同在途操作；少于两个 Unicode 字符时提示继续输入，不发送供应商确定无结果的请求。空输入清空状态。每次查询、地点或语言改变提升代次，取消旧任务并在回写时核对代次。
 
-ViewModel 私有 MutableStateFlow、公开不可变 StateFlow，Activity 在 `lifecycleScope` 中通过 `repeatOnLifecycle(Lifecycle.State.STARTED)` 收集并调用幂等 render 更新 Views；多个 Flow 在该作用域内分别启动子协程收集。收集器恢复时只渲染最新状态，不因重复订阅重新触发网络请求；点击、重试、输入和刷新作为意图传入，网络和日期业务在仓储/领域策略内完成。生命周期处理参考 [StateFlow 官方说明](https://developer.android.com/kotlin/flow/stateflow-and-sharedflow)。
+天气 current 与 forecast 在监督作用域内并发独立加载；同一区域已有数据时刷新不清空，失败保留原 fetchedAt 并标记未更新。今日高低温只来自同一 forecast 的当地今天。刷新合并在途操作，单区重试只请求失败区域；不展示全页刷新按钮，正常数据通过前台恢复和跨日规则更新。前台恢复：当前天气超过 10 分钟、预报超过 60 分钟或日期变化时刷新；不后台轮询。
 
-整理根和 app 的构建插件、功能开关及依赖，清理无引用的版本目录项，按用途明确声明 Kotlin 工具链版本。UI 层统一使用 AppCompat、Material Components、ConstraintLayout、RecyclerView、ViewBinding 及所需 Lifecycle KTX，测试使用 Espresso 和 ActivityScenario。
+### 3. 路由与会话
 
-- SearchUiState：原始 query、有效语言、Idle/Loading/Content/Empty/Error、候选列表及错误。输入 trim 后防抖 350ms、去重；一个中文字符也允许搜索，空字符串不请求。键盘提交可立即查询但须合并同一在途请求。
-- WeatherUiState：地点会话、语言、地点时区、current 与 forecast 两个独立区域状态。区域含数据、错误、isRefreshing、fetchedAt 和不完整标记；首次请求加载，无数据失败显示错误；已有数据失败保留数据并显示未更新。
-- 使用 `viewModelScope` 及可取消挂起请求。每次输入、地点、语言变化产生请求代次；取消旧作业并在回写时核对代次，防止不可及时取消的旧响应覆盖新状态。取消不映射成业务错误。
-- 当前天气和每日预报并行获取，使用独立结果和监督作用域，单个请求失败不取消另一请求。今日高低温从 forecast 的今天数据派生，不发第三个天气请求。
-- 旋转保留 ViewModel 状态，不重复发请求；从后台恢复只在语言、当地日期变化或当前天气距获取超过 10 分钟/预报超过 60 分钟时刷新对应区域。这是前台刷新策略，不是长期缓存或后台轮询。
-- Activity 的绑定、监听器和适配器只属于该 Activity 生命周期，不存入 ViewModel 或单例；页面销毁时释放相关引用。渲染输入框时只在文字实际变化时更新，防止 TextWatcher 与状态回写互相触发；列表提交使用不可变快照。
-- 不使用 SavedStateHandle、View 自动状态保存或磁盘缓存保存 GeoAPI 返回内容，相关动态 View 不保存这些值；进程丢失后重新搜索。普通 UI 临时状态与配置变化由会话内状态承接。
+主入口为 HomeActivity，在 Manifest 中直接声明 MAIN / LAUNCHER 和 exported=true；保留 /app/home 路由供应用内导航，ARouter 在 SkyMomentApplication 中初始化，不再设置中转 Activity。首页展示 WeatherFragment，右上角切换通过 LocationSearchContract 打开浅色独立 SearchActivity；选择后回传随机会话 token，替换天气 Fragment，不增加天气页返回栈。启动先定位并获取天气，加载使用完整插画与阶段提示，失败显示对应空态。
 
-### 3. ARouter 仅负责组件入口
+保留 /app/home 和 /location/search 路由，删除重复的 WeatherActivity 与 /weather/detail。普通搜索路由选择后也回到首页，已有首页通过 onNewIntent 更新；首页打开的搜索继续通过 Activity Result 回传。Routes 只定义地址，NavigationExtras.SESSION_TOKEN 定义传参键。随机 token 关联内存 Location，新选择使旧 token 失效；旧天气 Fragment 销毁并取消任务，旋转保留 Fragment ViewModel。进程丢失后首页重新定位，失败显示空态。Geo 信息不写入 SavedStateHandle、View 自动状态、Intent 或备份。路由返回使用 CLEAR_TOP/SINGLE_TOP。
 
-跨组件入口为 `/location/search` 和 `/weather/detail`，各由 feature 自己的 AppCompatActivity 加载 XML 布局并通过 ViewBinding 渲染。app 启动入口路由到搜索；搜索选择地点后进入天气，天气页提供重新搜索入口；返回行为避免重复堆叠搜索页。Navigator 门面集中传参和错误处理，页面不散布原始路由字符串。
+ARouter api/compiler 1.5.2 + AGP 对应 legacy-kapt 9.3.3，模块名 app_home / feature_search（天气模块不再使用路由处理器），默认 dex 路由发现，无 register 插件。删除 feature_weather 路由模块时 versionCode 从 2 升至 3，覆盖安装会按 ARouter 版本规则更新路由缓存。Jetifier 处理旧 support 引用；consumer 规则保留生成表、facade、反射创建的 IProvider 默认构造器及 ISyringe。RouteMeta.rawType 仅注解阶段引用的 javax.lang.model.element.Element 单独 dontwarn。
 
-选择地点写入 domain 接口定义的内存会话，由 data 实现，路由仅携带随机的会话 token；真实地点名称、坐标、ID 和时区不进入 Intent 持久恢复快照。token 不具备鉴权作用；进程重建 token 失效时安全回到搜索。切换新地点创建新 token，避免数据串用。
+debug 使用 Espresso/ActivityScenario；release 使用平台 RouteSmokeInstrumentation 验证实际路由和 XML。仅本机 smoke 额外保留注入合成会话的 RouteSmokeData 桥接类，不增加 ARouter 保留范围，保持 R8 开启。API 24 与 target API 设备验收仍独立追踪。
 
-[ARouter 官方仓库](https://github.com/alibaba/ARouter)描述 Kotlin 注解处理与可选注册机制；[Android 官方迁移说明](https://developer.android.com/build/migrate-to-built-in-kotlin)指出 AGP 内建 Kotlin 下传统 kotlin-kapt 不兼容，可采用同版本 `com.android.legacy-kapt`。因此先验证已发布 ARouter api/compiler 与 legacy-kapt，设置唯一模块名，不将尚未发布的 KSP 实现当作稳定依赖。首版先用默认路由发现，不引入额外 register 插件；对实际 release 包测试路由发现与 R8 保留规则。若存在工具链硬冲突，记录具体错误并修订规划，不默默替换 ARouter 或全局降级 AGP。
+### 4. 公共端点和天气契约
 
-### 4. 和风天气接入结论与契约
+核验日期 2026-11-05，依据 [Forecast 文档](https://open-meteo.com/en/docs) 和 [Geocoding 文档](https://open-meteo.com/en/docs/geocoding-api)。
 
-2026-11-05 核验的官方文档如下；这张表不等同于成功调用记录。
-
-| 目的 | 接口与选择 | 结论 |
-| --- | --- | --- |
-| 搜索 | `GET /geo/v2/city/lookup?location=…&lang=…&number=20`，不限定 range | [文档](https://dev.qweather.com/docs/api/geoapi/city-lookup/)支持全球搜索，返回地点身份、行政区、坐标和时区；真实县区命中待测 |
-| 当前天气 | `GET /weather/v1/current/{latitude}/{longitude}?lang=…&localTime=true` | [文档](https://dev.qweather.com/docs/api/weather/weather-current/)支持所需当前指标 |
-| 七日预报 | `GET /weather/v1/daily/{latitude}/{longitude}?days=7&lang=…&localTime=true` | [文档](https://dev.qweather.com/docs/api/weather/weather-daily-forecast/)支持 1–10 天；本产品固定请求七天，起止日期与午夜响应需验证 |
-| 主机 | `https://<账户专属 API Host>/` | 按[API Host 文档](https://dev.qweather.com/en/docs/configuration/api-host/)配置，不使用旧共享域名 |
-| 认证 | `X-QW-Api-Key` 请求头 | [认证文档](https://dev.qweather.com/docs/configuration/authentication/)目前支持 API Key；保留认证适配边界，2027 年限制必须核验 |
-
-不采用即将弃用的 v7 城市天气接口，也不把新版 v1 的 `temperature.value`、比例湿度、带单位风速等字段按旧版字符串 DTO 处理。GeoAPI 仍是独立响应格式，包含业务 code 与 location；两者使用不同 envelope。序列化采用 Retrofit + kotlinx.serialization，忽略未知附加字段但严格校验已使用字段，不能把整个错误响应反序列化为全 null 的成功数据。OkHttp 使用内建 Gzip 处理，不手工设置导致重复压缩/解压的头。
-
-搜索保持供应商排序，按位置 ID 去重，显示名称/adm2/adm1/国家并移除相邻重复名称。`type=city` 不能用于证明一定是地级市或县区；县区验收依赖人工确认的目标行政实体，不对供应商未提供的层级编造标签。用户选择前不加载天气，不默认选首项。
-
-领域模型建议包括 Location（provider、id、name、行政路径、坐标、ZoneId）、CurrentWeather、DailyForecast、WeatherAttribution、WeatherFailure；不向 feature 暴露供应商 DTO。坐标发送 v1 时按两位小数规范化、使用小数点且顺序为纬度/经度，保留原始地点 ID 和名称；不能直接复用 GeoAPI 的“经度,纬度”参数排列。
-
-映射规则：温度统一 °C、风速 m/s、湿度比例乘 100；识别上游 unit 后再转换，未知单位记为缺失而非猜测。温度允许负数和零；风速非负、湿度比例 0–1；高温低于低温时该日高低温标为异常，不交换伪装修复。缺失个别字段为局部缺失；全部核心字段缺失为无可展示内容；损坏 JSON、错误字段类型和错误 envelope 为解析失败。获取时刻由可注入 Clock 记录，界面写“获取于”；v1 当前天气文档未给出观测时间，不移植 v7 的 obsTime 假设。
-
-### 5. 客户端凭据与供应商使用限制
-
-按用户确定的纯客户端范围，首版采用 API Key 直连；不在 APK 放置 JWT 签名私钥，不用无法自动续期的手工 JWT 冒充长期方案。开发/发布使用不同 Key，配置来自未入库本地属性或 CI 秘密变量，由 app 注入网络层。Host 不是秘密保护机制；合法 HTTPS Host 缺失/错误及 Key 缺失时，release 构建失败，debug 给出配置错误，不自动连接示例地址。
-
-[安全指南](https://dev.qweather.com/docs/best-practices/security-guidelines/)提供 API/应用限制：为 Key 仅开放必要接口，配置包名及签名证书约束；直连请求带 `X-Android-Package-Name`、`X-Android-Cert`。这些信息可被伪造，不能把它们当作不可绕过的验证。验证 debug/release 签名差异，开启额度通知并提供服务侧撤销及客户端发版轮换步骤；用户无需登录或创建和风账户。源码不含 Key 并不代表 APK 不含 Key。
-
-日志关闭请求/响应正文，清除 Authorization、X-QW-Api-Key、查询地点和坐标，仅记录端点种类、耗时、分类错误及非敏感请求标识。GeoAPI 不写 HTTP 磁盘缓存、数据库、搜索历史、备份或崩溃附件；仅保留当前 UI 使用所需的内存对象。[缓存说明](https://dev.qweather.com/docs/best-practices/cache/)限制地理信息存储，因此首版不增加地点持久化；天气也不启用磁盘缓存，降低过期和跨日复杂度。
-
-搜索和天气页显示可点击 QWeather/和风天气名称，天气页还展示 `metadata.attributions` 返回的声明/链接，保留 GeoAPI 的许可元数据供来源说明使用；遵循[来源要求](https://dev.qweather.com/docs/terms/attribution/)。使用链接仅作为来源信息，不自动执行响应内容。[定价说明](https://dev.qweather.com/docs/finance/pricing/)为按量计费；免费额度按服务分组而非每个端点各有一份，实施时核对当前账户，不承诺永久免费。
-
-### 6. 错误、重试和状态转换
-
-HTTP 状态先判断，再区分 Geo 业务码与 v1 problem+json 中的错误类型；依据[错误文档](https://dev.qweather.com/docs/resource/error-code/)解析，不直接显示供应商 detail。以下超时/冷却数值是本产品初始策略，非供应商 SLA。
-
-| 类别 | 处理 |
+| 用途 | 请求 |
 | --- | --- |
-| Geo 合法空列表/明确无地点；合法无天气数据 | Empty 或 UnsupportedLocation，提示修改查询/稍后重试 |
-| 断网、DNS、超时 | Network/Timeout；首次及至多一次有抖动的延迟重试，随后可手动重试 |
-| HTTP 5xx | ServiceUnavailable；至多一次自动重试 |
-| 401、403、普通参数错误、404 路径错误 | 分为凭据/额度/配置问题；不自动重试，不显示为空结果 |
-| 429 | 区分短期频率和月度配额；短期限流遵守 Retry-After，无头则至少 60 秒冷却，跨页面共享；月度配额不定时自动重试 |
-| 响应解析或不支持单位/时区 | 全局结构错误为 DataInvalid；单字段错误为局部缺失；不自动重试 |
-| CancellationException | 传递取消，不发错误提示 |
+| 搜索 | https://geocoding-api.open-meteo.com/v1/search?name=…&count=50&language=zh或en&format=json |
+| 地点译名更新 | https://geocoding-api.open-meteo.com/v1/get?id=…&language=zh或en |
+| 当前天气 | https://api.open-meteo.com/v1/forecast，current=temperature_2m,relative_humidity_2m,wind_speed_10m,weather_code,is_day |
+| 七日预报 | 同一 forecast 端点，daily=weather_code,temperature_2m_max,temperature_2m_min，forecast_days=7 |
 
-connectTimeout 10 秒、readTimeout 15 秒、每次 callTimeout 20 秒，自动重试延迟约 0.5–1.5 秒；单次用户操作整体截止 45 秒，避免多层重试相乘。统一在一层控制重试，禁用或核算 OkHttp 额外连接重试；401 不尝试隐式登录。刷新按钮合并重复操作，重试只针对失败区域；限流冷却期间禁用再次请求并给出本地化说明。成功后清除该区域错误并更新 fetchedAt。
+两个天气操作分别请求相应字段，以保留独立失败／重试语义；并不增加第三个高低温请求。均使用 latitude / longitude 命名参数、temperature_unit=celsius、wind_speed_unit=ms、timezone=所选地点 IANA ID。当前时间使用 timeformat=unixtime，逐日时间使用 iso8601 日期标签。坐标以固定小数点发送，保留地理服务精度，不套用其他供应商的两位小数约束。
 
-### 7. 日期窗口与国际化
+当前天气单位从 current_units 校验；温度允许负值和零，湿度原生为 0–100%，不乘 100，风速为非负 m/s。当前 time 是模型有效时刻，界面主时间仍为注入 Clock 记录的“获取于”，不标为站点观测时间。Open-Meteo 会选择邻近模型网格，响应坐标不要求与地点坐标逐字相等；请求上下文保持 Location 身份，防止串用地点。
 
-以可注入 Clock 和 Location.ZoneId 求 D，使用 LocalDate.plusDays 构造 D…D+6；每日项依据 forecastStartTime 转到地点时区后的日期归属，并验证 forecastEndTime 的排他结束边界与当地日历。该归属策略需要用真实 v1 样本验证，若数据不提供可映射的完整当日窗口，则供应商验证不通过，不取“前七条”充数。重复完全相同日可去重，冲突日丢弃并标记不完整；窗口外日丢弃。午夜触发及恢复前台重新计算，不以固定 24 小时计时替代当地下一次午夜。API 24/25 通过 core library desugaring 支持 java.time，需测试而不是提高 minSdk 避开。
+逐日数据为 daily.time 与各字段平行数组，按索引对应。必要 time 结构损坏为 DataInvalid；可选指标缺项显示缺失，错位／超长结构不能静默 zip 截断后宣称完整。解析日期标签为 LocalDate，按所选 ZoneId 求 D，筛选 D…D+6、排序、去重；完全相同日可去重，冲突日丢弃并标记不完整，高温小于低温时该日高低温不可用。全部核心指标为空时为空数据；损坏 envelope 不是空数据。
 
-默认资源为英文，添加简体、繁体资源；集中 LocaleResolver 按系统首选 Locale 的脚本/地区映射三种有效语言，资源上下文和 API 参数共用结果，避免 Android 资源匹配和网络语言各自判断。系统首选语言不支持则固定英文，不取后续语言意外改变规则。数字显示用有效 Locale，请求坐标用固定小数点格式。语言变化时旧响应失效，重新查询 Geo 显示名称及天气；失败可保留数字但不沿用旧语言天气文本。供应商合法的地点名称回退保留。
+Open-Meteo 文档说明 ISO 时间与日聚合采用请求时解析的 UTC offset，区间内 DST 不重新计算。日期标签用于识别供应商逐日产品，不把其日聚合区间伪称严格的 DST 本地午夜区间；应用自身七日窗口、今天标记、日期显示和下一次午夜调度始终使用 IANA ZoneId 与日历运算，不通过固定 24 小时计算日期。真实样本和测试记录这一供应商限制。
 
-### 8. 验证矩阵与完成标准
+### 5. 地理检索与中文别名
 
-| 层面 | 样本/方法 | 通过标准 |
-| --- | --- | --- |
-| 中国粒度 | 海淀区、德清县、昆山市；朝阳重名结果 | 每个县区能独立选择且行政归属正确，重名可区分；“全部县区覆盖”不能由这三个样本推断 |
-| 海外覆盖 | London、New York、Tokyo；另查 Shinjuku 观察细分支持 | 城市可选择；细分查无结果时提示上级城市，不宣称县区命中 |
-| 三语 | zh-hans、zh-hant、en 查询同一组样本 | UI 和请求参数正确，供应商文本回退被记录 |
-| 天气契约 | 每个选定样本获取 current 与 daily | 必要指标可展示，今日高低温同源，七日日期为 D…D+6；记录纬经顺序、湿度/单位及归因 |
-| 网络区域 | 中国大陆固定宽带及移动网络各一处，至少一处海外实际网络；不依赖 VPN | 每种网络做 10 次“搜索→两天气请求”流程，至少 9 次在 10 秒内完成，超时能恢复；这是首版验收门槛，非全球可用性保证 |
-| 时间边界 | 注入时钟测试纽约与北京异日、纽约夏令时、当地午夜、后台恢复 | 七个日历日不偏移；缺日/重复/跨日刷新失败符合规格 |
-| 错误与竞争 | MockWebServer + 协程测试调度器 | 无结果、超时、HTTP/业务失败、非法 JSON、单接口失败、慢旧请求、快速切换、限流均有确定结果 |
-| 工程与 UI | 模块依赖检查、单测、lint、debug/release 构建、Espresso/ActivityScenario、API 24 和 target API 设备 | 无依赖环，UI 依赖符合 XML/ViewBinding 技术方案，页面由 StateFlow 驱动，ARouter 能打开两个入口，旋转/进程重建安全，三语完整 |
+地理服务来自 GeoNames，返回 id、name、latitude、longitude、timezone、country、admin1…admin4 和 feature_code；缺失字段不编造。位置身份使用供应商 ID。feature_code 仅辅助类型识别，不证明全国县区全覆盖。
 
-真实验证记录单独存放后续开发文档，只保存人工输入样本、非敏感断言结果和耗时，不把完整 GeoAPI 响应当作测试夹具。自动化夹具使用合成数据。未提供凭据或某地区网络时保留未验证项，不以模拟结果替代跨区域实测。
+本机样本：海淀、德清可返回对应行政中心；海淀区、德清县、新都区全称无结果；中文昆山返回多个同名村镇而江苏目标可由 Kunshan 查询得到。适配层最多生成原文、去末尾单个行政后缀、拼音三种不同查询，有限并发并在同一个 45 秒操作预算内执行，按 ID 合并；拼音使用 ICU4J 77.1 Han-Latin 后去声调和空格（兼容 minSdk 24），保留原查询与真实供应商译名，不维护硬编码城市库。必要时可补充查询中明确的国家／省级限定。所有候选显示完整可用行政路径，保留单次供应商排序，不默认选第一条，不把拼音同音结果当作唯一匹配。
 
-UI 验证采用 [Espresso](https://developer.android.com/training/testing/espresso) 和 ActivityScenario，列表使用 RecyclerViewActions，网络/协程异步状态使用可控 Fake 或 IdlingResource 同步，不以固定 sleep 等待。覆盖停止时不更新已失活 Views、恢复后渲染最新状态、旋转无重复订阅，以及 XML 布局的三语长文本显示。
+原文可得结果但缺少目标时也补查拼音，避免“昆山”已有错误同名结果导致跳过补查。原始输入不足两个字符时不请求；两字为精确匹配，三字以上按供应商前缀规则。去后缀后不足两个字时保留原文，不过度截断。中国完整县区覆盖仍需实测；失败不得仅用同名上级市通过验收。
+
+### 6. 语言、WMO 与来源
+
+LocaleResolver 只取系统首选语言，Hans/Hant 脚本优先，无脚本时 TW/HK/MO 繁体，其余中文简体，其他语言英文。资源与日期数字格式使用同一有效 Locale。应用固定打包三语资源。
+
+Geocoding 参数简繁均用 zh、英文用 en。供应商中文译名可能混用字形或回退拉丁名，保留有效返回名称，不编造或硬替换译名。天气接口没有语言参数，domain 保存 WMO code / isDay，core:ui 在渲染时映射简繁英描述及图标；未知代码显示通用占位，切换语言立即更新本地天气文字。地点译名按 ID 重查；旧语言请求失效，离线时已有数值与新语言天气描述可保留，提示译名刷新失败；下次返回前台时重试译名，不依赖已移除的全页按钮。
+
+按用户要求移除天气来源页脚，README 和数据契约保留 Open-Meteo / CC BY 4.0 归因与服务说明，领域模型仍保留静态来源。搜索候选可见时提供 Open-Meteo Geocoding、GeoNames 和 CC BY 4.0 链接。链接只作来源，不执行返回文本。
+
+### 7. 无凭据网络、错误和配额
+
+固定两个公共 HTTPS base URL，不读天气 Key／Host 环境变量，不添加鉴权／Android 签名头。release/debug 不存在凭据缺失门槛，release 禁止明文端点。OkHttp 内建透明 Gzip，不额外重复解压，不建磁盘缓存；关闭正文和含地点／坐标的 URL 日志。
+
+connectTimeout 10 秒、readTimeout 15 秒、callTimeout 20 秒；每次用户操作整体 45 秒。统一一层处理重试，禁用隐式连接重试，只对网络／5xx 至多自动重试一次，延迟 0.5–1.5 秒。CancellationException 原样传播。HTTP 400 或 error=true 为请求／数据错误；401/403、404 路径错误不自动重试。合法缺 results 或无天气指标为空，不能把错误载荷解析为全 null 成功。
+
+429 短期限流遵守 Retry-After，缺失则至少 60 秒；共享冷却限制所有页面。明确日配额耗尽不自动定时重试。reason 只用于安全分类，不原样展示。单位、时区或整体结构损坏是 DataInvalid；字段级问题是局部缺失。
+
+公共服务 [使用条件](https://open-meteo.com/en/terms) / [定价](https://open-meteo.com/en/pricing) 限定非商业用途，当前公开限额为每分钟 600、每小时 5,000、每日 10,000 次，并有公开月预算。调用可能按变量和日期范围折算，不承诺每次用户查询只有一个计费单位。服务位于海外，免 Key 不代表大陆网络稳定或商用授权；首版开发可使用公共端点，不自动购买或引入客户专属 API。
+
+### 8. 验证矩阵
+
+| 层面 | 方法与门槛 |
+| --- | --- |
+| 中国县区 | 海淀／海淀区、德清／德清县、昆山／昆山市、新都区；朝阳重名。验证后缀与拼音补查、独立身份、行政归属与显式选择 |
+| 海外 | London、New York、Tokyo、Shinjuku，记录细分支持或无结果，不保证全球最细级覆盖 |
+| 语言 | UI 简繁英及法语回退、脚本优先、多语言首选；Geo zh/en 回退、WMO 三语、运行中变化 |
+| 天气 | 无 Key 的 current/daily 请求、百分比／单位／零值、七个当地日期、模型时间与归因 |
+| 网络 | 大陆宽带、大陆移动及至少一处实际海外网络，各 10 次完整流程，至少 9 次在 10 秒内；不依赖 VPN，不推断未知当前网络区域 |
+| 时间 | 可注入 Clock，纽约与北京异日、DST、当地午夜与前台恢复，刷新失败剔除昨天 |
+| 错误 | MockWebServer、协程虚拟时钟：400/error=true、429、5xx、超时、坏 JSON、部分成功、取消、旧响应、45 秒截止 |
+| 工程/UI | 模块依赖、单元测试、lint、debug/release、配置缓存、API 24 与 target API 设备；Espresso/Fake/IdlingResource，不用固定 sleep |
+
+仅保存人工查询样本、非敏感断言和耗时。自动化夹具使用合成数据；API 35 的基础验证不代替 API 24 / target API 的最终设备验收。
 
 ## Risks / Trade-offs
 
-- [纯客户端无法保密 API Key，且 2027 年 API Key 限制临近] → 用户已选择此范围；实施先核实受限额度是否满足验收，限制接口、区分环境、监控和轮换；如不足，暂停供应商集成交付并提交范围变更，不暗自添加后端。
-- [全球搜索不等于每个海外县区均可检索] → 以真实名称和行政路径展示，细分缺失有明确提示；中国样本失败则不通过核心验收，扩大目标县区抽样后再声明覆盖范围。
-- [ARouter 与当前 AGP/Gradle、Views 依赖组合未经构建验证] → 完成最小 XML 页面、ViewBinding、路由、KAPT、配置缓存和 release 冒烟，记录确切可用版本；失败先查明确的兼容点。
-- [GeoAPI 不提供通用行政层级字段且限制缓存] → 不以 type 猜层级，不建离线库；进程结束后用户需要重新搜索，这是首版明确体验取舍。
-- [v1 新契约、账户权限或地区连通性不满足要求] → 文档核验只算候选通过，真实验证为后续集成前置；保留仓储接口替换空间，但不在本变更自动接入第二供应商。
-- [两个天气请求完成时间不同] → 分区状态、独立获取时间与同地点/语言代次校验；今日高低温只来源于当前有效预报。
+- 中文别名、县区中心与同音结果存在缺口 → 后缀／拼音补查、完整行政路径、人工矩阵与明确空提示，不假装全覆盖。
+- 模型当前天气与逐日固定 offset 聚合不是站点观测 → 保留来源、正确时间标签与供应商约束，应用日期窗口独立使用 IANA 日历。
+- 免费服务限额、非商业用途和大陆连通性 → 明确用量、限流和区域验收，不以无凭据冒烟代替生产可用性。
+- 旧路由库依赖 Jetifier / 反射 → 固定已验证版本、精确 keep 与 release 设备冒烟；升级 AGP 前重新验证。
 
 ## Migration Plan
 
-这是从空壳新增能力，无用户数据库迁移。本轮停在规划；实施时先完成 API/工具链验证并建立 XML/ViewBinding 基础，再建模块和数据层，随后实现搜索、天气、国际化及验收。引入依赖锁定到已验证版本，不无理由改写现有工具链。
-
-没有生产流量切换。实施过程中按可构建阶段保留版本基线；若供应商验证失败，保留可用工程骨架并暂停相应业务交付，修订设计后继续。凭据泄露时在和风控制台撤销受影响 Key，替换配置并发版，旧版本会显示服务不可用；不承诺无后端条件下远程无感更换 Key。
+保留已验证工程基础，移除旧供应商规划、配置提示与语言码假设；数据层接入两个公共端点。先实现并测试契约、中文别名和 WMO 映射，再接通完整搜索／天气／刷新行为，最后完成设备及区域实测。无用户数据库、账号或服务器迁移。
 
 ## Open Questions
 
-- 实施环境的专属 API Host、开发/发布凭据及签名指纹待配置，不能写入本规划。
-- 大陆宽带、移动网络和海外实测节点的具体运营商与地点待安排，验收样本与门槛已确定。
-- UI 视觉细节采用 Material Components for Android 的 Views 控件和 XML 主题/样式，具体配色、间距和图标样式可在实现时确定，不影响规格和模块边界。
+- 大陆宽带、移动和海外实测节点的运营商／区域待安排，不阻止公共端点实现，仍阻塞完整地区验收。

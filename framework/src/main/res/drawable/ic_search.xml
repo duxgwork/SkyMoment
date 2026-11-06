@@ -1,0 +1,5 @@
+<!-- 搜索输入框使用的矢量图标。 -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android" android:width="24dp" android:height="24dp" android:viewportWidth="24" android:viewportHeight="24">
+    <path android:fillColor="@android:color/transparent" android:strokeColor="#727481" android:strokeWidth="1.8" android:strokeLineCap="round"
+        android:pathData="M10.5,4.5a6,6 0,1 0,0 12a6,6 0,1 0,0 -12M15,15L20,20" />
+</vector>

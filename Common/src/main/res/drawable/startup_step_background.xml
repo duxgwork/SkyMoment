@@ -1,0 +1,7 @@
+<!-- 按启动步骤的选中状态切换背景，状态由真实请求进度驱动。 -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_selected="true">
+        <shape><solid android:color="#E5E8F3" /><corners android:radius="20dp" /></shape>
+    </item>
+    <item><shape><solid android:color="#F8F9FC" /><corners android:radius="20dp" /></shape></item>
+</selector>

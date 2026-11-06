@@ -1,0 +1,6 @@
+<!-- 共享界面颜色资源，避免布局中重复写入颜色字面量。 -->
+<resources>
+    <color name="home_background">#F1F2F6</color>
+    <color name="home_text">#292A35</color>
+    <color name="home_secondary">#727481</color>
+</resources>

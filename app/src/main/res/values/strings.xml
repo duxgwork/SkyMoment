@@ -1,3 +1,4 @@
+<!-- 默认英文文案资源；资源键与其他语言保持一致，由有效语言上下文选择。 -->
 <resources>
     <string name="app_name">SkyMoment</string>
 </resources>

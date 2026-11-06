@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 候选地点列表项，同时展示名称和行政路径以区分同名地点。 -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
+    android:background="@drawable/home_card"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground"
+    android:minHeight="72dp"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:saveEnabled="false">
+
+    <TextView
+        android:id="@+id/location_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:saveEnabled="false"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/location_path"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:saveEnabled="false"
+        android:textSize="14sp" />
+</LinearLayout>

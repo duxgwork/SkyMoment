@@ -1,0 +1,15 @@
+<!-- 启动加载插画的矢量资源，不负责请求逻辑或模拟进度。 -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="160dp" android:height="160dp" android:viewportWidth="160" android:viewportHeight="160">
+    <path android:fillColor="#E7EAF5" android:pathData="M80,8 A72,72 0,1 1,80,152 A72,72 0,1 1,80,8" />
+    <path android:fillColor="#EFF1F8" android:pathData="M80,20 A60,60 0,1 1,80,140 A60,60 0,1 1,80,20" />
+    <path android:fillColor="#F1DCA7" android:pathData="M102,37 A24,24 0,1 1,102,85 A24,24 0,1 1,102,37" />
+    <path android:fillColor="#00000000" android:strokeColor="#D7BD80" android:strokeWidth="2.5" android:strokeLineCap="round"
+        android:pathData="M102,27 L102,22 M130,34 L134,30 M137,61 L142,61 M78,34 L74,30" />
+    <path android:fillColor="#DCE1F1" android:pathData="M42,114 C31,114 26,107 26,99 C26,90 33,83 42,83 C47,65 62,56 78,61 C91,64 98,74 99,84 C114,82 126,93 126,105 C126,111 121,115 113,115 Z" />
+    <path android:fillColor="#FFFFFF" android:strokeColor="#8992B6" android:strokeWidth="2.5" android:strokeLineJoin="round"
+        android:pathData="M43,108 C30,108 25,100 25,92 C25,81 33,74 44,74 C47,57 61,48 76,52 C90,55 97,65 98,77 C112,75 124,85 124,97 C124,104 119,108 111,108 Z" />
+    <path android:fillColor="#B4BEDA" android:pathData="M48,126 A3,3 0,1 1,48,132 A3,3 0,1 1,48,126 M132,113 A2,2 0,1 1,132,117 A2,2 0,1 1,132,113" />
+    <path android:fillColor="#00000000" android:strokeColor="#C6CDE2" android:strokeWidth="2" android:strokeLineCap="round"
+        android:pathData="M67,127 L101,127 M75,135 L92,135" />
+</vector>

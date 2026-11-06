@@ -1,0 +1,910 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mxfile host="Electron" agent="draw.io Desktop" version="32.6.10" type="device" pages="3">
+  <diagram id="layered-overview" name="01 分层职责总览">
+    <mxGraphModel dx="1920" dy="1280" grid="1" gridSize="8" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1920" pageHeight="1280" math="0" shadow="0" background="#FFFFFF">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="canvas" value="" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#FFFFFF;strokeColor=none;strokeWidth=1.3;locked=1;connectable=0;" vertex="1" parent="1">
+          <mxGeometry x="0" y="0" width="1920" height="1280" as="geometry" />
+        </mxCell>
+        <mxCell id="accent" value="" style="rounded=0;absoluteArcSize=1;arcSize=0;whiteSpace=wrap;html=0;fillColor=#427BC1;strokeColor=none;strokeWidth=1.3;" vertex="1" parent="1">
+          <mxGeometry x="64" y="52" width="6" height="58" as="geometry" />
+        </mxCell>
+        <mxCell id="item-3" value="SkyMoment 组件化分层架构" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=40;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="1">
+          <mxGeometry x="88" y="45" width="1300" height="58" as="geometry" />
+        </mxCell>
+        <mxCell id="item-4" value="应用负责装配，功能面向契约；共享展示、数据实现与基础能力各守边界。" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=19;fontColor=#65758B;fontStyle=0;fontFamily=Helvetica;connectable=0;" vertex="1" parent="1">
+          <mxGeometry x="88" y="108" width="1450" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="item-5" value="9 个生产模块 + 1 个测试模块" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;spacing=0;fontSize=22;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="1">
+          <mxGeometry x="1450" y="56" width="406" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="item-6" value="KOTLIN  /  XML · VIEWBINDING · MVVM" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;spacing=0;fontSize=14;fontColor=#65758B;fontStyle=0;fontFamily=Helvetica;connectable=0;" vertex="1" parent="1">
+          <mxGeometry x="1396" y="101" width="460" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="footer-rule" value="" style="rounded=0;absoluteArcSize=1;arcSize=0;whiteSpace=wrap;html=0;fillColor=#DAE2EC;strokeColor=none;strokeWidth=1.3;" vertex="1" parent="1">
+          <mxGeometry x="64" y="1214" width="1792" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="item-8" value="依据当前工作区 Gradle 与源码 · 2026-11-06" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=16;fontColor=#65758B;fontStyle=0;fontFamily=Helvetica;connectable=0;" vertex="1" parent="1">
+          <mxGeometry x="64" y="1228" width="1000" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="item-9" value="SKYMOMENT  /  01" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;spacing=0;fontSize=16;fontColor=#65758B;fontStyle=0;fontFamily=Helvetica;connectable=0;" vertex="1" parent="1">
+          <mxGeometry x="1556" y="1228" width="300" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="lane-L3" value="" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#F8FAFD;strokeColor=none;strokeWidth=1.3;" vertex="1" parent="1">
+          <mxGeometry x="64" y="160" width="1392" height="168" as="geometry" />
+        </mxCell>
+        <mxCell id="item-11" value="L3" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=26;fontColor=#65758B;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="1">
+          <mxGeometry x="88" y="180" width="120" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="item-12" value="应用装配" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=20;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="1">
+          <mxGeometry x="88" y="224" width="120" height="72" as="geometry" />
+        </mxCell>
+        <mxCell id="lane-L2" value="" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#F8FAFD;strokeColor=none;strokeWidth=1.3;" vertex="1" parent="1">
+          <mxGeometry x="64" y="352" width="1392" height="216" as="geometry" />
+        </mxCell>
+        <mxCell id="item-14" value="L2" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=26;fontColor=#65758B;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="1">
+          <mxGeometry x="88" y="372" width="120" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="item-15" value="业务功能" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=20;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="1">
+          <mxGeometry x="88" y="416" width="120" height="72" as="geometry" />
+        </mxCell>
+        <mxCell id="lane-L1" value="" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#F8FAFD;strokeColor=none;strokeWidth=1.3;" vertex="1" parent="1">
+          <mxGeometry x="64" y="592" width="1392" height="248" as="geometry" />
+        </mxCell>
+        <mxCell id="item-17" value="L1" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=26;fontColor=#65758B;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="1">
+          <mxGeometry x="88" y="612" width="120" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="item-18" value="契约 · 共享&#10;数据实现" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=20;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="1">
+          <mxGeometry x="88" y="656" width="120" height="72" as="geometry" />
+        </mxCell>
+        <mxCell id="lane-L0" value="" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#F8FAFD;strokeColor=none;strokeWidth=1.3;" vertex="1" parent="1">
+          <mxGeometry x="64" y="864" width="1392" height="234" as="geometry" />
+        </mxCell>
+        <mxCell id="item-20" value="L0" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=26;fontColor=#65758B;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="1">
+          <mxGeometry x="88" y="884" width="120" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="item-21" value="领域 · 基础" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=20;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="1">
+          <mxGeometry x="88" y="928" width="120" height="72" as="geometry" />
+        </mxCell>
+        <mxCell id="app" value="" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#FFF6DF;strokeColor=#C39427;strokeWidth=1.3;" vertex="1" parent="1" module="app">
+          <mxGeometry x="232" y="176" width="1200" height="136" as="geometry" />
+        </mxCell>
+        <mxCell id="app-bar" value="" style="rounded=0;absoluteArcSize=1;arcSize=0;whiteSpace=wrap;html=0;fillColor=#C39427;strokeColor=none;strokeWidth=1.3;" vertex="1" parent="app">
+          <mxGeometry x="0" y="0" width="5" height="136" as="geometry" />
+        </mxCell>
+        <mxCell id="item-24" value="app" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=26;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="app">
+          <mxGeometry x="20" y="12" width="1160" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="item-25" value="Application · 服务装配 · 平台适配" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=18;fontColor=#C39427;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="app">
+          <mxGeometry x="20" y="52" width="1160" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="item-26" value="" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=17;fontColor=#203047;fontStyle=0;fontFamily=Helvetica;connectable=0;" vertex="1" parent="app">
+          <mxGeometry x="20" y="86" width="1160" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="item-27" value="SkyMomentApplication" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=17;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="1">
+          <mxGeometry x="252" y="262" width="365" height="23" as="geometry" />
+        </mxCell>
+        <mxCell id="item-28" value="初始化 ARouter" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=15;fontColor=#65758B;fontStyle=0;fontFamily=Helvetica;connectable=0;" vertex="1" parent="1">
+          <mxGeometry x="252" y="287" width="365" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="item-29" value="AppServices · IApplicationService" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=17;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="1">
+          <mxGeometry x="620" y="262" width="365" height="23" as="geometry" />
+        </mxCell>
+        <mxCell id="item-30" value="按需缓存；注入领域依赖" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=15;fontColor=#65758B;fontStyle=0;fontFamily=Helvetica;connectable=0;" vertex="1" parent="1">
+          <mxGeometry x="620" y="287" width="365" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="item-31" value="Android 平台适配" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=17;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="1">
+          <mxGeometry x="1024" y="262" width="365" height="23" as="geometry" />
+        </mxCell>
+        <mxCell id="item-32" value="设备定位 · Geocoder 逆地理编码" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=15;fontColor=#65758B;fontStyle=0;fontFamily=Helvetica;connectable=0;" vertex="1" parent="1">
+          <mxGeometry x="1024" y="287" width="365" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="feature-Home" value="" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#EAF3FF;strokeColor=#427BC1;strokeWidth=1.3;" vertex="1" parent="1" module="feature:Home">
+          <mxGeometry x="232" y="368" width="384" height="184" as="geometry" />
+        </mxCell>
+        <mxCell id="feature-Home-bar" value="" style="rounded=0;absoluteArcSize=1;arcSize=0;whiteSpace=wrap;html=0;fillColor=#427BC1;strokeColor=none;strokeWidth=1.3;" vertex="1" parent="feature-Home">
+          <mxGeometry x="0" y="0" width="5" height="184" as="geometry" />
+        </mxCell>
+        <mxCell id="item-35" value="feature:Home" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=26;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="feature-Home">
+          <mxGeometry x="20" y="12" width="344" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="item-36" value="首页与启动编排" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=18;fontColor=#427BC1;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="feature-Home">
+          <mxGeometry x="20" y="52" width="344" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="item-37" value="HomeActivity · HomeViewModel&#10;权限 → 定位 → 首屏天气&#10;天气容器 · 切换地点" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=17;fontColor=#203047;fontStyle=0;fontFamily=Helvetica;connectable=0;" vertex="1" parent="feature-Home">
+          <mxGeometry x="20" y="86" width="344" height="84" as="geometry" />
+        </mxCell>
+        <mxCell id="feature-Search" value="" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#EAF3FF;strokeColor=#427BC1;strokeWidth=1.3;" vertex="1" parent="1" module="feature:Search">
+          <mxGeometry x="640" y="368" width="384" height="184" as="geometry" />
+        </mxCell>
+        <mxCell id="feature-Search-bar" value="" style="rounded=0;absoluteArcSize=1;arcSize=0;whiteSpace=wrap;html=0;fillColor=#427BC1;strokeColor=none;strokeWidth=1.3;" vertex="1" parent="feature-Search">
+          <mxGeometry x="0" y="0" width="5" height="184" as="geometry" />
+        </mxCell>
+        <mxCell id="item-40" value="feature:Search" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=26;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="feature-Search">
+          <mxGeometry x="20" y="12" width="344" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="item-41" value="搜索与地点选择" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=18;fontColor=#427BC1;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="feature-Search">
+          <mxGeometry x="20" y="52" width="344" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="item-42" value="SearchActivity · SearchViewModel&#10;350 ms 防抖 · 搜索历史&#10;LocationSearchService" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=17;fontColor=#203047;fontStyle=0;fontFamily=Helvetica;connectable=0;" vertex="1" parent="feature-Search">
+          <mxGeometry x="20" y="86" width="344" height="84" as="geometry" />
+        </mxCell>
+        <mxCell id="feature-Weather" value="" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#EAF3FF;strokeColor=#427BC1;strokeWidth=1.3;" vertex="1" parent="1" module="feature:Weather">
+          <mxGeometry x="1048" y="368" width="384" height="184" as="geometry" />
+        </mxCell>
+        <mxCell id="feature-Weather-bar" value="" style="rounded=0;absoluteArcSize=1;arcSize=0;whiteSpace=wrap;html=0;fillColor=#427BC1;strokeColor=none;strokeWidth=1.3;" vertex="1" parent="feature-Weather">
+          <mxGeometry x="0" y="0" width="5" height="184" as="geometry" />
+        </mxCell>
+        <mxCell id="item-45" value="feature:Weather" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=26;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="feature-Weather">
+          <mxGeometry x="20" y="12" width="344" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="item-46" value="天气页面与独立刷新" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=18;fontColor=#427BC1;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="feature-Weather">
+          <mxGeometry x="20" y="52" width="344" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="item-47" value="WeatherFragment · WeatherViewModel&#10;当前天气 · 24 小时 · 七日预报&#10;WeatherService · 页面工厂" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=17;fontColor=#203047;fontStyle=0;fontFamily=Helvetica;connectable=0;" vertex="1" parent="feature-Weather">
+          <mxGeometry x="20" y="86" width="344" height="84" as="geometry" />
+        </mxCell>
+        <mxCell id="core" value="" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#F1EBFC;strokeColor=#8A68BA;strokeWidth=1.3;" vertex="1" parent="1" module="Core">
+          <mxGeometry x="232" y="608" width="384" height="216" as="geometry" />
+        </mxCell>
+        <mxCell id="core-bar" value="" style="rounded=0;absoluteArcSize=1;arcSize=0;whiteSpace=wrap;html=0;fillColor=#8A68BA;strokeColor=none;strokeWidth=1.3;" vertex="1" parent="core">
+          <mxGeometry x="0" y="0" width="5" height="216" as="geometry" />
+        </mxCell>
+        <mxCell id="item-50" value="Core" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=26;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="core">
+          <mxGeometry x="20" y="12" width="344" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="item-51" value="跨组件服务契约与路由" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=18;fontColor=#8A68BA;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="core">
+          <mxGeometry x="20" y="52" width="344" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="item-52" value="IApplicationService / IWeatherService&#10;ILocationSearchService&#10;ServiceLocator · LocationSearchContract" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=17;fontColor=#203047;fontStyle=0;fontFamily=Helvetica;connectable=0;" vertex="1" parent="core">
+          <mxGeometry x="20" y="86" width="344" height="86" as="geometry" />
+        </mxCell>
+        <mxCell id="item-53" value="api → Domain" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=15;fontColor=#65758B;fontStyle=0;fontFamily=Helvetica;connectable=0;" vertex="1" parent="core">
+          <mxGeometry x="20" y="180" width="344" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="common" value="" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#E8F6F2;strokeColor=#398C79;strokeWidth=1.3;" vertex="1" parent="1" module="Common">
+          <mxGeometry x="640" y="608" width="384" height="216" as="geometry" />
+        </mxCell>
+        <mxCell id="common-bar" value="" style="rounded=0;absoluteArcSize=1;arcSize=0;whiteSpace=wrap;html=0;fillColor=#398C79;strokeColor=none;strokeWidth=1.3;" vertex="1" parent="common">
+          <mxGeometry x="0" y="0" width="5" height="216" as="geometry" />
+        </mxCell>
+        <mxCell id="item-56" value="Common" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=26;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="common">
+          <mxGeometry x="20" y="12" width="344" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="item-57" value="共享天气展示" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=18;fontColor=#398C79;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="common">
+          <mxGeometry x="20" y="52" width="344" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="item-58" value="格式化 · WMO 描述 · 错误文案&#10;WeatherLoadingView / WeatherEmptyView&#10;只接收展示参数与操作回调" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=17;fontColor=#203047;fontStyle=0;fontFamily=Helvetica;connectable=0;" vertex="1" parent="common">
+          <mxGeometry x="20" y="86" width="344" height="86" as="geometry" />
+        </mxCell>
+        <mxCell id="item-59" value="依赖 → Domain / framework" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=15;fontColor=#65758B;fontStyle=0;fontFamily=Helvetica;connectable=0;" vertex="1" parent="common">
+          <mxGeometry x="20" y="180" width="344" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="data" value="" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#FFF0E5;strokeColor=#C47E43;strokeWidth=1.3;" vertex="1" parent="1" module="Datalayer">
+          <mxGeometry x="1048" y="608" width="384" height="216" as="geometry" />
+        </mxCell>
+        <mxCell id="data-bar" value="" style="rounded=0;absoluteArcSize=1;arcSize=0;whiteSpace=wrap;html=0;fillColor=#C47E43;strokeColor=none;strokeWidth=1.3;" vertex="1" parent="data">
+          <mxGeometry x="0" y="0" width="5" height="216" as="geometry" />
+        </mxCell>
+        <mxCell id="item-62" value="Datalayer" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=26;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="data">
+          <mxGeometry x="20" y="12" width="344" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="item-63" value="网络、供应商协议与仓储" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=18;fontColor=#C47E43;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="data">
+          <mxGeometry x="20" y="52" width="344" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="item-64" value="network：执行器 · 连接池 · 限流&#10;weather：API / DTO / 映射 / 仓储&#10;内存会话 · 搜索词持久化" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=17;fontColor=#203047;fontStyle=0;fontFamily=Helvetica;connectable=0;" vertex="1" parent="data">
+          <mxGeometry x="20" y="86" width="344" height="86" as="geometry" />
+        </mxCell>
+        <mxCell id="item-65" value="依赖 → Domain" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=15;fontColor=#65758B;fontStyle=0;fontFamily=Helvetica;connectable=0;" vertex="1" parent="data">
+          <mxGeometry x="20" y="180" width="344" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="domain" value="" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#EDF2F7;strokeColor=#607991;strokeWidth=1.3;" vertex="1" parent="1" module="Domain">
+          <mxGeometry x="232" y="880" width="588" height="202" as="geometry" />
+        </mxCell>
+        <mxCell id="domain-bar" value="" style="rounded=0;absoluteArcSize=1;arcSize=0;whiteSpace=wrap;html=0;fillColor=#607991;strokeColor=none;strokeWidth=1.3;" vertex="1" parent="domain">
+          <mxGeometry x="0" y="0" width="5" height="202" as="geometry" />
+        </mxCell>
+        <mxCell id="item-68" value="Domain" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=26;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="domain">
+          <mxGeometry x="20" y="12" width="548" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="item-69" value="领域模型、契约与时间规则" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=18;fontColor=#607991;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="domain">
+          <mxGeometry x="20" y="52" width="548" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="item-70" value="Location / CurrentWeather / Forecast / DataResult&#10;仓储接口 · DeviceLocationProvider&#10;ForecastWindow · HourlyForecastWindow" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=17;fontColor=#203047;fontStyle=0;fontFamily=Helvetica;connectable=0;" vertex="1" parent="domain">
+          <mxGeometry x="20" y="86" width="548" height="72" as="geometry" />
+        </mxCell>
+        <mxCell id="item-71" value="Android Library · 无其他项目模块依赖" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=15;fontColor=#65758B;fontStyle=0;fontFamily=Helvetica;connectable=0;" vertex="1" parent="domain">
+          <mxGeometry x="20" y="166" width="548" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="framework" value="" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#EDF2F7;strokeColor=#607991;strokeWidth=1.3;" vertex="1" parent="1" module="framework">
+          <mxGeometry x="844" y="880" width="588" height="202" as="geometry" />
+        </mxCell>
+        <mxCell id="framework-bar" value="" style="rounded=0;absoluteArcSize=1;arcSize=0;whiteSpace=wrap;html=0;fillColor=#607991;strokeColor=none;strokeWidth=1.3;" vertex="1" parent="framework">
+          <mxGeometry x="0" y="0" width="5" height="202" as="geometry" />
+        </mxCell>
+        <mxCell id="item-74" value="framework" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=26;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="framework">
+          <mxGeometry x="20" y="12" width="548" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="item-75" value="通用 Android 页面基础" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=18;fontColor=#607991;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="framework">
+          <mxGeometry x="20" y="52" width="548" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="item-76" value="BaseActivity&lt;VB&gt; · BaseFragment&lt;VB&gt;&#10;显式 Binding 工厂 · 视图生命周期订阅&#10;语言上下文 · 主题 · StatusPanel · 系统栏边距" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=17;fontColor=#203047;fontStyle=0;fontFamily=Helvetica;connectable=0;" vertex="1" parent="framework">
+          <mxGeometry x="20" y="86" width="548" height="72" as="geometry" />
+        </mxCell>
+        <mxCell id="item-77" value="Android Library · 无其他项目模块依赖" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=15;fontColor=#65758B;fontStyle=0;fontFamily=Helvetica;connectable=0;" vertex="1" parent="framework">
+          <mxGeometry x="20" y="166" width="548" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="test-panel" value="" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#F8FAFD;strokeColor=#DAE2EC;strokeWidth=1.3;" vertex="1" parent="1">
+          <mxGeometry x="1480" y="160" width="376" height="336" as="geometry" />
+        </mxCell>
+        <mxCell id="item-79" value="独立测试支撑" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=22;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="1">
+          <mxGeometry x="1504" y="176" width="328" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="test" value="" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#FAEDF4;strokeColor=#B26B95;strokeWidth=1.3;" vertex="1" parent="1" module="Test">
+          <mxGeometry x="1500" y="216" width="336" height="206" as="geometry" />
+        </mxCell>
+        <mxCell id="test-bar" value="" style="rounded=0;absoluteArcSize=1;arcSize=0;whiteSpace=wrap;html=0;fillColor=#B26B95;strokeColor=none;strokeWidth=1.3;" vertex="1" parent="test">
+          <mxGeometry x="0" y="0" width="5" height="206" as="geometry" />
+        </mxCell>
+        <mxCell id="item-82" value="Test" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=26;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="test">
+          <mxGeometry x="20" y="12" width="296" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="item-83" value="仅供测试源集使用" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=18;fontColor=#B26B95;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="test">
+          <mxGeometry x="20" y="52" width="296" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="item-84" value="MainDispatcherRule · SchedulerClock&#10;WeatherFixtures&#10;FakeLocationSessionRepository" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=17;fontColor=#203047;fontStyle=0;fontFamily=Helvetica;connectable=0;" vertex="1" parent="test">
+          <mxGeometry x="20" y="86" width="296" height="76" as="geometry" />
+        </mxCell>
+        <mxCell id="item-85" value="api → Domain" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=15;fontColor=#65758B;fontStyle=0;fontFamily=Helvetica;connectable=0;" vertex="1" parent="test">
+          <mxGeometry x="20" y="170" width="296" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="item-86" value="8 个模块以 testImplementation 引用&#10;Domain 测试直接使用 JUnit；不反向依赖 Test" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=16;fontColor=#65758B;fontStyle=0;fontFamily=Helvetica;connectable=0;" vertex="1" parent="1">
+          <mxGeometry x="1500" y="436" width="336" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="boundary-panel" value="" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#F8FAFD;strokeColor=#DAE2EC;strokeWidth=1.3;" vertex="1" parent="1">
+          <mxGeometry x="1480" y="520" width="376" height="290" as="geometry" />
+        </mxCell>
+        <mxCell id="item-88" value="模块边界" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=22;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="1">
+          <mxGeometry x="1504" y="536" width="328" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="item-89" value="• 三个 feature 无直接互依&#10;&#10;• feature 不依赖 Datalayer / app&#10;&#10;• Core / Common / Datalayer 互不依赖&#10;&#10;• Test 不进入应用运行时" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=17;fontColor=#203047;fontStyle=0;fontFamily=Helvetica;connectable=0;" vertex="1" parent="1">
+          <mxGeometry x="1500" y="577" width="336" height="206" as="geometry" />
+        </mxCell>
+        <mxCell id="state-panel" value="" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#F8FAFD;strokeColor=#DAE2EC;strokeWidth=1.3;" vertex="1" parent="1">
+          <mxGeometry x="1480" y="834" width="376" height="264" as="geometry" />
+        </mxCell>
+        <mxCell id="item-91" value="状态与实现约定" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=22;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="1">
+          <mxGeometry x="1504" y="850" width="328" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="item-92" value="ViewModel 构造器注入领域契约&#10;StateFlow 驱动 Renderer 与 XML&#10;&#10;跨组件传递随机 session token&#10;地点与天气保留在进程内存&#10;搜索词保存至 SharedPreferences" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=17;fontColor=#203047;fontStyle=0;fontFamily=Helvetica;connectable=0;" vertex="1" parent="1">
+          <mxGeometry x="1500" y="894" width="336" height="170" as="geometry" />
+        </mxCell>
+        <mxCell id="item-93" value="层级表示职责与允许的依赖方向；直接依赖见第 02 页，运行时服务协作见第 03 页。" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=19;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="1">
+          <mxGeometry x="64" y="1130" width="1792" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="item-94" value="共 10 个 Gradle 模块：app 为 Android Application，其余 9 个为 Android Library。Core 将 Domain 以 api 公开。" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=17;fontColor=#65758B;fontStyle=0;fontFamily=Helvetica;connectable=0;" vertex="1" parent="1">
+          <mxGeometry x="64" y="1170" width="1792" height="25" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="module-dependencies" name="02 Gradle 直接依赖">
+    <mxGraphModel dx="1920" dy="1280" grid="1" gridSize="8" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1920" pageHeight="1280" math="0" shadow="0" background="#FFFFFF">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="canvas" value="" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#FFFFFF;strokeColor=none;strokeWidth=1.3;locked=1;connectable=0;" vertex="1" parent="1">
+          <mxGeometry x="0" y="0" width="1920" height="1280" as="geometry" />
+        </mxCell>
+        <mxCell id="accent" value="" style="rounded=0;absoluteArcSize=1;arcSize=0;whiteSpace=wrap;html=0;fillColor=#427BC1;strokeColor=none;strokeWidth=1.3;" vertex="1" parent="1">
+          <mxGeometry x="64" y="52" width="6" height="58" as="geometry" />
+        </mxCell>
+        <mxCell id="item-3" value="Gradle 模块直接依赖" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=40;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="1">
+          <mxGeometry x="88" y="45" width="1300" height="58" as="geometry" />
+        </mxCell>
+        <mxCell id="item-4" value="实线：生产项目依赖，箭头从使用方指向被依赖模块。目标节点重复展示，以便逐组核对。" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=19;fontColor=#65758B;fontStyle=0;fontFamily=Helvetica;connectable=0;" vertex="1" parent="1">
+          <mxGeometry x="88" y="108" width="1450" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="item-5" value="22 条生产直接依赖" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;spacing=0;fontSize=22;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="1">
+          <mxGeometry x="1450" y="56" width="406" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="item-6" value="KOTLIN  /  XML · VIEWBINDING · MVVM" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;spacing=0;fontSize=14;fontColor=#65758B;fontStyle=0;fontFamily=Helvetica;connectable=0;" vertex="1" parent="1">
+          <mxGeometry x="1396" y="101" width="460" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="footer-rule" value="" style="rounded=0;absoluteArcSize=1;arcSize=0;whiteSpace=wrap;html=0;fillColor=#DAE2EC;strokeColor=none;strokeWidth=1.3;" vertex="1" parent="1">
+          <mxGeometry x="64" y="1214" width="1792" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="item-8" value="依据当前工作区 Gradle 与源码 · 2026-11-06" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=16;fontColor=#65758B;fontStyle=0;fontFamily=Helvetica;connectable=0;" vertex="1" parent="1">
+          <mxGeometry x="64" y="1228" width="1000" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="item-9" value="SKYMOMENT  /  02" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;spacing=0;fontSize=16;fontColor=#65758B;fontStyle=0;fontFamily=Helvetica;connectable=0;" vertex="1" parent="1">
+          <mxGeometry x="1556" y="1228" width="300" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="app-deps" value="" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#F8FAFD;strokeColor=#DAE2EC;strokeWidth=1.3;" vertex="1" parent="1">
+          <mxGeometry x="64" y="160" width="1792" height="242" as="geometry" />
+        </mxCell>
+        <mxCell id="item-11" value="01  应用装配 · 6 条" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=22;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="1">
+          <mxGeometry x="88" y="176" width="1744" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="app-deps-source" value="" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#FFF6DF;strokeColor=#C39427;strokeWidth=1.3;" vertex="1" parent="1" module=":app">
+          <mxGeometry x="805.0" y="220" width="310" height="52" as="geometry" />
+        </mxCell>
+        <mxCell id="item-13" value="app" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacing=0;fontSize=22;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="app-deps-source">
+          <mxGeometry x="12" y="0" width="286" height="52" as="geometry" />
+        </mxCell>
+        <mxCell id="app-deps-target-0" value="" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#EAF3FF;strokeColor=#427BC1;strokeWidth=1.3;" vertex="1" parent="1" module=":feature:Home">
+          <mxGeometry x="146.0" y="330" width="258" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="item-15" value="feature:Home" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacing=0;fontSize=18;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="app-deps-target-0">
+          <mxGeometry x="12" y="0" width="234" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="app-deps-dependency-0" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=0;endArrow=block;endFill=1;strokeWidth=1.8;strokeColor=#C39427;fontSize=15;fontColor=#203047;fontFamily=Helvetica;labelBackgroundColor=#FFFFFF;dashed=0;dashPattern=6 4;exitX=0.14285714285714285;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="app-deps-source" target="app-deps-target-0" kind="production-dependency" dependency="implementation">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="app-deps-target-1" value="" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#EAF3FF;strokeColor=#427BC1;strokeWidth=1.3;" vertex="1" parent="1" module=":feature:Search">
+          <mxGeometry x="420.0" y="330" width="258" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="item-18" value="feature:Search" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacing=0;fontSize=18;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="app-deps-target-1">
+          <mxGeometry x="12" y="0" width="234" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="app-deps-dependency-1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=0;endArrow=block;endFill=1;strokeWidth=1.8;strokeColor=#C39427;fontSize=15;fontColor=#203047;fontFamily=Helvetica;labelBackgroundColor=#FFFFFF;dashed=0;dashPattern=6 4;exitX=0.2857142857142857;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="app-deps-source" target="app-deps-target-1" kind="production-dependency" dependency="implementation">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="app-deps-target-2" value="" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#EAF3FF;strokeColor=#427BC1;strokeWidth=1.3;" vertex="1" parent="1" module=":feature:Weather">
+          <mxGeometry x="694.0" y="330" width="258" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="item-21" value="feature:Weather" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacing=0;fontSize=18;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="app-deps-target-2">
+          <mxGeometry x="12" y="0" width="234" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="app-deps-dependency-2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=0;endArrow=block;endFill=1;strokeWidth=1.8;strokeColor=#C39427;fontSize=15;fontColor=#203047;fontFamily=Helvetica;labelBackgroundColor=#FFFFFF;dashed=0;dashPattern=6 4;exitX=0.42857142857142855;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="app-deps-source" target="app-deps-target-2" kind="production-dependency" dependency="implementation">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="app-deps-target-3" value="" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#F1EBFC;strokeColor=#8A68BA;strokeWidth=1.3;" vertex="1" parent="1" module=":Core">
+          <mxGeometry x="968.0" y="330" width="258" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="item-24" value="Core" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacing=0;fontSize=18;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="app-deps-target-3">
+          <mxGeometry x="12" y="0" width="234" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="app-deps-dependency-3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=0;endArrow=block;endFill=1;strokeWidth=1.8;strokeColor=#C39427;fontSize=15;fontColor=#203047;fontFamily=Helvetica;labelBackgroundColor=#FFFFFF;dashed=0;dashPattern=6 4;exitX=0.5714285714285714;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="app-deps-source" target="app-deps-target-3" kind="production-dependency" dependency="implementation">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="app-deps-target-4" value="" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#FFF0E5;strokeColor=#C47E43;strokeWidth=1.3;" vertex="1" parent="1" module=":Datalayer">
+          <mxGeometry x="1242.0" y="330" width="258" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="item-27" value="Datalayer" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacing=0;fontSize=18;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="app-deps-target-4">
+          <mxGeometry x="12" y="0" width="234" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="app-deps-dependency-4" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=0;endArrow=block;endFill=1;strokeWidth=1.8;strokeColor=#C39427;fontSize=15;fontColor=#203047;fontFamily=Helvetica;labelBackgroundColor=#FFFFFF;dashed=0;dashPattern=6 4;exitX=0.7142857142857143;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="app-deps-source" target="app-deps-target-4" kind="production-dependency" dependency="implementation">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="app-deps-target-5" value="" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#EDF2F7;strokeColor=#607991;strokeWidth=1.3;" vertex="1" parent="1" module=":Domain">
+          <mxGeometry x="1516.0" y="330" width="258" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="item-30" value="Domain" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacing=0;fontSize=18;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="app-deps-target-5">
+          <mxGeometry x="12" y="0" width="234" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="app-deps-dependency-5" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=0;endArrow=block;endFill=1;strokeWidth=1.8;strokeColor=#C39427;fontSize=15;fontColor=#203047;fontFamily=Helvetica;labelBackgroundColor=#FFFFFF;dashed=0;dashPattern=6 4;exitX=0.8571428571428571;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="app-deps-source" target="app-deps-target-5" kind="production-dependency" dependency="implementation">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="feature-deps-Home" value="" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#F8FAFD;strokeColor=#DAE2EC;strokeWidth=1.3;" vertex="1" parent="1">
+          <mxGeometry x="64" y="426" width="576" height="256" as="geometry" />
+        </mxCell>
+        <mxCell id="item-33" value="02.1  功能组件 · 4 条" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=22;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="1">
+          <mxGeometry x="88" y="442" width="528" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="feature-deps-Home-source" value="" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#EAF3FF;strokeColor=#427BC1;strokeWidth=1.3;" vertex="1" parent="1" module=":feature:Home">
+          <mxGeometry x="209.0" y="493" width="286" height="52" as="geometry" />
+        </mxCell>
+        <mxCell id="item-35" value="feature:Home" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacing=0;fontSize=22;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="feature-deps-Home-source">
+          <mxGeometry x="12" y="0" width="262" height="52" as="geometry" />
+        </mxCell>
+        <mxCell id="feature-deps-Home-target-0" value="" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#F1EBFC;strokeColor=#8A68BA;strokeWidth=1.3;" vertex="1" parent="1" module=":Core">
+          <mxGeometry x="88.0" y="606" width="126" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="item-37" value="Core" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacing=0;fontSize=18;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="feature-deps-Home-target-0">
+          <mxGeometry x="12" y="0" width="102" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="feature-deps-Home-dependency-0" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=0;endArrow=block;endFill=1;strokeWidth=1.8;strokeColor=#427BC1;fontSize=15;fontColor=#203047;fontFamily=Helvetica;labelBackgroundColor=#FFFFFF;dashed=0;dashPattern=6 4;exitX=0.2;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="feature-deps-Home-source" target="feature-deps-Home-target-0" kind="production-dependency" dependency="implementation">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="feature-deps-Home-target-1" value="" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#E8F6F2;strokeColor=#398C79;strokeWidth=1.3;" vertex="1" parent="1" module=":Common">
+          <mxGeometry x="222.0" y="606" width="126" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="item-40" value="Common" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacing=0;fontSize=18;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="feature-deps-Home-target-1">
+          <mxGeometry x="12" y="0" width="102" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="feature-deps-Home-dependency-1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=0;endArrow=block;endFill=1;strokeWidth=1.8;strokeColor=#427BC1;fontSize=15;fontColor=#203047;fontFamily=Helvetica;labelBackgroundColor=#FFFFFF;dashed=0;dashPattern=6 4;exitX=0.4;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="feature-deps-Home-source" target="feature-deps-Home-target-1" kind="production-dependency" dependency="implementation">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="feature-deps-Home-target-2" value="" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#EDF2F7;strokeColor=#607991;strokeWidth=1.3;" vertex="1" parent="1" module=":Domain">
+          <mxGeometry x="356.0" y="606" width="126" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="item-43" value="Domain" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacing=0;fontSize=18;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="feature-deps-Home-target-2">
+          <mxGeometry x="12" y="0" width="102" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="feature-deps-Home-dependency-2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=0;endArrow=block;endFill=1;strokeWidth=1.8;strokeColor=#427BC1;fontSize=15;fontColor=#203047;fontFamily=Helvetica;labelBackgroundColor=#FFFFFF;dashed=0;dashPattern=6 4;exitX=0.6;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="feature-deps-Home-source" target="feature-deps-Home-target-2" kind="production-dependency" dependency="implementation">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="feature-deps-Home-target-3" value="" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#EDF2F7;strokeColor=#607991;strokeWidth=1.3;" vertex="1" parent="1" module=":framework">
+          <mxGeometry x="490.0" y="606" width="126" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="item-46" value="framework" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacing=0;fontSize=18;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="feature-deps-Home-target-3">
+          <mxGeometry x="12" y="0" width="102" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="feature-deps-Home-dependency-3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=0;endArrow=block;endFill=1;strokeWidth=1.8;strokeColor=#427BC1;fontSize=15;fontColor=#203047;fontFamily=Helvetica;labelBackgroundColor=#FFFFFF;dashed=0;dashPattern=6 4;exitX=0.8;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="feature-deps-Home-source" target="feature-deps-Home-target-3" kind="production-dependency" dependency="implementation">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="feature-deps-Search" value="" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#F8FAFD;strokeColor=#DAE2EC;strokeWidth=1.3;" vertex="1" parent="1">
+          <mxGeometry x="672" y="426" width="576" height="256" as="geometry" />
+        </mxCell>
+        <mxCell id="item-49" value="02.2  功能组件 · 4 条" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=22;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="1">
+          <mxGeometry x="696" y="442" width="528" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="feature-deps-Search-source" value="" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#EAF3FF;strokeColor=#427BC1;strokeWidth=1.3;" vertex="1" parent="1" module=":feature:Search">
+          <mxGeometry x="817.0" y="493" width="286" height="52" as="geometry" />
+        </mxCell>
+        <mxCell id="item-51" value="feature:Search" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacing=0;fontSize=22;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="feature-deps-Search-source">
+          <mxGeometry x="12" y="0" width="262" height="52" as="geometry" />
+        </mxCell>
+        <mxCell id="feature-deps-Search-target-0" value="" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#F1EBFC;strokeColor=#8A68BA;strokeWidth=1.3;" vertex="1" parent="1" module=":Core">
+          <mxGeometry x="696.0" y="606" width="126" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="item-53" value="Core" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacing=0;fontSize=18;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="feature-deps-Search-target-0">
+          <mxGeometry x="12" y="0" width="102" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="feature-deps-Search-dependency-0" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=0;endArrow=block;endFill=1;strokeWidth=1.8;strokeColor=#427BC1;fontSize=15;fontColor=#203047;fontFamily=Helvetica;labelBackgroundColor=#FFFFFF;dashed=0;dashPattern=6 4;exitX=0.2;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="feature-deps-Search-source" target="feature-deps-Search-target-0" kind="production-dependency" dependency="implementation">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="feature-deps-Search-target-1" value="" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#E8F6F2;strokeColor=#398C79;strokeWidth=1.3;" vertex="1" parent="1" module=":Common">
+          <mxGeometry x="830.0" y="606" width="126" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="item-56" value="Common" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacing=0;fontSize=18;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="feature-deps-Search-target-1">
+          <mxGeometry x="12" y="0" width="102" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="feature-deps-Search-dependency-1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=0;endArrow=block;endFill=1;strokeWidth=1.8;strokeColor=#427BC1;fontSize=15;fontColor=#203047;fontFamily=Helvetica;labelBackgroundColor=#FFFFFF;dashed=0;dashPattern=6 4;exitX=0.4;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="feature-deps-Search-source" target="feature-deps-Search-target-1" kind="production-dependency" dependency="implementation">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="feature-deps-Search-target-2" value="" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#EDF2F7;strokeColor=#607991;strokeWidth=1.3;" vertex="1" parent="1" module=":Domain">
+          <mxGeometry x="964.0" y="606" width="126" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="item-59" value="Domain" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacing=0;fontSize=18;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="feature-deps-Search-target-2">
+          <mxGeometry x="12" y="0" width="102" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="feature-deps-Search-dependency-2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=0;endArrow=block;endFill=1;strokeWidth=1.8;strokeColor=#427BC1;fontSize=15;fontColor=#203047;fontFamily=Helvetica;labelBackgroundColor=#FFFFFF;dashed=0;dashPattern=6 4;exitX=0.6;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="feature-deps-Search-source" target="feature-deps-Search-target-2" kind="production-dependency" dependency="implementation">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="feature-deps-Search-target-3" value="" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#EDF2F7;strokeColor=#607991;strokeWidth=1.3;" vertex="1" parent="1" module=":framework">
+          <mxGeometry x="1098.0" y="606" width="126" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="item-62" value="framework" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacing=0;fontSize=18;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="feature-deps-Search-target-3">
+          <mxGeometry x="12" y="0" width="102" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="feature-deps-Search-dependency-3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=0;endArrow=block;endFill=1;strokeWidth=1.8;strokeColor=#427BC1;fontSize=15;fontColor=#203047;fontFamily=Helvetica;labelBackgroundColor=#FFFFFF;dashed=0;dashPattern=6 4;exitX=0.8;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="feature-deps-Search-source" target="feature-deps-Search-target-3" kind="production-dependency" dependency="implementation">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="feature-deps-Weather" value="" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#F8FAFD;strokeColor=#DAE2EC;strokeWidth=1.3;" vertex="1" parent="1">
+          <mxGeometry x="1280" y="426" width="576" height="256" as="geometry" />
+        </mxCell>
+        <mxCell id="item-65" value="02.3  功能组件 · 4 条" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=22;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="1">
+          <mxGeometry x="1304" y="442" width="528" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="feature-deps-Weather-source" value="" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#EAF3FF;strokeColor=#427BC1;strokeWidth=1.3;" vertex="1" parent="1" module=":feature:Weather">
+          <mxGeometry x="1425.0" y="493" width="286" height="52" as="geometry" />
+        </mxCell>
+        <mxCell id="item-67" value="feature:Weather" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacing=0;fontSize=22;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="feature-deps-Weather-source">
+          <mxGeometry x="12" y="0" width="262" height="52" as="geometry" />
+        </mxCell>
+        <mxCell id="feature-deps-Weather-target-0" value="" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#F1EBFC;strokeColor=#8A68BA;strokeWidth=1.3;" vertex="1" parent="1" module=":Core">
+          <mxGeometry x="1304.0" y="606" width="126" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="item-69" value="Core" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacing=0;fontSize=18;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="feature-deps-Weather-target-0">
+          <mxGeometry x="12" y="0" width="102" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="feature-deps-Weather-dependency-0" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=0;endArrow=block;endFill=1;strokeWidth=1.8;strokeColor=#427BC1;fontSize=15;fontColor=#203047;fontFamily=Helvetica;labelBackgroundColor=#FFFFFF;dashed=0;dashPattern=6 4;exitX=0.2;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="feature-deps-Weather-source" target="feature-deps-Weather-target-0" kind="production-dependency" dependency="implementation">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="feature-deps-Weather-target-1" value="" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#E8F6F2;strokeColor=#398C79;strokeWidth=1.3;" vertex="1" parent="1" module=":Common">
+          <mxGeometry x="1438.0" y="606" width="126" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="item-72" value="Common" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacing=0;fontSize=18;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="feature-deps-Weather-target-1">
+          <mxGeometry x="12" y="0" width="102" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="feature-deps-Weather-dependency-1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=0;endArrow=block;endFill=1;strokeWidth=1.8;strokeColor=#427BC1;fontSize=15;fontColor=#203047;fontFamily=Helvetica;labelBackgroundColor=#FFFFFF;dashed=0;dashPattern=6 4;exitX=0.4;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="feature-deps-Weather-source" target="feature-deps-Weather-target-1" kind="production-dependency" dependency="implementation">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="feature-deps-Weather-target-2" value="" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#EDF2F7;strokeColor=#607991;strokeWidth=1.3;" vertex="1" parent="1" module=":Domain">
+          <mxGeometry x="1572.0" y="606" width="126" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="item-75" value="Domain" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacing=0;fontSize=18;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="feature-deps-Weather-target-2">
+          <mxGeometry x="12" y="0" width="102" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="feature-deps-Weather-dependency-2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=0;endArrow=block;endFill=1;strokeWidth=1.8;strokeColor=#427BC1;fontSize=15;fontColor=#203047;fontFamily=Helvetica;labelBackgroundColor=#FFFFFF;dashed=0;dashPattern=6 4;exitX=0.6;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="feature-deps-Weather-source" target="feature-deps-Weather-target-2" kind="production-dependency" dependency="implementation">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="feature-deps-Weather-target-3" value="" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#EDF2F7;strokeColor=#607991;strokeWidth=1.3;" vertex="1" parent="1" module=":framework">
+          <mxGeometry x="1706.0" y="606" width="126" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="item-78" value="framework" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacing=0;fontSize=18;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="feature-deps-Weather-target-3">
+          <mxGeometry x="12" y="0" width="102" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="feature-deps-Weather-dependency-3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=0;endArrow=block;endFill=1;strokeWidth=1.8;strokeColor=#427BC1;fontSize=15;fontColor=#203047;fontFamily=Helvetica;labelBackgroundColor=#FFFFFF;dashed=0;dashPattern=6 4;exitX=0.8;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="feature-deps-Weather-source" target="feature-deps-Weather-target-3" kind="production-dependency" dependency="implementation">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="shared-deps-Core" value="" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#F8FAFD;strokeColor=#DAE2EC;strokeWidth=1.3;" vertex="1" parent="1">
+          <mxGeometry x="64" y="706" width="576" height="216" as="geometry" />
+        </mxCell>
+        <mxCell id="item-81" value="03.1  Core · 1 条" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=22;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="1">
+          <mxGeometry x="88" y="722" width="528" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="shared-deps-Core-source" value="" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#F1EBFC;strokeColor=#8A68BA;strokeWidth=1.3;" vertex="1" parent="1" module=":Core">
+          <mxGeometry x="237.0" y="764" width="230" height="52" as="geometry" />
+        </mxCell>
+        <mxCell id="item-83" value="Core" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacing=0;fontSize=22;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="shared-deps-Core-source">
+          <mxGeometry x="12" y="0" width="206" height="52" as="geometry" />
+        </mxCell>
+        <mxCell id="shared-deps-Core-target-0" value="" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#EDF2F7;strokeColor=#607991;strokeWidth=1.3;" vertex="1" parent="1" module=":Domain">
+          <mxGeometry x="249.5" y="852" width="205" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="item-85" value="Domain" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacing=0;fontSize=18;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="shared-deps-Core-target-0">
+          <mxGeometry x="12" y="0" width="181" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="shared-deps-Core-dependency-0" value="api" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=0;endArrow=block;endFill=1;strokeWidth=1.8;strokeColor=#8A68BA;fontSize=15;fontColor=#203047;fontFamily=Helvetica;labelBackgroundColor=#FFFFFF;dashed=0;dashPattern=6 4;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="shared-deps-Core-source" target="shared-deps-Core-target-0" kind="production-dependency" dependency="api">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="shared-deps-Common" value="" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#F8FAFD;strokeColor=#DAE2EC;strokeWidth=1.3;" vertex="1" parent="1">
+          <mxGeometry x="672" y="706" width="576" height="216" as="geometry" />
+        </mxCell>
+        <mxCell id="item-88" value="03.2  Common · 2 条" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=22;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="1">
+          <mxGeometry x="696" y="722" width="528" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="shared-deps-Common-source" value="" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#E8F6F2;strokeColor=#398C79;strokeWidth=1.3;" vertex="1" parent="1" module=":Common">
+          <mxGeometry x="845.0" y="764" width="230" height="52" as="geometry" />
+        </mxCell>
+        <mxCell id="item-90" value="Common" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacing=0;fontSize=22;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="shared-deps-Common-source">
+          <mxGeometry x="12" y="0" width="206" height="52" as="geometry" />
+        </mxCell>
+        <mxCell id="shared-deps-Common-target-0" value="" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#EDF2F7;strokeColor=#607991;strokeWidth=1.3;" vertex="1" parent="1" module=":Domain">
+          <mxGeometry x="751.0" y="852" width="205" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="item-92" value="Domain" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacing=0;fontSize=18;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="shared-deps-Common-target-0">
+          <mxGeometry x="12" y="0" width="181" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="shared-deps-Common-dependency-0" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=0;endArrow=block;endFill=1;strokeWidth=1.8;strokeColor=#398C79;fontSize=15;fontColor=#203047;fontFamily=Helvetica;labelBackgroundColor=#FFFFFF;dashed=0;dashPattern=6 4;exitX=0.3333333333333333;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="shared-deps-Common-source" target="shared-deps-Common-target-0" kind="production-dependency" dependency="implementation">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="shared-deps-Common-target-1" value="" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#EDF2F7;strokeColor=#607991;strokeWidth=1.3;" vertex="1" parent="1" module=":framework">
+          <mxGeometry x="964.0" y="852" width="205" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="item-95" value="framework" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacing=0;fontSize=18;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="shared-deps-Common-target-1">
+          <mxGeometry x="12" y="0" width="181" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="shared-deps-Common-dependency-1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=0;endArrow=block;endFill=1;strokeWidth=1.8;strokeColor=#398C79;fontSize=15;fontColor=#203047;fontFamily=Helvetica;labelBackgroundColor=#FFFFFF;dashed=0;dashPattern=6 4;exitX=0.6666666666666666;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="shared-deps-Common-source" target="shared-deps-Common-target-1" kind="production-dependency" dependency="implementation">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="shared-deps-Datalayer" value="" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#F8FAFD;strokeColor=#DAE2EC;strokeWidth=1.3;" vertex="1" parent="1">
+          <mxGeometry x="1280" y="706" width="576" height="216" as="geometry" />
+        </mxCell>
+        <mxCell id="item-98" value="03.3  Datalayer · 1 条" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=22;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="1">
+          <mxGeometry x="1304" y="722" width="528" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="shared-deps-Datalayer-source" value="" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#FFF0E5;strokeColor=#C47E43;strokeWidth=1.3;" vertex="1" parent="1" module=":Datalayer">
+          <mxGeometry x="1453.0" y="764" width="230" height="52" as="geometry" />
+        </mxCell>
+        <mxCell id="item-100" value="Datalayer" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacing=0;fontSize=22;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="shared-deps-Datalayer-source">
+          <mxGeometry x="12" y="0" width="206" height="52" as="geometry" />
+        </mxCell>
+        <mxCell id="shared-deps-Datalayer-target-0" value="" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#EDF2F7;strokeColor=#607991;strokeWidth=1.3;" vertex="1" parent="1" module=":Domain">
+          <mxGeometry x="1465.5" y="852" width="205" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="item-102" value="Domain" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacing=0;fontSize=18;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="shared-deps-Datalayer-target-0">
+          <mxGeometry x="12" y="0" width="181" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="shared-deps-Datalayer-dependency-0" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=0;endArrow=block;endFill=1;strokeWidth=1.8;strokeColor=#C47E43;fontSize=15;fontColor=#203047;fontFamily=Helvetica;labelBackgroundColor=#FFFFFF;dashed=0;dashPattern=6 4;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="shared-deps-Datalayer-source" target="shared-deps-Datalayer-target-0" kind="production-dependency" dependency="implementation">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="test-scope" value="" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#F8FAFD;strokeColor=#DAE2EC;strokeWidth=1.3;" vertex="1" parent="1">
+          <mxGeometry x="64" y="946" width="1792" height="246" as="geometry" />
+        </mxCell>
+        <mxCell id="item-105" value="04  测试依赖 · 不计入上方 22 条生产依赖" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=22;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="1">
+          <mxGeometry x="88" y="962" width="1744" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="test-consumers" value="" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#FAEDF4;strokeColor=#B26B95;strokeWidth=1.3;" vertex="1" parent="1">
+          <mxGeometry x="88" y="1016" width="638" height="78" as="geometry" />
+        </mxCell>
+        <mxCell id="item-107" value="8 个模块的 src/test" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacing=0;fontSize=21;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="test-consumers">
+          <mxGeometry x="12" y="9" width="614" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="item-108" value="app / Core / Common / Datalayer / framework / 三个 feature" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacing=0;fontSize=16;fontColor=#203047;fontStyle=0;fontFamily=Helvetica;connectable=0;" vertex="1" parent="test-consumers">
+          <mxGeometry x="12" y="47" width="614" height="23" as="geometry" />
+        </mxCell>
+        <mxCell id="test-module" value="" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#FAEDF4;strokeColor=#B26B95;strokeWidth=1.3;" vertex="1" parent="1" module=":Test">
+          <mxGeometry x="950" y="1016" width="300" height="78" as="geometry" />
+        </mxCell>
+        <mxCell id="item-110" value="Test" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacing=0;fontSize=24;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="test-module">
+          <mxGeometry x="12" y="9" width="276" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="item-111" value="共享调度器、时钟、样本与会话替身" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacing=0;fontSize=16;fontColor=#203047;fontStyle=0;fontFamily=Helvetica;connectable=0;" vertex="1" parent="test-module">
+          <mxGeometry x="12" y="47" width="276" height="23" as="geometry" />
+        </mxCell>
+        <mxCell id="test-domain" value="" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#EDF2F7;strokeColor=#607991;strokeWidth=1.3;" vertex="1" parent="1" module=":Domain">
+          <mxGeometry x="1450" y="1016" width="358" height="78" as="geometry" />
+        </mxCell>
+        <mxCell id="item-113" value="Domain" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacing=0;fontSize=24;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="test-domain">
+          <mxGeometry x="12" y="9" width="334" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="item-114" value="领域模型与契约" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacing=0;fontSize=16;fontColor=#203047;fontStyle=0;fontFamily=Helvetica;connectable=0;" vertex="1" parent="test-domain">
+          <mxGeometry x="12" y="47" width="334" height="23" as="geometry" />
+        </mxCell>
+        <mxCell id="test-consumers-edge" value="testImplementation" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=0;endArrow=block;endFill=1;strokeWidth=1.8;strokeColor=#B26B95;fontSize=15;fontColor=#203047;fontFamily=Helvetica;labelBackgroundColor=#FFFFFF;dashed=1;dashPattern=6 4;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="test-consumers" target="test-module" kind="test-dependency">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="test-domain-edge" value="api" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=0;endArrow=block;endFill=1;strokeWidth=1.8;strokeColor=#B26B95;fontSize=15;fontColor=#203047;fontFamily=Helvetica;labelBackgroundColor=#FFFFFF;dashed=1;dashPattern=6 4;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="test-module" target="test-domain" kind="test-support-dependency">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="item-117" value="Domain / framework 无生产项目依赖。Domain 单元测试仅引用 JUnit，避免 Domain → Test → Domain 环。" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=17;fontColor=#203047;fontStyle=0;fontFamily=Helvetica;connectable=0;" vertex="1" parent="1">
+          <mxGeometry x="88" y="1110" width="1720" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="item-118" value="补充构建声明：app 的 androidTestImplementation → Common / framework。普通实线默认为 implementation，仅 Core → Domain 标记为 api。" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=16;fontColor=#65758B;fontStyle=0;fontFamily=Helvetica;connectable=0;" vertex="1" parent="1">
+          <mxGeometry x="88" y="1149" width="1720" height="25" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="runtime-collaboration" name="03 运行时装配与数据流">
+    <mxGraphModel dx="1920" dy="1280" grid="1" gridSize="8" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1920" pageHeight="1280" math="0" shadow="0" background="#FFFFFF">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="canvas" value="" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#FFFFFF;strokeColor=none;strokeWidth=1.3;locked=1;connectable=0;" vertex="1" parent="1">
+          <mxGeometry x="0" y="0" width="1920" height="1280" as="geometry" />
+        </mxCell>
+        <mxCell id="accent" value="" style="rounded=0;absoluteArcSize=1;arcSize=0;whiteSpace=wrap;html=0;fillColor=#427BC1;strokeColor=none;strokeWidth=1.3;" vertex="1" parent="1">
+          <mxGeometry x="64" y="52" width="6" height="58" as="geometry" />
+        </mxCell>
+        <mxCell id="item-3" value="运行时装配与跨组件协作" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=40;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="1">
+          <mxGeometry x="88" y="45" width="1300" height="58" as="geometry" />
+        </mxCell>
+        <mxCell id="item-4" value="本页箭头表示运行时调用、结果返回或接口实现；与第 02 页的 Gradle 依赖分开阅读。" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=19;fontColor=#65758B;fontStyle=0;fontFamily=Helvetica;connectable=0;" vertex="1" parent="1">
+          <mxGeometry x="88" y="108" width="1450" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="item-5" value="契约协作 · 构造器注入" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;spacing=0;fontSize=22;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="1">
+          <mxGeometry x="1450" y="56" width="406" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="item-6" value="KOTLIN  /  XML · VIEWBINDING · MVVM" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;spacing=0;fontSize=14;fontColor=#65758B;fontStyle=0;fontFamily=Helvetica;connectable=0;" vertex="1" parent="1">
+          <mxGeometry x="1396" y="101" width="460" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="footer-rule" value="" style="rounded=0;absoluteArcSize=1;arcSize=0;whiteSpace=wrap;html=0;fillColor=#DAE2EC;strokeColor=none;strokeWidth=1.3;" vertex="1" parent="1">
+          <mxGeometry x="64" y="1214" width="1792" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="item-8" value="依据当前工作区 Gradle 与源码 · 2026-11-06" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=16;fontColor=#65758B;fontStyle=0;fontFamily=Helvetica;connectable=0;" vertex="1" parent="1">
+          <mxGeometry x="64" y="1228" width="1000" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="item-9" value="SKYMOMENT  /  03" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;spacing=0;fontSize=16;fontColor=#65758B;fontStyle=0;fontFamily=Helvetica;connectable=0;" vertex="1" parent="1">
+          <mxGeometry x="1556" y="1228" width="300" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="assembly" value="" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#F8FAFD;strokeColor=#DAE2EC;strokeWidth=1.3;" vertex="1" parent="1">
+          <mxGeometry x="64" y="160" width="1792" height="282" as="geometry" />
+        </mxCell>
+        <mxCell id="item-11" value="01  服务装配" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=22;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="1">
+          <mxGeometry x="88" y="176" width="1744" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="item-12" value="进程启动：SkyMomentApplication 初始化 ARouter；AppServices 在首次服务查找时创建、init 并缓存。" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=18;fontColor=#65758B;fontStyle=0;fontFamily=Helvetica;connectable=0;" vertex="1" parent="1">
+          <mxGeometry x="88" y="210" width="1720" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="pages" value="" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#EAF3FF;strokeColor=#427BC1;strokeWidth=1.3;" vertex="1" parent="1">
+          <mxGeometry x="88" y="266" width="280" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="item-14" value="页面 ViewModel 工厂" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacing=0;fontSize=20;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="pages">
+          <mxGeometry x="12" y="9" width="256" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="item-15" value="Home / Search / Weather&#10;Activity / Fragment" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacing=0;fontSize=16;fontColor=#203047;fontStyle=0;fontFamily=Helvetica;connectable=0;" vertex="1" parent="pages">
+          <mxGeometry x="12" y="47" width="256" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="locator" value="" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#F1EBFC;strokeColor=#8A68BA;strokeWidth=1.3;" vertex="1" parent="1">
+          <mxGeometry x="434" y="266" width="280" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="item-17" value="Core · ServiceLocator" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacing=0;fontSize=20;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="locator">
+          <mxGeometry x="12" y="9" width="256" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="item-18" value="按契约查找服务&#10;/services/application" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacing=0;fontSize=16;fontColor=#203047;fontStyle=0;fontFamily=Helvetica;connectable=0;" vertex="1" parent="locator">
+          <mxGeometry x="12" y="47" width="256" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="app-services" value="" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#FFF6DF;strokeColor=#C39427;strokeWidth=1.3;" vertex="1" parent="1">
+          <mxGeometry x="780" y="266" width="280" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="item-20" value="app · AppServices" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacing=0;fontSize=20;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="app-services">
+          <mxGeometry x="12" y="9" width="256" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="item-21" value="IApplicationService · IProvider&#10;只持有 Application Context" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacing=0;fontSize=16;fontColor=#203047;fontStyle=0;fontFamily=Helvetica;connectable=0;" vertex="1" parent="app-services">
+          <mxGeometry x="12" y="47" width="256" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="factory" value="" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#FFF0E5;strokeColor=#C47E43;strokeWidth=1.3;" vertex="1" parent="1">
+          <mxGeometry x="1126" y="266" width="340" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="item-23" value="Datalayer · 仓储工厂" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacing=0;fontSize=20;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="factory">
+          <mxGeometry x="12" y="9" width="316" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="item-24" value="WeatherRepositoryFactory&#10;网络仓储 · 会话 · 历史" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacing=0;fontSize=16;fontColor=#203047;fontStyle=0;fontFamily=Helvetica;connectable=0;" vertex="1" parent="factory">
+          <mxGeometry x="12" y="47" width="316" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="dependencies" value="" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#EDF2F7;strokeColor=#607991;strokeWidth=1.3;" vertex="1" parent="1">
+          <mxGeometry x="1532" y="266" width="300" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="item-26" value="Domain · 领域依赖" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacing=0;fontSize=20;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="dependencies">
+          <mxGeometry x="12" y="9" width="276" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="item-27" value="WeatherDependencies&#10;四类仓储接口" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacing=0;fontSize=16;fontColor=#203047;fontStyle=0;fontFamily=Helvetica;connectable=0;" vertex="1" parent="dependencies">
+          <mxGeometry x="12" y="47" width="276" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="find" value="查找" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=0;endArrow=block;endFill=1;strokeWidth=1.8;strokeColor=#7C8FA5;fontSize=15;fontColor=#203047;fontFamily=Helvetica;labelBackgroundColor=#FFFFFF;dashed=0;dashPattern=6 4;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="pages" target="locator" kind="runtime-call">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="resolve" value="路由解析" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=0;endArrow=block;endFill=1;strokeWidth=1.8;strokeColor=#7C8FA5;fontSize=15;fontColor=#203047;fontFamily=Helvetica;labelBackgroundColor=#FFFFFF;dashed=0;dashPattern=6 4;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="locator" target="app-services" kind="runtime-call">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="build" value="组装" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=0;endArrow=block;endFill=1;strokeWidth=1.8;strokeColor=#7C8FA5;fontSize=15;fontColor=#203047;fontFamily=Helvetica;labelBackgroundColor=#FFFFFF;dashed=0;dashPattern=6 4;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="app-services" target="factory" kind="runtime-call">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="provide" value="返回" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=0;endArrow=block;endFill=1;strokeWidth=1.8;strokeColor=#7C8FA5;fontSize=15;fontColor=#203047;fontFamily=Helvetica;labelBackgroundColor=#FFFFFF;dashed=0;dashPattern=6 4;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="factory" target="dependencies" kind="runtime-call">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="item-32" value="页面工厂把取得的领域实现经构造器注入 ViewModel；Home 另注入 DeviceLocationProvider。" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=17;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="1">
+          <mxGeometry x="88" y="381" width="1720" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="item-33" value="app 提供 AndroidDeviceLocationProvider 与 AndroidLocationNameResolver；后者以回调传入数据工厂，用于系统逆地理编码。" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=16;fontColor=#65758B;fontStyle=0;fontFamily=Helvetica;connectable=0;" vertex="1" parent="1">
+          <mxGeometry x="88" y="412" width="1720" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="collaboration" value="" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#F8FAFD;strokeColor=#DAE2EC;strokeWidth=1.3;" vertex="1" parent="1">
+          <mxGeometry x="64" y="466" width="1792" height="346" as="geometry" />
+        </mxCell>
+        <mxCell id="item-35" value="02  Home 通过 Core 契约协作 · feature 之间无直接编译依赖" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=22;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="1">
+          <mxGeometry x="88" y="482" width="1744" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="home-runtime" value="" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#EAF3FF;strokeColor=#427BC1;strokeWidth=1.3;" vertex="1" parent="1">
+          <mxGeometry x="88" y="550" width="380" height="172" as="geometry" />
+        </mxCell>
+        <mxCell id="item-37" value="feature:Home · HomeActivity" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacing=0;fontSize=23;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="home-runtime">
+          <mxGeometry x="12" y="9" width="356" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="item-38" value="Launcher · /app/home&#10;&#10;权限 → 定位 → 首屏天气&#10;接收地点选择 · 容纳天气 Fragment" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacing=0;fontSize=16;fontColor=#203047;fontStyle=0;fontFamily=Helvetica;connectable=0;" vertex="1" parent="home-runtime">
+          <mxGeometry x="12" y="47" width="356" height="117" as="geometry" />
+        </mxCell>
+        <mxCell id="search-contract" value="" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#F1EBFC;strokeColor=#8A68BA;strokeWidth=1.3;" vertex="1" parent="1">
+          <mxGeometry x="612" y="532" width="568" height="84" as="geometry" />
+        </mxCell>
+        <mxCell id="item-40" value="Core · LocationSearchContract" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacing=0;fontSize=22;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="search-contract">
+          <mxGeometry x="12" y="9" width="544" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="item-41" value="委托 ILocationSearchService.createSelectionIntent()" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacing=0;fontSize=16;fontColor=#203047;fontStyle=0;fontFamily=Helvetica;connectable=0;" vertex="1" parent="search-contract">
+          <mxGeometry x="12" y="47" width="544" height="29" as="geometry" />
+        </mxCell>
+        <mxCell id="weather-contract" value="" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#F1EBFC;strokeColor=#8A68BA;strokeWidth=1.3;" vertex="1" parent="1">
+          <mxGeometry x="612" y="658" width="568" height="84" as="geometry" />
+        </mxCell>
+        <mxCell id="item-43" value="Core · IWeatherService" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacing=0;fontSize=22;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="weather-contract">
+          <mxGeometry x="12" y="9" width="544" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="item-44" value="createFragment(sessionToken)" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacing=0;fontSize=16;fontColor=#203047;fontStyle=0;fontFamily=Helvetica;connectable=0;" vertex="1" parent="weather-contract">
+          <mxGeometry x="12" y="47" width="544" height="29" as="geometry" />
+        </mxCell>
+        <mxCell id="search-runtime" value="" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#EAF3FF;strokeColor=#427BC1;strokeWidth=1.3;" vertex="1" parent="1">
+          <mxGeometry x="1368" y="532" width="464" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="item-46" value="feature:Search" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacing=0;fontSize=23;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="search-runtime">
+          <mxGeometry x="12" y="9" width="440" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="item-47" value="LocationSearchService → SearchActivity&#10;/location/service · /location/search" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacing=0;fontSize=16;fontColor=#203047;fontStyle=0;fontFamily=Helvetica;connectable=0;" vertex="1" parent="search-runtime">
+          <mxGeometry x="12" y="47" width="440" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="weather-runtime" value="" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#EAF3FF;strokeColor=#427BC1;strokeWidth=1.3;" vertex="1" parent="1">
+          <mxGeometry x="1368" y="658" width="464" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="item-49" value="feature:Weather" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacing=0;fontSize=23;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="weather-runtime">
+          <mxGeometry x="12" y="9" width="440" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="item-50" value="WeatherService → 返回 WeatherFragment&#10;/weather/service" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacing=0;fontSize=16;fontColor=#203047;fontStyle=0;fontFamily=Helvetica;connectable=0;" vertex="1" parent="weather-runtime">
+          <mxGeometry x="12" y="47" width="440" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="open-search" value="切换地点" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=0;endArrow=block;endFill=1;strokeWidth=1.8;strokeColor=#427BC1;fontSize=15;fontColor=#203047;fontFamily=Helvetica;labelBackgroundColor=#FFFFFF;dashed=0;dashPattern=6 4;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="home-runtime" target="search-contract" kind="runtime-call">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="search-intent" value="创建 Intent" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=0;endArrow=block;endFill=1;strokeWidth=1.8;strokeColor=#8A68BA;fontSize=15;fontColor=#203047;fontFamily=Helvetica;labelBackgroundColor=#FFFFFF;dashed=0;dashPattern=6 4;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="search-contract" target="search-runtime" kind="runtime-call">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="weather-request" value="传入 token" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=0;endArrow=block;endFill=1;strokeWidth=1.8;strokeColor=#427BC1;fontSize=15;fontColor=#203047;fontFamily=Helvetica;labelBackgroundColor=#FFFFFF;dashed=0;dashPattern=6 4;exitX=1;exitY=0.85;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="home-runtime" target="weather-contract" kind="runtime-call">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fragment-request" value="创建 Fragment" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=0;endArrow=block;endFill=1;strokeWidth=1.8;strokeColor=#8A68BA;fontSize=15;fontColor=#203047;fontFamily=Helvetica;labelBackgroundColor=#FFFFFF;dashed=0;dashPattern=6 4;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="weather-contract" target="weather-runtime" kind="runtime-call">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="selection-result" value="Activity Result：随机 session token；取消保留原地点" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=0;endArrow=block;endFill=1;strokeWidth=1.8;strokeColor=#398C79;fontSize=15;fontColor=#203047;fontFamily=Helvetica;labelBackgroundColor=#FFFFFF;dashed=1;dashPattern=6 4;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="search-runtime" target="home-runtime" kind="runtime-result">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1844" y="582" />
+              <mxPoint x="1844" y="784" />
+              <mxPoint x="278" y="784" />
+            </Array>
+            <mxPoint x="0" y="0" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="state-data" value="" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#F8FAFD;strokeColor=#DAE2EC;strokeWidth=1.3;" vertex="1" parent="1">
+          <mxGeometry x="64" y="836" width="1792" height="356" as="geometry" />
+        </mxCell>
+        <mxCell id="item-57" value="03  状态与数据边界" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=22;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="1">
+          <mxGeometry x="88" y="852" width="1744" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="view" value="" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#EAF3FF;strokeColor=#427BC1;strokeWidth=1.3;" vertex="1" parent="1">
+          <mxGeometry x="88" y="910" width="300" height="112" as="geometry" />
+        </mxCell>
+        <mxCell id="item-59" value="View · Renderer" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacing=0;fontSize=23;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="view">
+          <mxGeometry x="12" y="9" width="276" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="item-60" value="XML / ViewBinding&#10;生命周期内收集状态" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacing=0;fontSize=16;fontColor=#203047;fontStyle=0;fontFamily=Helvetica;connectable=0;" vertex="1" parent="view">
+          <mxGeometry x="12" y="47" width="276" height="57" as="geometry" />
+        </mxCell>
+        <mxCell id="vm" value="" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#EAF3FF;strokeColor=#427BC1;strokeWidth=1.3;" vertex="1" parent="1">
+          <mxGeometry x="470" y="910" width="330" height="112" as="geometry" />
+        </mxCell>
+        <mxCell id="item-62" value="ViewModel" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacing=0;fontSize=24;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="vm">
+          <mxGeometry x="12" y="9" width="306" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="item-63" value="StateFlow · 请求取消与代次&#10;天气三个区域独立加载 / 重试" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacing=0;fontSize=16;fontColor=#203047;fontStyle=0;fontFamily=Helvetica;connectable=0;" vertex="1" parent="vm">
+          <mxGeometry x="12" y="47" width="306" height="57" as="geometry" />
+        </mxCell>
+        <mxCell id="domain-runtime" value="" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#EDF2F7;strokeColor=#607991;strokeWidth=1.3;" vertex="1" parent="1">
+          <mxGeometry x="882" y="910" width="340" height="112" as="geometry" />
+        </mxCell>
+        <mxCell id="item-65" value="Domain · 领域契约" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacing=0;fontSize=23;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="domain-runtime">
+          <mxGeometry x="12" y="9" width="316" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="item-66" value="仓储接口 · DataResult&#10;领域模型与预报时间窗口" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacing=0;fontSize=16;fontColor=#203047;fontStyle=0;fontFamily=Helvetica;connectable=0;" vertex="1" parent="domain-runtime">
+          <mxGeometry x="12" y="47" width="316" height="57" as="geometry" />
+        </mxCell>
+        <mxCell id="data-runtime" value="" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#FFF0E5;strokeColor=#C47E43;strokeWidth=1.3;" vertex="1" parent="1">
+          <mxGeometry x="1304" y="910" width="528" height="112" as="geometry" />
+        </mxCell>
+        <mxCell id="item-68" value="Datalayer · 仓储实现" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacing=0;fontSize=23;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="data-runtime">
+          <mxGeometry x="12" y="9" width="504" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="item-69" value="OpenMeteo 仓储 → Service / DTO / Mapper&#10;RequestExecutor · Retrofit · OkHttp · 序列化" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacing=0;fontSize=16;fontColor=#203047;fontStyle=0;fontFamily=Helvetica;connectable=0;" vertex="1" parent="data-runtime">
+          <mxGeometry x="12" y="47" width="504" height="57" as="geometry" />
+        </mxCell>
+        <mxCell id="events" value="事件" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=0;endArrow=block;endFill=1;strokeWidth=1.8;strokeColor=#427BC1;fontSize=15;fontColor=#203047;fontFamily=Helvetica;labelBackgroundColor=#FFFFFF;dashed=0;dashPattern=6 4;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=0;entryY=0.25;entryDx=0;entryDy=0;" edge="1" parent="1" source="view" target="vm" kind="runtime-call">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="state" value="状态" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=0;endArrow=block;endFill=1;strokeWidth=1.8;strokeColor=#398C79;fontSize=15;fontColor=#203047;fontFamily=Helvetica;labelBackgroundColor=#FFFFFF;dashed=1;dashPattern=6 4;exitX=0;exitY=0.8;exitDx=0;exitDy=0;entryX=1;entryY=0.8;entryDx=0;entryDy=0;" edge="1" parent="1" source="vm" target="view" kind="runtime-result">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="domain-call" value="调用" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=0;endArrow=block;endFill=1;strokeWidth=1.8;strokeColor=#427BC1;fontSize=15;fontColor=#203047;fontFamily=Helvetica;labelBackgroundColor=#FFFFFF;dashed=0;dashPattern=6 4;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="vm" target="domain-runtime" kind="runtime-call">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="implements" value="实现" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=0;endArrow=block;endFill=1;strokeWidth=1.8;strokeColor=#C47E43;fontSize=15;fontColor=#203047;fontFamily=Helvetica;labelBackgroundColor=#FFFFFF;dashed=1;dashPattern=6 4;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;endFill=0;" edge="1" parent="1" source="data-runtime" target="domain-runtime" kind="interface-implementation">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="open-meteo" value="" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#FFF0E5;strokeColor=#C47E43;strokeWidth=1.3;" vertex="1" parent="1">
+          <mxGeometry x="1420" y="1090" width="412" height="64" as="geometry" />
+        </mxCell>
+        <mxCell id="item-75" value="Open-Meteo 公共 HTTPS API" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacing=0;fontSize=22;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="open-meteo">
+          <mxGeometry x="12" y="0" width="388" height="64" as="geometry" />
+        </mxCell>
+        <mxCell id="https" value="天气 / 地点搜索" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=0;endArrow=block;endFill=1;strokeWidth=1.8;strokeColor=#C47E43;fontSize=15;fontColor=#203047;fontFamily=Helvetica;labelBackgroundColor=#FFFFFF;dashed=0;dashPattern=6 4;exitX=0.61;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="data-runtime" target="open-meteo" kind="runtime-call">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="item-77" value="framework：单 Binding 泛型基类；Fragment 订阅随 viewLifecycleOwner。" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=17;fontColor=#203047;fontStyle=0;fontFamily=Helvetica;connectable=0;" vertex="1" parent="1">
+          <mxGeometry x="88" y="1052" width="1190" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="item-78" value="Common：天气格式化、WMO 描述、错误文案、加载与空态展示。" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=17;fontColor=#203047;fontStyle=0;fontFamily=Helvetica;connectable=0;" vertex="1" parent="1">
+          <mxGeometry x="88" y="1092" width="1190" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="item-79" value="存储：地点 / token / 天气仅在内存；SharedPreferences 仅存最近 10 条搜索词。" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=17;fontColor=#203047;fontStyle=0;fontFamily=Helvetica;connectable=0;" vertex="1" parent="1">
+          <mxGeometry x="88" y="1132" width="1230" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="item-80" value="图例：实线 = 调用 / 创建 / 返回契约；虚线 = 结果或状态回传；空心箭头虚线 = 实现领域接口。" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=15;fontColor=#65758B;fontStyle=0;fontFamily=Helvetica;connectable=0;" vertex="1" parent="1">
+          <mxGeometry x="64" y="1190" width="1792" height="21" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
