@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- 通用状态面板，加载指示、消息和重试按钮由调用方传入状态。 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center"
@@ -21,7 +22,8 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:paddingTop="16dp"
-        android:saveEnabled="false" />
+        android:saveEnabled="false"
+        tools:text="请求失败，请稍后重试。" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/status_retry"
@@ -29,5 +31,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="@string/retry"
-        android:visibility="gone" />
+        android:visibility="gone"
+        tools:visibility="visible" />
 </LinearLayout>

@@ -3,7 +3,7 @@ package com.example.skymoment.search
 import com.example.skymoment.domain.CurrentWeather
 import com.example.skymoment.domain.DataResult
 import com.example.skymoment.domain.Location
-import com.example.skymoment.domain.LocationRepository
+import com.example.skymoment.domain.LocationSearchRepository
 import com.example.skymoment.domain.LocationSessionRepository
 import com.example.skymoment.domain.SearchHistoryRepository
 import com.example.skymoment.domain.WeatherFailure
@@ -31,12 +31,12 @@ class SearchViewModelTest {
     private var selected: Location? = null
     private val sessions = object : LocationSessionRepository {
         // 提供可控的会话选择结果，隔离真实网络与系统环境。
-        override fun select(location: Location, initialWeather: CurrentWeather?): String {
+        override fun createSession(location: Location, initialWeather: CurrentWeather?): String {
             selected = location; return "token"
         }
 
         // 提供可控的会话解析结果，隔离真实网络与系统环境。
-        override fun resolve(token: String) = selected
+        override fun findLocation(token: String) = selected
         // 提供可控的数据清理行为，隔离真实网络与系统环境。
         override fun clear() {
             selected = null
@@ -45,9 +45,9 @@ class SearchViewModelTest {
     private val history = object : SearchHistoryRepository {
         private var entries = emptyList<String>()
         // 读取并清理历史关键词，按去重后的最近使用顺序返回。
-        override fun recent() = entries
+        override fun getRecentQueries() = entries
         // 去除首尾空白，忽略大小写去重并将新词移到队首，最多保留十条。
-        override fun record(query: String): List<String> {
+        override fun recordQuery(query: String): List<String> {
             entries = listOf(query.trim())
             return entries
         }
@@ -62,9 +62,9 @@ class SearchViewModelTest {
     // 创建使用可控仓储和时钟的 ViewModel，供测试驱动状态变化。
     private fun model(block: suspend (String, String) -> DataResult<List<Location>>) =
         SearchViewModel(
-            object : LocationRepository {
+            object : LocationSearchRepository {
                 // 提供可控的搜索响应，隔离真实网络与系统环境。
-                override suspend fun search(query: String, language: String) =
+                override suspend fun searchLocations(query: String, language: String) =
                     block(query, language)
             }, sessions, history,
         )
@@ -88,7 +88,7 @@ class SearchViewModelTest {
         vm.search("海淀区", "zh"); runCurrent()
         assertEquals(1, calls.size)
         assertNull(selected)
-        assertEquals("token", vm.select(place)); assertEquals(place, selected)
+        assertEquals("token", vm.selectLocation(place)); assertEquals(place, selected)
         vm.languageChanged("en"); runCurrent()
         assertEquals("海淀区" to "en", calls.last())
     }
@@ -116,7 +116,7 @@ class SearchViewModelTest {
             vm.queryChanged(" London ", "en")
             advanceTimeBy(350); runCurrent()
             assertTrue(vm.state.value.history.isEmpty())
-            vm.select(place)
+            vm.selectLocation(place)
             assertEquals(listOf("London"), vm.state.value.history)
             vm.queryChanged("", "en"); runCurrent()
             assertEquals(listOf("London"), vm.state.value.history)
@@ -129,7 +129,7 @@ class SearchViewModelTest {
             assertEquals(listOf("Tokyo"), reopened.state.value.history)
             reopened.clearHistory()
             assertTrue(reopened.state.value.history.isEmpty())
-            assertTrue(history.recent().isEmpty())
+            assertTrue(history.getRecentQueries().isEmpty())
         }
 
     @Test
@@ -149,11 +149,11 @@ class SearchViewModelTest {
     // 验证重复选择不会多次替换会话，下次前台可重新选择。
     fun repeatedSelectionDoesNotReplaceSessionUntilNextForeground() = runTest(dispatcher) {
         val vm = model { _, _ -> DataResult.Success(listOf(place)) }
-        assertEquals("token", vm.select(place))
-        assertNull(vm.select(place.copy(id = "second")))
+        assertEquals("token", vm.selectLocation(place))
+        assertNull(vm.selectLocation(place.copy(id = "second")))
         assertEquals(place, selected)
         vm.onForeground("en")
-        assertEquals("token", vm.select(place.copy(id = "second")))
+        assertEquals("token", vm.selectLocation(place.copy(id = "second")))
         assertEquals("second", selected?.id)
     }
 

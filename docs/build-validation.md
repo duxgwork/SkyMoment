@@ -1,5 +1,15 @@
 # 工程基础验证
 
+## 搜索历史 MMKV 持久化（2026-11-07）
+
+- 使用 `com.tencent:mmkv:1.3.17` 和 `MmkvSearchHistoryRepository` 实现搜索历史持久化，由 `ApplicationServiceProvider` 通过领域契约注入。首次读写初始化应用私有的单进程 `search_history` 实例，以 `queries` JSON 数组保存最近十条有效关键词。
+- 支持 trim、Unicode 码点校验、忽略大小写去重、最近使用置顶、清空与损坏 JSON 恢复；多个仓储实例共享进程内锁。
+- `:Datalayer:testDebugUnitTest :app:testDebugUnitTest :feature:Search:testDebugUnitTest` 通过：46 项本地单元测试，Datalayer 33、app 7、Search 6，失败／错误／跳过均为 0。这是本次相关模块结果，不是全项目测试总数。
+- Android 仪器测试验证真实 MMKV 存储，包含关闭后重新打开的持久化检查。`ANDROID_SERIAL=emulator-5556 ./gradlew :Datalayer:connectedDebugAndroidTest` 在 Pixel_9_API_35（Android 15）临时模拟器上通过全部 5 项，失败／错误／跳过均为 0。
+- `:app:assembleDebug :app:assembleRelease :Datalayer:lintDebug :app:lintDebug` 通过，包括 Release R8；Datalayer lint 无问题，app lint 0 错误、17 项已有提示。`git diff --check` 通过。
+- 首次原生测试因已有模拟器读取系统属性超时而未启动用例；使用独立临时模拟器重跑后通过，结束后已关闭临时模拟器。没有把连接失败记作仓储测试通过。
+- 以上为 MMKV 实现轮次的已执行证据；本次文档同步沿用这些结果，没有重新运行构建或设备测试。本轮未重跑全套 UI、Release 设备冒烟、API 24／目标 API 设备或区域网络验收。
+
 ## 启动天气失败与模拟器 DNS 修复（2026-11-07）
 
 - 用户截图为天气请求失败空态。API 35 模拟器已授予前台位置权限，定位服务日志确认向应用交付坐标；同时域名探测返回 `unknown host`，直接 IP 可达，主机请求天气接口返回 HTTP 200。故障位于模拟器 DNS 链路。
@@ -254,3 +264,13 @@ OpenSpec 严格校验通过；本轮首页任务完成后为 34/39。仍待真�
 - app 与 feature:search 共 20 项单元测试通过；Debug 应用／测试包构建及两个模块的 Debug lint 通过。首次增量构建读取共享 UI 产物异常，清理该模块构建输出并禁用构建缓存后通过。
 - API 35 模拟器全套 20 项 UI 测试首次通过 19 项，已有路由测试因未等待 onNewIntent 交付而提前断言。统一补齐会话交付等待后，HomeFlowTest 和 FoundationUiTest 共 9 项复跑全部通过，包括切换选择、取消、加载中切换、旋转与路由复用；新增切换用例在两轮均通过。
 - 本轮只使用 emulator-5554，设备测试采用合成响应；未重复 Release 或真实网络验收。git diff --check 通过。
+
+## 2026-11-07：SOLID 与职责命名重构
+
+- 拆分领域能力与功能依赖视图；首页只依赖坐标天气，搜索只依赖地点查询，天气页只依赖已选地点天气与名称更新。宿主仍通过同一路由提供共享实例。
+- 独立设备 / Open-Meteo 名称策略与来源注册表，名称刷新仅更新展示字段；独立 HTTP 错误分类策略，共享限流、重试和取消由执行器统一管理。
+- 统一服务提供者、依赖工厂、响应映射器、查询变体和仓储方法命名，更新生产调用、测试、路由冒烟源集、接口文档与三张架构预览。命名迁移和全部 23 种设计模式取舍见 [重构说明](solid-refactoring.md)。
+- `./gradlew testDebugUnitTest :app:assembleDebug` 通过：113 项单元测试，失败 / 错误 / 跳过均为 0。其中 Domain 7、Datalayer 37、Core 5、Common 4、framework 15、Home 16、Search 6、Weather 13、app 7、Test 3。
+- `./gradlew :app:assembleRelease` 通过，包括 R8 压缩；`./gradlew lint` 通过，所有模块零错误。保留 app 的版本 / SDK / 备份策略提示和 feature 的布局 / RTL / 字号等提示，共 24 个 warning，未禁用检查。
+- 首轮编译发现系统名称解析器的一处重命名引用遗漏，修复后完成上述全部测试与构建；`git diff --check` 通过。
+- `./gradlew :app:connectedReleaseAndroidTest -PtestBuildType=release -PlocalSmokeSigning=true -ProuteSmoke=true` 在 API 35 的 `emulator-5554` 通过 1 项：ICU 拼音、实际 ARouter 服务装配、首页 / 搜索路由及天气 Fragment XML 均正常。UTP 未取得该用例 logcat，但仪器结果和 Gradle 均成功；本次使用合成会话，不代表真实网络或完整设备矩阵验收。

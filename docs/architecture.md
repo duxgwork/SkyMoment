@@ -67,13 +67,13 @@ flowchart TB
 
 项目另设 `Test` Android Library，共计 10 个模块。它位于生产分层之外，依赖方向为 `各组件的 src/test → Test → Domain`。Test 不引用 app、feature、Core、Common、framework 或 Datalayer，业务生产源集禁止依赖 Test。Domain 的测试直接使用 JUnit，不反向依赖 Test，因此没有构建环。
 
-Test 公开 MainDispatcherRule、SchedulerClock、WeatherFixtures 和 FakeLocationSessionRepository。Android 平台行为由各组件的 Robolectric 本地测试验证；网络测试使用本地 MockWebServer。具体覆盖矩阵与执行命令见 [测试指南](testing.md)。
+Test 公开 MainDispatcherRule、SchedulerClock、WeatherFixtures 和 FakeLocationSessionRepository。Android 平台行为由各组件的 Robolectric 本地测试验证；网络测试使用本地 MockWebServer。MMKV 搜索历史使用 Datalayer 的 Android 仪器测试加载真实 JNI，验证文件关闭重开后的读写，不纳入 Robolectric 本地测试。具体覆盖矩阵与执行命令见 [测试指南](testing.md)。
 
 当前架构的三页可编辑图见 [draw.io 源文件](diagrams/skymoment-layered-architecture.drawio)，包括分层职责、Gradle 直接依赖与运行时协作；[README](../README.md#项目架构) 提供对应 PNG 预览。模块关系以当前 Gradle 配置和源码为准。
 
 ## 运行时装配与依赖倒置
 
-`SkyMomentApplication` 初始化 ARouter。`AppServices` 在宿主实现 `IApplicationService`，由 ARouter 按需创建并缓存；仅保存 Application Context，平台定位留在 app，网络和仓储由 Datalayer 装配。`DeviceLocationProvider` 属于 Domain，功能模块不引用 app 的类型。
+`SkyMomentApplication` 初始化 ARouter。`ApplicationServiceProvider` 在宿主实现 `IApplicationService`，由 ARouter 按需创建并缓存；仅保存 Application Context，平台定位留在 app，网络和仓储由 Datalayer 装配。`DeviceLocationProvider` 属于 Domain，功能模块不引用 app 的类型。
 
 Home 通过 `IApplicationService` 获取定位和仓储，通过 `IWeatherService.createFragment(token)` 创建天气页，通过 Core 的 `LocationSearchContract` 接收搜索结果。搜索契约委托 `ILocationSearchService` 创建 Intent，具体 Activity 类型留在 Search 内。天气页面工厂在 Weather 内实现。所有 ViewModel 使用构造器注入，不自行查找服务。
 
@@ -83,7 +83,19 @@ Home 通过 `IApplicationService` 获取定位和仓储，通过 `IWeatherServic
 
 ## 状态与生命周期
 
-Activity／Fragment 自行使用 `ViewModelProvider(this, factory)[Model::class.java]` 声明页面作用域的 ViewModel，工厂用 `viewModelFactory { initializer { … } }` 注入业务依赖。仪器测试动态替换服务路由，生产构建不包含 Fake。搜索历史实现 `PreferencesSearchHistoryRepository` 在应用私有 SharedPreferences 中保存关键词，不保存坐标或天气。
+Activity／Fragment 自行使用 `ViewModelProvider(this, factory)[Model::class.java]` 声明页面作用域的 ViewModel，工厂用 `viewModelFactory { initializer { … } }` 注入业务依赖。仪器测试动态替换服务路由，生产构建不包含 Fake。
+
+### 搜索历史存储
+
+`ApplicationServiceProvider` 将 Datalayer 的 `MmkvSearchHistoryRepository` 注入 `SearchHistoryRepository` 契约，feature 不直接依赖 MMKV。版本目录固定 `com.tencent:mmkv:1.3.17`，采用 1.3.x LTS 保留 32 位设备兼容性。
+
+- 首次读写时以 Application Context 初始化 MMKV，打开单进程 `search_history` 实例；`queries` 键保存有序 JSON 数组。
+- 只记录用户主动提交、点击历史或选择地点时使用的关键词；trim 后至少两个 Unicode 码点，忽略大小写去重，最近使用置顶，最多十条。输入防抖和语言变化不新增历史。
+- 多个仓储实例使用同一把进程内锁，串行完成读取、修改、写入和清空。`encode` 返回失败时报告存储错误；损坏 JSON 读取为空列表，后续有效记录可覆盖损坏内容。
+- `clear()` 删除 MMKV 的 `queries` 键；重新打开存储仍为空。仅保存搜索词，地点对象、坐标、天气及会话数据继续留在内存，应用继续关闭备份。
+- 搜索记录可跨仓储实例和存储重开保留。
+
+字段及行为契约见 [数据契约](data-contract.md#搜索历史与持久化边界)，设备验证见 [测试指南](testing.md)。
 
 ### 状态归属与转换
 
@@ -110,7 +122,7 @@ stateDiagram-v2
     READY --> READY: 切换有效地点会话
 ```
 
-ViewModel 私有 `MutableStateFlow`、公开 `asStateFlow()`。首页 WeatherFragment 持有自己的 ViewModel，使用 `viewLifecycleOwner.lifecycleScope + repeatOnLifecycle(STARTED)` 收集，在 `onDestroyView` 清理绑定、监听器和适配器；搜索 Activity 使用 Activity 生命周期。恢复收集只渲染最新状态，不在收集器内请求网络。SearchViewModel 处理 350ms 防抖、显式提交和代次；WeatherViewModel 独立维护三个区域、刷新／语言代次、地点整点／午夜定时和前台时效。三个区域共用私有 `RegionRequest` 管理请求任务、重复点击、代次和失败保留旧数据；各区域只提供自己的读写与查询逻辑，完成时合并到最新状态，避免互相覆盖。后台取消整点／午夜计时与界面收集，网络结果仍可进入 ViewModel；旋转通过 ViewModelStore 保留数据。
+ViewModel 私有 `MutableStateFlow`、公开 `asStateFlow()`。首页 WeatherFragment 持有自己的 ViewModel，使用 `viewLifecycleOwner.lifecycleScope + repeatOnLifecycle(STARTED)` 收集，在 `onDestroyView` 清理绑定、监听器和适配器；搜索 Activity 使用 Activity 生命周期。恢复收集只渲染最新状态，不在收集器内请求网络。SearchViewModel 处理 350ms 防抖、显式提交和代次；WeatherViewModel 独立维护三个区域、刷新／语言代次、地点整点／午夜定时和前台时效。三个区域共用私有 `WeatherRegionRequest` 管理请求任务、重复点击、代次和失败保留旧数据；各区域只提供自己的读写与查询逻辑，完成时合并到最新状态，避免互相覆盖。后台取消整点／午夜计时与界面收集，网络结果仍可进入 ViewModel；旋转通过 ViewModelStore 保留数据。
 
 `framework` 提供 `BaseActivity<VB>` 和 `BaseFragment<VB>`。Activity 接收 `(LayoutInflater) -> VB`，Fragment 接收 `(LayoutInflater, ViewGroup?, Boolean) -> VB`，例如：
 
@@ -147,7 +159,7 @@ BaseActivity 创建绑定、内容视图和沉浸式边距后初始化页面。B
 
 ## API 集成与数据契约
 
-[`WeatherRepositoryFactory`](../Datalayer/src/main/java/com/example/skymoment/datalayer/weather/WeatherRepositoryFactory.kt) 在数据层创建供应商服务、映射器、仓储与共享请求执行器，对上只返回 `WeatherDependencies`。[`OpenMeteoService`](../Datalayer/src/main/java/com/example/skymoment/datalayer/weather/OpenMeteoService.kt) 定义 HTTP 参数，[`OpenMeteoMapper`](../Datalayer/src/main/java/com/example/skymoment/datalayer/weather/OpenMeteoMapper.kt) 校验并转换 DTO；页面和 ViewModel 不接触 Retrofit Response 或 DTO。
+[`WeatherDependencyFactory`](../Datalayer/src/main/java/com/example/skymoment/datalayer/weather/WeatherDependencyFactory.kt) 在数据层创建供应商服务、映射器、仓储与共享请求执行器，对上只返回 `WeatherDependencies`。[`OpenMeteoService`](../Datalayer/src/main/java/com/example/skymoment/datalayer/weather/OpenMeteoService.kt) 定义 HTTP 参数，[`OpenMeteoResponseMapper`](../Datalayer/src/main/java/com/example/skymoment/datalayer/weather/OpenMeteoResponseMapper.kt) 校验并转换 DTO；页面和 ViewModel 不接触 Retrofit Response 或 DTO。
 
 | 请求 | 数据策略与取舍 |
 | --- | --- |
@@ -158,7 +170,7 @@ BaseActivity 创建绑定、内容视图和沉浸式边距后初始化页面。B
 
 [`RequestExecutor`](../Datalayer/src/main/java/com/example/skymoment/datalayer/network/RequestExecutor.kt) 处理通用传输：连接 10 秒、读 15 秒、单调用 20 秒，总执行预算 45 秒；网络、超时或服务端错误最多重试一次，其他失败不盲目重试。搜索变体共享 45 秒外层预算；首页另设定位 15 秒、启动天气 30 秒的体验边界。取消向下传播，终止不再需要的请求。
 
-HTTP 429 的 Retry-After 冷却属于网络层；Open-Meteo 的 `reason`、日／月配额判定属于 [`OpenMeteoErrors`](../Datalayer/src/main/java/com/example/skymoment/datalayer/weather/OpenMeteoErrors.kt)，以策略参数传入执行器。供应商替换只要满足现有领域契约，即可调整 data 的服务、映射和工厂，无需让 feature 依赖新 SDK。
+HTTP 错误分类与 Retry-After 解析由 `HttpErrorClassifier` 策略负责；执行器仍统一管理重试、取消和共享冷却。Open-Meteo 的 `reason`、日／月配额判定属于 [`OpenMeteoErrors`](../Datalayer/src/main/java/com/example/skymoment/datalayer/weather/OpenMeteoErrors.kt)，以策略参数传入执行器。供应商替换只要满足现有领域契约，即可调整 data 的服务、映射和工厂，无需让 feature 依赖新 SDK。
 
 ## 错误处理与用户恢复
 
@@ -178,10 +190,10 @@ HTTP 429 的 Retry-After 冷却属于网络层；Open-Meteo 的 `reason`、日�
 ## 程式码组织与可维护性
 
 - 业务 ViewModel 只接受仓储接口、会话和时钟等构造参数；基础组件只处理通用生命周期、布局或传输。新增业务规则先确定所属层，再决定是否需要共享。
-- `WeatherRenderer` 专注渲染，`WeatherRegionUiState` / `RegionRequest` 统一区域状态与请求管理；空态／加载态组件只接收展示参数和操作回调。共享代码服务于已存在的复用点，不额外引入通用插件框架。
+- `WeatherRenderer` 专注渲染，`WeatherRegionUiState` / `WeatherRegionRequest` 统一区域状态与请求管理；空态／加载态组件只接收展示参数和操作回调。共享代码服务于已存在的复用点，不额外引入通用插件框架。
 - 页面地址、服务地址、传参键分别维护；供应商地址和错误协议集中在 data。版本统一位于 `gradle/libs.versions.toml`，三语业务文案集中在 shared 资源中，避免跨层重复定义。
 - 单元测试以 Fake、可注入 Clock、可控协程和 HTTPS MockWebServer 验证行为；设备测试验证真实 XML、返回栈、旋转、边距和恢复。异步页面跳转等待生命周期，阶段变化等待实际渲染，减少时序偶发失败。
-- [`check_architecture.py`](../scripts/check_architecture.py) 自动拒绝同层、逆向和循环依赖；Debug／Release 构建、lint 与混淆包冒烟验证静态结构和运行时注册。API 24／36、真实区域网络与午夜实测仍是独立验收项。
+- Debug／Release 构建、lint 与混淆包冒烟验证静态结构和运行时注册。API 24／36、真实区域网络与午夜实测仍是独立验收项。
 
 ## 类命名与界面职责
 
@@ -227,6 +239,7 @@ StatusPanel 只渲染 Idle、Loading、Empty、Error 或 Hidden，并接受重�
 ./gradlew :Domain:build assembleDebug
 ./gradlew :app:assembleRelease
 ./gradlew testDebugUnitTest
+./gradlew :Datalayer:connectedDebugAndroidTest
 ./gradlew :app:connectedDebugAndroidTest
 ./gradlew :app:connectedReleaseAndroidTest -PtestBuildType=release -PlocalSmokeSigning=true -ProuteSmoke=true
 ./gradlew :app:dependencies --configuration debugRuntimeClasspath
@@ -252,3 +265,11 @@ ICU4J 77.1 用于中文拼音补查，避免 Android 平台 Transliterator 的 A
 ## 代码注释约定
 
 源码按职责块注释：类说明用途和所属层，方法说明输入、结果或状态变化，复杂请求／生命周期分支说明边界；测试说明验证的预期行为，构建脚本和 XML 说明配置或布局块用途。供应商原始字段与领域空值语义保持独立说明；修改行为时同步更新注释，不使用逐行复述代替流程解释。
+
+## SOLID 与职责命名
+
+本轮将功能依赖拆为 `HomeDependencies`、`SearchDependencies`、`WeatherDisplayDependencies`；ARouter 地址保持不变，均解析同一个 `ApplicationServiceProvider`。ViewModel 依赖坐标天气、已选地点天气、地点搜索或名称更新的窄契约，不再实现无关方法或依赖默认“不支持”实现。模块直接依赖关系不变。
+
+`ProviderLocationNameRepository` 按来源选择名称策略，工厂注册设备逆地理编码与 Open-Meteo ID 查询。两者均只更新名称和行政路径，保留来源、ID、坐标和时区；新增来源不需要修改搜索算法。未知来源返回明确失败，避免把其他供应商 ID 发送到 GeoNames。
+
+`DefaultHttpErrorClassifier` 只分类 HTTP 错误并解析恢复时刻，`RequestExecutor` 负责请求预算、重试、取消和共享限流。供应商配额判断仍由数据层工厂注入。具体命名迁移、五项原则和全部 23 种模式的取舍见 [重构说明](solid-refactoring.md)。

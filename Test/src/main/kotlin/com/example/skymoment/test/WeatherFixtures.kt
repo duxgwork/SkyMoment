@@ -10,6 +10,7 @@ object WeatherFixtures {
     fun location(id: String = "1") = Location(
         "test", id, "示例区", listOf("示例市"), 31.2, 121.5, ZoneId.of("Asia/Shanghai")
     )
+
     fun current() = CurrentWeather(
         12.0, 50.0, 2.0, 3, true, Instant.parse("2026-11-06T00:00:00Z"), emptyList()
     )

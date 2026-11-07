@@ -14,19 +14,22 @@
 
 系统语言变化使 Activity 重建资源上下文，使用有效语言标签标记请求代次。Geo 参数统一 zh/en；天气代码和“当前位置”标题就地翻译，不依赖天气接口的文案。译名失败保留已有名称并显示提示，再次回到前台时重试译名。地点对象、坐标和天气数据不进入 Intent、SavedState、磁盘缓存或备份；用户主动使用的搜索关键词以最多 10 条历史保存在应用私有存储，可在搜索页清空；SavedState 只保存随机 token，进程消失后重新定位，失败显示对应原因的空态；首页路由收到失效会话时显示空态，并可重新定位。天气 UI 不再显示所选地点标签、预报时间和来源页脚。
 
+搜索历史使用应用私有 MMKV 的 `search_history/queries` 有序 JSON 数组保存。只在显式提交、点击历史或选中地点时记录有效词，去首尾空白、忽略大小写去重并将最近使用移到首位；过短输入、输入防抖及语言刷新不新增记录。清空后重新打开历史仍为空。
+
 ## 证据对应
 
 | 规格／场景 | 自动化证据 | 限制 |
 | --- | --- | --- |
-| location-search：trim、防抖、显式选择、清空、旧请求 | SearchViewModelTest；OpenMeteoRepositoryTest；LocationQueriesTest | 供应商所有县区覆盖不由合成数据证明 |
+| location-search：trim、防抖、显式选择、清空、旧请求 | SearchViewModelTest；OpenMeteoRepositoryTest；LocationQueryVariantsTest | 供应商所有县区覆盖不由合成数据证明 |
+| location-search：MMKV 历史跨实例与重开、十条上限、去重、Unicode、损坏恢复及清空 | MmkvSearchHistoryRepositoryTest（Datalayer Android 仪器测试，5 项）；SearchViewModelTest | API 35 模拟器加载真实 JNI；本轮未进行搜索页面 UI 全量回归 |
 | location-search：启动定位／天气成功与失败、权限设置恢复、切换选择与取消恢复、路由会话替换、旋转、无额外天气页 | HomeViewModelTest；HomeFlowTest；OpenMeteoHttpTest | Fake 坐标与天气验证状态分支，不代替真实设备定位覆盖；目标 API 矩阵仍单独追踪 |
 | location-search：重名、点击、旋转、错误／空 | WeatherFlowTest 搜索两用例；FoundationUiTest 路由 | 设备版本执行结果见 build-validation |
 | immersive-startup：透明系统栏、刘海／键盘避让、重建后不重复加边距、真实加载阶段、旋转不重复请求 | ImmersiveStartupTest | API 35 模拟器，使用可控定位／天气响应 |
-| current-weather：零值、65%、占位、高低温、失败保留数据 | OpenMeteoMapperTest；WeatherFlowTest 数值用例 | 测试天气为合成数据 |
+| current-weather：零值、65%、占位、高低温、失败保留数据 | OpenMeteoResponseMapperTest；WeatherFlowTest 数值用例 | 测试天气为合成数据 |
 | current-weather：局部成功、重试、保留原数据、限流 | WeatherViewModelTest；RequestExecutorTest | 实际公共端点不会人为耗尽配额 |
 | seven-day-forecast：D…D+6、跨时区、DST、午夜、冲突日 | ForecastWindowTest；WeatherViewModelTest 午夜用例 | 不替代供应商真实午夜连续响应 |
 | seven-day-forecast：7 行、缺今天、缺日提示、单概况 | WeatherFlowTest 数值用例；DailyForecastAdapter/XML 检查 | 小时预报为独立卡片 |
-| hourly-forecast：当前小时至未来 23 小时、跨天／DST、缺失占位、整点刷新、单独重试 | HourlyForecastWindowTest；OpenMeteoMapperTest；OpenMeteoHttpTest；WeatherViewModelTest | 固定 Clock 与合成响应验证边界 |
+| hourly-forecast：当前小时至未来 23 小时、跨天／DST、缺失占位、整点刷新、单独重试 | HourlyForecastWindowTest；OpenMeteoResponseMapperTest；OpenMeteoHttpTest；WeatherViewModelTest | 固定 Clock 与合成响应验证边界 |
 | hourly-forecast：卡片顺序、24 项、横向滑动至最后一小时、旋转复用 | WeatherFlowTest 小时预报用例 | 模拟器上的合成数据，不代替所有设备尺寸验证 |
 | system-localization：三语、首选、脚本、英文回退 | LocaleResolverTest（11）；FoundationUiTest；WeatherFormatterTest；三语／fr-FR 的 HomeActivity／WeatherFragment 设备场景 | 截图使用测试进程语言快照，不等于所有系统版本真实设置变更 |
 | system-localization：迟到译名／天气、离线保留、恢复 | SearchViewModelTest、WeatherViewModelTest 语言代次 | 系统配置重建仍需目标设备矩阵 |

@@ -21,7 +21,7 @@ import java.time.ZoneOffset
 /** 覆盖 OpenMeteoRepository 的正常流程、恢复行为与边界条件。 */
 class OpenMeteoRepositoryTest {
     private val clock = Clock.fixed(Instant.parse("2026-11-05T02:00:00Z"), ZoneOffset.UTC)
-    private val mapper = OpenMeteoMapper(clock)
+    private val mapper = OpenMeteoResponseMapper(clock)
     private val executor = RequestExecutor(clock, retryDelayMillis = { 0 })
 
     @Test
@@ -40,26 +40,26 @@ class OpenMeteoRepositoryTest {
             override suspend fun get(id: String, language: String): Response<OpenMeteoLocationDto> =
                 error("Device coordinates must not be queried as a GeoNames ID")
         }
-        val place = mapper.location(location(1))!!
+        val place = mapper.mapLocation(location(1))!!
             .copy(provider = DEVICE_LOCATION_PROVIDER, name = "现有地点")
         var resolve: suspend (Location, String) -> Location? = { _, _ -> null }
         val repo = OpenMeteoLocationRepository(
             service,
             executor,
             mapper,
-            deviceLocationNames = { location, language -> resolve(location, language) })
-        assertEquals(DataResult.Success(place), repo.refresh(place, "zh"))
+            locationNames = DeviceLocationNameRepository { location, language -> resolve(location, language) })
+        assertEquals(DataResult.Success(place), repo.refreshLocationName(place, "zh"))
         resolve = { _, _ -> throw IOException("unavailable") }
-        assertEquals(DataResult.Success(place), repo.refresh(place, "zh"))
+        assertEquals(DataResult.Success(place), repo.refreshLocationName(place, "zh"))
         resolve = { _, _ -> awaitCancellation() }
         val start = testScheduler.currentTime
-        assertEquals(DataResult.Success(place), repo.refresh(place, "zh"))
+        assertEquals(DataResult.Success(place), repo.refreshLocationName(place, "zh"))
         assertEquals(4_000, testScheduler.currentTime - start)
         resolve = { location, language ->
             assertEquals("zh-Hans", language)
             location.copy(name = "浦东新区", administrativePath = listOf("上海市", "中国"))
         }
-        val named = (repo.refresh(place, "zh-Hans") as DataResult.Success).data
+        val named = (repo.refreshLocationName(place, "zh-Hans") as DataResult.Success).data
         assertEquals("浦东新区", named.name)
         assertEquals(place.latitude, named.latitude, 0.0)
         assertEquals(place.timeZone, named.timeZone)
@@ -95,18 +95,18 @@ class OpenMeteoRepositoryTest {
                 Response.success(location(id.toLong()))
         }
         val repo =
-            OpenMeteoLocationRepository(service, executor, mapper, LocationQueries { "kunshan" })
-        val result = repo.search("昆山", "zh")
+            OpenMeteoLocationRepository(service, executor, mapper, LocationQueryVariants { "kunshan" })
+        val result = repo.searchLocations("昆山", "zh")
         assertEquals(listOf("昆山" to "zh", "kunshan" to "zh"), requested)
         assertEquals(listOf("1", "2"), (result as DataResult.Success).data.map { it.id })
         val selected = result.data.last()
-        assertEquals(selected, (repo.refresh(selected, "en") as DataResult.Success).data)
+        assertEquals(selected, (repo.refreshLocationName(selected, "en") as DataResult.Success).data)
         failPinyin = true
         assertEquals(
             listOf("1"),
-            (repo.search("昆山", "zh") as DataResult.Success).data.map { it.id })
+            (repo.searchLocations("昆山", "zh") as DataResult.Success).data.map { it.id })
         val before = requested.size
-        assertEquals(DataResult.Empty, repo.search("昆", "zh"))
+        assertEquals(DataResult.Empty, repo.searchLocations("昆", "zh"))
         assertEquals(before, requested.size)
     }
 
@@ -128,17 +128,17 @@ class OpenMeteoRepositoryTest {
                 Response.success(location(1).copy(error = true))
         }
         val repo = OpenMeteoLocationRepository(service, executor, mapper)
-        assertEquals(DataResult.Empty, repo.search("Missing", "en"))
+        assertEquals(DataResult.Empty, repo.searchLocations("Missing", "en"))
         body = OpenMeteoGeocodingResponseDto(error = true)
-        assertEquals(DataResult.Failure(WeatherFailure.DATA_INVALID), repo.search("Missing", "en"))
+        assertEquals(DataResult.Failure(WeatherFailure.DATA_INVALID), repo.searchLocations("Missing", "en"))
         body = OpenMeteoGeocodingResponseDto()
-        assertEquals(DataResult.Failure(WeatherFailure.DATA_INVALID), repo.search("Missing", "en"))
+        assertEquals(DataResult.Failure(WeatherFailure.DATA_INVALID), repo.searchLocations("Missing", "en"))
     }
 
     @Test
     // 验证当前和逐日请求使用正确坐标、单位以及独立字段集。
     fun currentAndDailyUseNamedCoordinatesMetricUnitsAndDistinctFields() = runBlocking {
-        val place = mapper.location(location(1))!!
+        val place = mapper.mapLocation(location(1))!!
         val calls = mutableListOf<String>()
         val service = object : OpenMeteoForecastService {
             // 提供可控的小时预报样本，隔离真实网络与系统环境。
@@ -181,8 +181,8 @@ class OpenMeteoRepositoryTest {
             }
         }
         val repo = OpenMeteoWeatherRepository(service, executor, mapper)
-        assertEquals(DataResult.Failure(WeatherFailure.DATA_INVALID), repo.current(place, "en"))
-        assertEquals(DataResult.Empty, repo.forecast(place, "en"))
+        assertEquals(DataResult.Failure(WeatherFailure.DATA_INVALID), repo.getCurrentWeather(place, "en"))
+        assertEquals(DataResult.Empty, repo.getDailyForecast(place, "en"))
         assertEquals(listOf("current", "daily"), calls)
     }
 

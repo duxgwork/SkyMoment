@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?><!-- 独立搜索页布局，包含返回、输入、历史标签、结果列表和状态提示。 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/home_background"
     android:focusableInTouchMode="true"
     android:orientation="vertical"
     android:padding="16dp"
-    android:saveEnabled="false">
+    android:saveEnabled="false"
+    tools:context="com.example.skymoment.search.SearchActivity">
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/search_back"
@@ -46,7 +48,8 @@
             android:inputType="text"
             android:maxLines="1"
             android:saveEnabled="false"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            tools:text="成都" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.core.widget.NestedScrollView
@@ -113,6 +116,11 @@
         android:layout_marginTop="8dp"
         android:layout_weight="1"
         android:saveEnabled="false"
-        android:visibility="gone" />
+        android:visibility="gone"
+        tools:itemCount="5"
+        tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/item_location"
+        tools:orientation="vertical"
+        tools:visibility="visible" />
 
 </LinearLayout>

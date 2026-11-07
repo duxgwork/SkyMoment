@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- 单日预报列表项，展示今日或星期、日期、概况和高低温。 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:baselineAligned="false"
@@ -19,7 +20,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:saveEnabled="false"
-            android:textSize="13sp" />
+            android:textSize="13sp"
+            tools:text="周六" />
 
         <TextView
             android:id="@+id/day_date"
@@ -27,7 +29,8 @@
             android:layout_height="wrap_content"
             android:saveEnabled="false"
             android:textColor="@color/home_secondary"
-            android:textSize="10sp" />
+            android:textSize="10sp"
+            tools:text="11月7日" />
     </LinearLayout>
 
     <TextView
@@ -38,7 +41,8 @@
         android:importantForAccessibility="no"
         android:saveEnabled="false"
         android:textColor="#727DA9"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        tools:text="☁" />
 
     <TextView
         android:id="@+id/day_summary"
@@ -48,7 +52,8 @@
         android:paddingHorizontal="6dp"
         android:saveEnabled="false"
         android:textColor="@color/home_secondary"
-        android:textSize="11sp" />
+        android:textSize="11sp"
+        tools:text="多云" />
 
     <TextView
         android:id="@+id/day_temperatures"
@@ -56,5 +61,6 @@
         android:layout_height="wrap_content"
         android:gravity="end"
         android:saveEnabled="false"
-        android:textSize="12sp" />
+        android:textSize="12sp"
+        tools:text="23°C / 15°C" />
 </LinearLayout>

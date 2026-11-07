@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- 首页与天气页共用的原因空态，仅提供设置或重试恢复操作。 -->
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clipToPadding="false"
@@ -31,7 +32,8 @@
             android:saveEnabled="false"
             android:textColor="@color/home_text"
             android:textSize="21sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            tools:text="@string/empty_weather_title" />
 
         <TextView
             android:id="@+id/empty_message"
@@ -42,7 +44,8 @@
             android:lineSpacingExtra="5dp"
             android:saveEnabled="false"
             android:textColor="@color/home_secondary"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            tools:text="@string/empty_weather_message" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/empty_retry"
@@ -52,6 +55,7 @@
             android:layout_marginTop="4dp"
             android:minHeight="48dp"
             android:textAllCaps="false"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            tools:text="@string/empty_retry_weather" />
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

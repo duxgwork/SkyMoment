@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- 单小时预报列表项，展示当地时间、日期提示、图标和温度。 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="96dp"
     android:layout_height="wrap_content"
     android:gravity="center_horizontal"
@@ -15,7 +16,8 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:saveEnabled="false"
-        android:textSize="13sp" />
+        android:textSize="13sp"
+        tools:text="14:00" />
 
     <TextView
         android:id="@+id/hour_date"
@@ -24,7 +26,8 @@
         android:gravity="center"
         android:saveEnabled="false"
         android:textColor="@color/home_secondary"
-        android:textSize="11sp" />
+        android:textSize="11sp"
+        tools:text="11月7日" />
 
     <TextView
         android:id="@+id/hour_symbol"
@@ -34,7 +37,8 @@
         android:gravity="center"
         android:importantForAccessibility="no"
         android:saveEnabled="false"
-        android:textSize="26sp" />
+        android:textSize="26sp"
+        tools:text="☀" />
 
     <TextView
         android:id="@+id/hour_summary"
@@ -45,7 +49,8 @@
         android:lines="2"
         android:saveEnabled="false"
         android:textColor="@color/home_secondary"
-        android:textSize="11sp" />
+        android:textSize="11sp"
+        tools:text="晴" />
 
     <TextView
         android:id="@+id/hour_temperature"
@@ -55,5 +60,6 @@
         android:gravity="center"
         android:saveEnabled="false"
         android:textSize="16sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        tools:text="21°C" />
 </LinearLayout>

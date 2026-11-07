@@ -28,7 +28,7 @@ class AndroidLocationNameResolverTest {
             thoroughfare = "Private street"; featureName = "Private building"
         })
         val location = WeatherFixtures.location()
-        val resolved = AndroidLocationNameResolver(RuntimeEnvironment.getApplication()).resolve(location, "en")
+        val resolved = AndroidLocationNameResolver(RuntimeEnvironment.getApplication()).resolveName(location, "en")
         assertEquals(location.copy(name = "District", administrativePath = listOf("City", "Country")), resolved)
     }
 
@@ -36,13 +36,13 @@ class AndroidLocationNameResolverTest {
         val resolver = AndroidLocationNameResolver(RuntimeEnvironment.getApplication())
         val location = WeatherFixtures.location()
         NameGeocoder.present = false
-        assertNull(resolver.resolve(location, "en"))
+        assertNull(resolver.resolveName(location, "en"))
         NameGeocoder.present = true
-        assertNull(resolver.resolve(location, "en"))
+        assertNull(resolver.resolveName(location, "en"))
         NameGeocoder.addresses = listOf(Address(Locale.ENGLISH).apply { thoroughfare = "Street only" })
-        assertNull(resolver.resolve(location, "en"))
+        assertNull(resolver.resolveName(location, "en"))
         NameGeocoder.fail = true
-        assertNull(resolver.resolve(location, "en"))
+        assertNull(resolver.resolveName(location, "en"))
     }
 }
 

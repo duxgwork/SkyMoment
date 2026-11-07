@@ -32,10 +32,13 @@ retrofit = "3.0.0"
 okhttp = "4.12.0"
 serialization = "1.9.0"
 icu4j = "77.1"
+# LTS retains 32-bit device support.
+mmkv = "1.3.17"
 
 [libraries]
 robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectric" }
 icu4j = { module = "com.ibm.icu:icu4j", version.ref = "icu4j" }
+mmkv = { module = "com.tencent:mmkv", version.ref = "mmkv" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }

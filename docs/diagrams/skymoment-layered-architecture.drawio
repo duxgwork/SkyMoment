@@ -89,10 +89,10 @@
         <mxCell id="item-28" value="初始化 ARouter" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=15;fontColor=#65758B;fontStyle=0;fontFamily=Helvetica;connectable=0;" vertex="1" parent="1">
           <mxGeometry x="252" y="287" width="365" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="item-29" value="AppServices · IApplicationService" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=17;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="1">
+        <mxCell id="item-29" value="ApplicationServiceProvider" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=17;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="1">
           <mxGeometry x="620" y="262" width="365" height="23" as="geometry" />
         </mxCell>
-        <mxCell id="item-30" value="按需缓存；注入领域依赖" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=15;fontColor=#65758B;fontStyle=0;fontFamily=Helvetica;connectable=0;" vertex="1" parent="1">
+        <mxCell id="item-30" value="IApplicationService · 按需缓存依赖" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=15;fontColor=#65758B;fontStyle=0;fontFamily=Helvetica;connectable=0;" vertex="1" parent="1">
           <mxGeometry x="620" y="287" width="365" height="20" as="geometry" />
         </mxCell>
         <mxCell id="item-31" value="Android 平台适配" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=17;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="1">
@@ -278,7 +278,7 @@
         <mxCell id="item-91" value="状态与实现约定" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=22;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="1">
           <mxGeometry x="1504" y="850" width="328" height="32" as="geometry" />
         </mxCell>
-        <mxCell id="item-92" value="ViewModel 构造器注入领域契约&#10;StateFlow 驱动 Renderer 与 XML&#10;&#10;跨组件传递随机 session token&#10;地点与天气保留在进程内存&#10;搜索词保存至 SharedPreferences" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=17;fontColor=#203047;fontStyle=0;fontFamily=Helvetica;connectable=0;" vertex="1" parent="1">
+        <mxCell id="item-92" value="ViewModel 构造器注入领域契约&#10;StateFlow 驱动 Renderer 与 XML&#10;&#10;跨组件传递随机 session token&#10;地点与天气保留在进程内存&#10;搜索词保存至 MMKV" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=17;fontColor=#203047;fontStyle=0;fontFamily=Helvetica;connectable=0;" vertex="1" parent="1">
           <mxGeometry x="1500" y="894" width="336" height="170" as="geometry" />
         </mxCell>
         <mxCell id="item-93" value="层级表示职责与允许的依赖方向；直接依赖见第 02 页，运行时服务协作见第 03 页。" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=19;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="1">
@@ -690,7 +690,7 @@
         <mxCell id="item-11" value="01  服务装配" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=22;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="1">
           <mxGeometry x="88" y="176" width="1744" height="32" as="geometry" />
         </mxCell>
-        <mxCell id="item-12" value="进程启动：SkyMomentApplication 初始化 ARouter；AppServices 在首次服务查找时创建、init 并缓存。" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=18;fontColor=#65758B;fontStyle=0;fontFamily=Helvetica;connectable=0;" vertex="1" parent="1">
+        <mxCell id="item-12" value="进程启动：SkyMomentApplication 初始化 ARouter；ApplicationServiceProvider 在首次服务查找时创建、init 并缓存。" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=18;fontColor=#65758B;fontStyle=0;fontFamily=Helvetica;connectable=0;" vertex="1" parent="1">
           <mxGeometry x="88" y="210" width="1720" height="26" as="geometry" />
         </mxCell>
         <mxCell id="pages" value="" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#EAF3FF;strokeColor=#427BC1;strokeWidth=1.3;" vertex="1" parent="1">
@@ -708,13 +708,13 @@
         <mxCell id="item-17" value="Core · ServiceLocator" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacing=0;fontSize=20;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="locator">
           <mxGeometry x="12" y="9" width="256" height="34" as="geometry" />
         </mxCell>
-        <mxCell id="item-18" value="按契约查找服务&#10;/services/application" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacing=0;fontSize=16;fontColor=#203047;fontStyle=0;fontFamily=Helvetica;connectable=0;" vertex="1" parent="locator">
+        <mxCell id="item-18" value="按功能依赖契约查找&#10;/services/application" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacing=0;fontSize=16;fontColor=#203047;fontStyle=0;fontFamily=Helvetica;connectable=0;" vertex="1" parent="locator">
           <mxGeometry x="12" y="47" width="256" height="45" as="geometry" />
         </mxCell>
         <mxCell id="app-services" value="" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#FFF6DF;strokeColor=#C39427;strokeWidth=1.3;" vertex="1" parent="1">
           <mxGeometry x="780" y="266" width="280" height="100" as="geometry" />
         </mxCell>
-        <mxCell id="item-20" value="app · AppServices" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacing=0;fontSize=20;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="app-services">
+        <mxCell id="item-20" value="ApplicationServiceProvider" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacing=0;fontSize=17;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="app-services">
           <mxGeometry x="12" y="9" width="256" height="34" as="geometry" />
         </mxCell>
         <mxCell id="item-21" value="IApplicationService · IProvider&#10;只持有 Application Context" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacing=0;fontSize=16;fontColor=#203047;fontStyle=0;fontFamily=Helvetica;connectable=0;" vertex="1" parent="app-services">
@@ -726,7 +726,7 @@
         <mxCell id="item-23" value="Datalayer · 仓储工厂" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacing=0;fontSize=20;fontColor=#203047;fontStyle=1;fontFamily=Helvetica;connectable=0;" vertex="1" parent="factory">
           <mxGeometry x="12" y="9" width="316" height="34" as="geometry" />
         </mxCell>
-        <mxCell id="item-24" value="WeatherRepositoryFactory&#10;网络仓储 · 会话 · 历史" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacing=0;fontSize=16;fontColor=#203047;fontStyle=0;fontFamily=Helvetica;connectable=0;" vertex="1" parent="factory">
+        <mxCell id="item-24" value="WeatherDependencyFactory&#10;网络仓储 · 会话 · 历史" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacing=0;fontSize=16;fontColor=#203047;fontStyle=0;fontFamily=Helvetica;connectable=0;" vertex="1" parent="factory">
           <mxGeometry x="12" y="47" width="316" height="45" as="geometry" />
         </mxCell>
         <mxCell id="dependencies" value="" style="rounded=1;absoluteArcSize=1;arcSize=12;whiteSpace=wrap;html=0;fillColor=#EDF2F7;strokeColor=#607991;strokeWidth=1.3;" vertex="1" parent="1">
@@ -898,7 +898,7 @@
         <mxCell id="item-78" value="Common：天气格式化、WMO 描述、错误文案、加载与空态展示。" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=17;fontColor=#203047;fontStyle=0;fontFamily=Helvetica;connectable=0;" vertex="1" parent="1">
           <mxGeometry x="88" y="1092" width="1190" height="25" as="geometry" />
         </mxCell>
-        <mxCell id="item-79" value="存储：地点 / token / 天气仅在内存；SharedPreferences 仅存最近 10 条搜索词。" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=17;fontColor=#203047;fontStyle=0;fontFamily=Helvetica;connectable=0;" vertex="1" parent="1">
+        <mxCell id="item-79" value="存储：地点 / token / 天气仅在内存；MMKV 仅存最近 10 条搜索词。" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=17;fontColor=#203047;fontStyle=0;fontFamily=Helvetica;connectable=0;" vertex="1" parent="1">
           <mxGeometry x="88" y="1132" width="1230" height="25" as="geometry" />
         </mxCell>
         <mxCell id="item-80" value="图例：实线 = 调用 / 创建 / 返回契约；虚线 = 结果或状态回传；空心箭头虚线 = 实现领域接口。" style="text;html=0;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacing=0;fontSize=15;fontColor=#65758B;fontStyle=0;fontFamily=Helvetica;connectable=0;" vertex="1" parent="1">

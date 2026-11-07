@@ -15,6 +15,7 @@
 - 供应商 DTO、网络错误与页面隔离，保留可替换仓储边界。
 - 所选地点、语言、日期与响应严格一致，两个天气区域独立完成和恢复。
 - 无凭据配置即可运行，明确公开服务限制和实际覆盖证据。
+- 搜索历史只持久化最近十个有效关键词，使用 MMKV，支持清空；地理结果与天气会话保持内存边界。
 
 **Non-Goals:**
 
@@ -26,7 +27,7 @@
 
 ### 1. 分层与显式组装
 
-九模块职责、直接依赖及运行时装配见 [分层架构图](../../../docs/architecture.md)。基础 UI／导航／网络层不依赖领域业务，天气展示移到 shared:weather-ui，供应商组装与协议解析由 data:weather 负责。feature 互不依赖，不引用 app 或数据实现；domain 保持纯 Kotlin/JVM。
+九模块职责、直接依赖及运行时装配见 [分层架构图](../../../../docs/architecture.md)。基础 UI／导航／网络层不依赖领域业务，天气展示移到 shared:weather-ui，供应商组装与协议解析由 data:weather 负责。feature 互不依赖，不引用 app 或数据实现；domain 保持纯 Kotlin/JVM。
 
 SkyMomentApplication 只在 onCreate 初始化 ARouterNavigator。AppServices 是 ARouter 缓存的进程单例，提供领域 WeatherDependencies 和 app 私有的 AppDependencies；页面经通用 ServiceLocator 获取契约，再以构造器注入 ViewModel。删除混合层次的 ApplicationServices、无消费者的 Navigator 接口和重复 ServiceFactory 封装。数据工厂共享连接池与限流门；仪器测试动态替换服务路由。生产构建不含 Fake，不额外引入 Hilt。
 
@@ -105,8 +106,23 @@ connectTimeout 10 秒、readTimeout 15 秒、callTimeout 20 秒；每次用户�
 | 时间 | 可注入 Clock，纽约与北京异日、DST、当地午夜与前台恢复，刷新失败剔除昨天 |
 | 错误 | MockWebServer、协程虚拟时钟：400/error=true、429、5xx、超时、坏 JSON、部分成功、取消、旧响应、45 秒截止 |
 | 工程/UI | 模块依赖、单元测试、lint、debug/release、配置缓存、API 24 与 target API 设备；Espresso/Fake/IdlingResource，不用固定 sleep |
+| 搜索历史 | Android 设备加载真实 MMKV JNI：跨实例与文件重开、Unicode 码点、忽略大小写去重、十条上限、损坏 JSON 恢复及清空；业务触发由 SearchViewModelTest 验证 |
 
 仅保存人工查询样本、非敏感断言和耗时。自动化夹具使用合成数据；API 35 的基础验证不代替 API 24 / target API 的最终设备验收。
+
+### 9. 搜索历史与持久化边界
+
+搜索词由 Domain 的 `SearchHistoryRepository` 定义，Datalayer 的 `MmkvSearchHistoryRepository` 实现，`ApplicationServiceProvider` 注入搜索依赖。feature 只依赖契约，不直接使用 MMKV。依赖版本由 `gradle/libs.versions.toml` 固定为 `com.tencent:mmkv:1.3.17`，采用 1.3.x LTS 保留 32 位设备兼容性。
+
+仓储首次读写时使用 Application Context 初始化 MMKV，以 `SINGLE_PROCESS_MODE` 打开 `search_history`，在 `queries` 键保存 JSON 字符串数组。多个仓储实例共享进程内锁，避免读改写交错；这不是跨进程事务设计。`encode` 失败时报告存储错误，不误报为写入成功。
+
+仅在显式提交、点击历史标签或选中候选时记录当前关键词；trim 后少于两个 Unicode 码点的输入忽略，包含单个 emoji 的过短输入也不记录。忽略大小写去重，重复使用移到首位并保留本次大小写，最多十条。防抖输入、重试与语言变化不新增历史；关键词保留用户输入，不随界面语言翻译。
+
+缺少 `queries` 或 JSON 损坏时返回空列表；读取时过滤无效词、去重并限制条数，下一次有效写入可覆盖损坏值。清空只删除该键，重新打开存储后仍为空。地点对象、坐标、搜索结果、天气和会话 token 不写入 MMKV，HTTP 无磁盘缓存，应用继续关闭备份。
+
+搜索关键词可跨实例及存储重开保留。历史词只能用于重新搜索，不恢复旧地点选择或天气。
+
+五项 `MmkvSearchHistoryRepositoryTest` Android 仪器测试覆盖真实 JNI 和关闭重开后的文件状态；相关本地单元测试继续验证服务装配与搜索业务。实际执行结果见 [工程验证记录](../../../../docs/build-validation.md)，不能据此推断强制杀进程、断电恢复或完整设备矩阵已验证。
 
 ## Risks / Trade-offs
 
@@ -115,9 +131,9 @@ connectTimeout 10 秒、readTimeout 15 秒、callTimeout 20 秒；每次用户�
 - 免费服务限额、非商业用途和大陆连通性 → 明确用量、限流和区域验收，不以无凭据冒烟代替生产可用性。
 - 旧路由库依赖 Jetifier / 反射 → 固定已验证版本、精确 keep 与 release 设备冒烟；升级 AGP 前重新验证。
 
-## Migration Plan
+## Implementation Plan
 
-保留已验证工程基础，移除旧供应商规划、配置提示与语言码假设；数据层接入两个公共端点。先实现并测试契约、中文别名和 WMO 映射，再接通完整搜索／天气／刷新行为，最后完成设备及区域实测。无用户数据库、账号或服务器迁移。
+保留已验证工程基础，移除旧供应商规划、配置提示与语言码假设；数据层接入两个公共端点。先实现并测试契约、中文别名和 WMO 映射，再接通完整搜索／天气／刷新行为，最后完成设备及区域实测。
 
 ## Open Questions
 

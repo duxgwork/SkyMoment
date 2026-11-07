@@ -1,11 +1,7 @@
 package com.example.skymoment.core.service
 
-import com.example.skymoment.domain.DeviceLocationProvider
+import com.example.skymoment.domain.HomeDependencies
 import com.example.skymoment.domain.WeatherDependencies
 
-/**
- * 宿主发布的应用服务契约；首页按此契约获取定位与天气依赖。
- **/
-interface IApplicationService : WeatherDependencies {
-    val deviceLocation: DeviceLocationProvider
-}
+/** 宿主装配契约；各功能页面通过自身所需的依赖视图解析同一服务。 */
+interface IApplicationService : HomeDependencies, WeatherDependencies

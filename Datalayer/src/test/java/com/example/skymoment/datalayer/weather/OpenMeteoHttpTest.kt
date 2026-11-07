@@ -38,7 +38,7 @@ class OpenMeteoHttpTest {
     private val clock = Clock.fixed(Instant.parse("2026-11-05T02:00:00Z"), ZoneOffset.UTC)
     private lateinit var geo: OpenMeteoGeocodingService
     private lateinit var weather: OpenMeteoForecastService
-    private val mapper = OpenMeteoMapper(clock)
+    private val mapper = OpenMeteoResponseMapper(clock)
     @Before
     // 为本用例准备调度器、时钟或测试服务，隔离外部环境。
     fun setup() {
@@ -63,18 +63,18 @@ class OpenMeteoHttpTest {
     @Test
     // 验证供应商长期配额不重试，其他 429 仍遵守短期冷却。
     fun providerQuotaPolicyDoesNotRetryAndOther429ResponsesKeepTheirCooldown() = runBlocking {
-        val repo = OpenMeteoLocationRepository(geo, WeatherRepositoryFactory.requestExecutor(clock), mapper)
+        val repo = OpenMeteoLocationRepository(geo, WeatherDependencyFactory.requestExecutor(clock), mapper)
         listOf("Daily API request limit exceeded", "Monthly limit", "Quota exceeded").forEach { reason ->
             server.enqueue(MockResponse().setResponseCode(429).setBody("""{"reason":"$reason"}"""))
-            assertEquals(DataResult.Failure(WeatherFailure.QUOTA), repo.search("Synthetic", "en"))
+            assertEquals(DataResult.Failure(WeatherFailure.QUOTA), repo.searchLocations("Synthetic", "en"))
         }
         assertEquals(3, server.requestCount)
         listOf("""{"reason":"Minutely limit"}""", "{invalid").forEach { body ->
-            val limitedRepo = OpenMeteoLocationRepository(geo, WeatherRepositoryFactory.requestExecutor(clock), mapper)
+            val limitedRepo = OpenMeteoLocationRepository(geo, WeatherDependencyFactory.requestExecutor(clock), mapper)
             server.enqueue(MockResponse().setResponseCode(429).setHeader("Retry-After", "120").setBody(body))
             val expected = DataResult.Failure(WeatherFailure.RATE_LIMITED, clock.instant().plusSeconds(120))
-            assertEquals(expected, limitedRepo.search("Synthetic", "en"))
-            assertEquals(expected, limitedRepo.search("Another", "en"))
+            assertEquals(expected, limitedRepo.searchLocations("Synthetic", "en"))
+            assertEquals(expected, limitedRepo.searchLocations("Another", "en"))
         }
         assertEquals(5, server.requestCount)
     }
@@ -85,7 +85,7 @@ class OpenMeteoHttpTest {
         val repo = OpenMeteoWeatherRepository(weather, RequestExecutor(clock), mapper)
         val coordinates = Coordinates(30.12345, 120.98765)
         server.enqueue(MockResponse().setBody("""{"latitude":30.1,"longitude":121,"timezone":"Asia/Shanghai","current_units":{"time":"unixtime","temperature_2m":"°C"},"current":{"time":1793844000,"temperature_2m":12}}"""))
-        val result = (repo.currentAt(coordinates, "zh") as DataResult.Success).data
+        val result = (repo.getWeatherAt(coordinates, "zh") as DataResult.Success).data
         assertEquals(ZoneId.of("Asia/Shanghai"), result.location.timeZone)
         assertEquals(DEVICE_LOCATION_PROVIDER, result.location.provider)
         assertEquals(12.0, result.current.temperatureCelsius)
@@ -96,10 +96,10 @@ class OpenMeteoHttpTest {
         server.enqueue(MockResponse().setBody("""{"latitude":30.1,"longitude":121,"timezone":"invalid"}"""))
         assertEquals(
             DataResult.Failure(WeatherFailure.DATA_INVALID),
-            repo.currentAt(coordinates, "en")
+            repo.getWeatherAt(coordinates, "en")
         )
         server.enqueue(MockResponse().setBody("""{"latitude":30.1,"longitude":121,"timezone":"Asia/Shanghai","current_units":{"time":"unixtime"},"current":{"time":1793844000}}"""))
-        assertEquals(DataResult.Empty, repo.currentAt(coordinates, "en"))
+        assertEquals(DataResult.Empty, repo.getWeatherAt(coordinates, "en"))
     }
 
     @Test
@@ -107,20 +107,20 @@ class OpenMeteoHttpTest {
     fun realSerializationDistinguishesEmptyBrokenEnvelopeAndUnknownFields() = runBlocking {
         val repo = OpenMeteoLocationRepository(geo, RequestExecutor(clock), mapper)
         server.enqueue(MockResponse().setBody("""{"generationtime_ms":1,"extra":true}"""))
-        assertEquals(DataResult.Empty, repo.search("Nowhere", "fr"))
+        assertEquals(DataResult.Empty, repo.searchLocations("Nowhere", "fr"))
         val request = server.takeRequest()
         assertEquals("/v1/search", request.requestUrl!!.encodedPath)
         assertEquals("en", request.requestUrl!!.queryParameter("language"))
         assertNull(request.getHeader("Authorization"))
         server.enqueue(MockResponse().setBody("""{"error":true,"reason":"raw private error"}"""))
-        assertEquals(DataResult.Failure(WeatherFailure.DATA_INVALID), repo.search("Nowhere", "en"))
+        assertEquals(DataResult.Failure(WeatherFailure.DATA_INVALID), repo.searchLocations("Nowhere", "en"))
         server.enqueue(MockResponse().setBody("""{"results":[{"id":1,"name":"合成区","latitude":30.12345,"longitude":120.98765,"timezone":"Asia/Shanghai","admin1":"合成省","country":"中国","extra":42}]}"""))
-        val place = (repo.search("Synthetic", "zh-Hant") as DataResult.Success).data.single()
+        val place = (repo.searchLocations("Synthetic", "zh-Hant") as DataResult.Success).data.single()
         server.takeRequest()
         assertEquals("zh", server.takeRequest().requestUrl!!.queryParameter("language"))
         assertEquals(listOf("合成省", "中国"), place.administrativePath)
         server.enqueue(MockResponse().setBody("""{"id":1,"name":"Synthetic","latitude":30.12345,"longitude":120.98765,"timezone":"Asia/Shanghai"}"""))
-        assertEquals("Synthetic", (repo.refresh(place, "en") as DataResult.Success).data.name)
+        assertEquals("Synthetic", (repo.refreshLocationName(place, "en") as DataResult.Success).data.name)
         assertEquals("1", server.takeRequest().requestUrl!!.queryParameter("id"))
     }
 
@@ -138,7 +138,7 @@ class OpenMeteoHttpTest {
             ZoneId.of("Asia/Shanghai")
         )
         server.enqueue(MockResponse().setBody("""{"latitude":30.1,"longitude":121,"timezone":"Asia/Shanghai","current_units":{"time":"unixtime","temperature_2m":"°C","relative_humidity_2m":"%","wind_speed_10m":"m/s","weather_code":"wmo code","is_day":""},"current":{"time":1793844000,"temperature_2m":0,"relative_humidity_2m":65,"wind_speed_10m":0,"weather_code":3,"is_day":1}}"""))
-        assertEquals(65.0, (repo.current(place, "zh") as DataResult.Success).data.humidityPercent)
+        assertEquals(65.0, (repo.getCurrentWeather(place, "zh") as DataResult.Success).data.humidityPercent)
         val current = server.takeRequest()
         assertEquals("30.12345", current.requestUrl!!.queryParameter("latitude"))
         assertEquals("120.98765", current.requestUrl!!.queryParameter("longitude"))
@@ -147,7 +147,7 @@ class OpenMeteoHttpTest {
         assertNull(current.requestUrl!!.queryParameter("language"))
         assertNull(current.requestUrl!!.queryParameter("apikey")); assertNull(current.getHeader("Authorization"))
         server.enqueue(MockResponse().setBody("""{"latitude":30.1,"longitude":121,"timezone":"Asia/Shanghai","daily_units":{"time":"iso8601"},"daily":{"time":[]}}"""))
-        assertEquals(DataResult.Empty, repo.forecast(place, "en"))
+        assertEquals(DataResult.Empty, repo.getDailyForecast(place, "en"))
         val daily = server.takeRequest()
         assertEquals("7", daily.requestUrl!!.queryParameter("forecast_days"))
         assertNull(daily.requestUrl!!.queryParameter("current"))
@@ -185,7 +185,7 @@ class OpenMeteoHttpTest {
         }]}}"""
         )
         )
-        val result = (repo.hourly(place, "zh") as DataResult.Success).data
+        val result = (repo.getHourlyForecast(place, "zh") as DataResult.Success).data
         assertEquals(24, result.hours.size)
         assertEquals(-2.5, result.hours.first().temperatureCelsius)
         assertEquals(false, result.hours.first().isDay)
@@ -227,13 +227,13 @@ class OpenMeteoHttpTest {
         }
         val repo = OpenMeteoLocationRepository(
             slow, RequestExecutor(clock), mapper,
-            LocationQueries { "haidian" }, StandardTestDispatcher(testScheduler)
+            LocationQueryVariants { "haidian" }, StandardTestDispatcher(testScheduler)
         )
         val before = testScheduler.currentTime
-        assertEquals(DataResult.Failure(WeatherFailure.TIMEOUT), repo.search("海淀区", "zh"))
+        assertEquals(DataResult.Failure(WeatherFailure.TIMEOUT), repo.searchLocations("海淀区", "zh"))
         assertEquals(45_000, testScheduler.currentTime - before)
         assertEquals(3, started); assertEquals(3, cancelled)
-        val job = launch { repo.search("海淀区", "zh") }
+        val job = launch { repo.searchLocations("海淀区", "zh") }
         runCurrent(); job.cancelAndJoin()
         assertEquals(6, started); assertEquals(6, cancelled)
     }

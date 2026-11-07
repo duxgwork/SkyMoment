@@ -2,6 +2,7 @@
 <!-- 启动加载视图，按真实定位与天气请求阶段更新文案和进度。 -->
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clipToPadding="false"
@@ -34,7 +35,8 @@
             android:text="@string/locating"
             android:textColor="@color/home_text"
             android:textSize="21sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            tools:text="@string/loading_local_weather" />
 
         <TextView
             android:id="@+id/loading_message"
@@ -46,7 +48,8 @@
             android:saveEnabled="false"
             android:text="@string/startup_location_message"
             android:textColor="@color/home_secondary"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            tools:text="@string/startup_weather_message" />
 
         <com.google.android.material.progressindicator.LinearProgressIndicator
             android:id="@+id/loading_progress"
@@ -80,7 +83,8 @@
                 android:saveEnabled="false"
                 android:text="@string/startup_location_step"
                 android:textColor="@color/startup_step_text"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                tools:text="@string/startup_location_ready" />
 
             <View
                 android:layout_width="24dp"

@@ -9,10 +9,10 @@ import com.example.skymoment.domain.HourlyForecast
 import com.example.skymoment.domain.HourlyForecastEntry
 import com.example.skymoment.domain.HourlyForecastWindow
 import com.example.skymoment.domain.Location
-import com.example.skymoment.domain.LocationRepository
+import com.example.skymoment.domain.LocationNameRepository
 import com.example.skymoment.domain.LocationSessionRepository
 import com.example.skymoment.domain.WeatherFailure
-import com.example.skymoment.domain.WeatherRepository
+import com.example.skymoment.domain.SelectedLocationWeatherRepository
 import java.time.Clock
 import java.time.Instant
 import java.time.LocalDate
@@ -42,9 +42,9 @@ class WeatherViewModelTest {
     private val place = Location("test", "1", "示例区", emptyList(), 1.0, 2.0, zone)
     private val sessions = object : LocationSessionRepository {
         // 提供可控的会话选择结果，隔离真实网络与系统环境。
-        override fun select(location: Location, initialWeather: CurrentWeather?) = "token"
+        override fun createSession(location: Location, initialWeather: CurrentWeather?) = "token"
         // 提供可控的会话解析结果，隔离真实网络与系统环境。
-        override fun resolve(token: String) = place.takeIf { token == "token" }
+        override fun findLocation(token: String) = place.takeIf { token == "token" }
         // 提供可控的数据清理行为，隔离真实网络与系统环境。
         override fun clear() = Unit
     }
@@ -68,12 +68,12 @@ class WeatherViewModelTest {
         var now: suspend () -> DataResult<CurrentWeather>,
         var days: suspend () -> DataResult<Forecast>,
         var hours: suspend () -> DataResult<HourlyForecast> = { DataResult.Empty },
-    ) : WeatherRepository {
+    ) : SelectedLocationWeatherRepository {
         var currentCalls = 0;
         var forecastCalls = 0;
         var hourlyCalls = 0
         // 提供可控的当前天气样本，隔离真实网络与系统环境。
-        override suspend fun current(
+        override suspend fun getCurrentWeather(
             location: Location,
             language: String
         ): DataResult<CurrentWeather> {
@@ -81,12 +81,12 @@ class WeatherViewModelTest {
         }
 
         // 提供可控的七日预报样本，隔离真实网络与系统环境。
-        override suspend fun forecast(location: Location, language: String): DataResult<Forecast> {
+        override suspend fun getDailyForecast(location: Location, language: String): DataResult<Forecast> {
             forecastCalls++; return days()
         }
 
         // 提供可控的小时预报样本，隔离真实网络与系统环境。
-        override suspend fun hourly(
+        override suspend fun getHourlyForecast(
             location: Location,
             language: String
         ): DataResult<HourlyForecast> {
@@ -213,7 +213,7 @@ class WeatherViewModelTest {
         val current = sample(clock)
         val seededSessions = object : LocationSessionRepository by sessions {
             // 按有效会话读取启动天气，供天气页复用并减少重复请求。
-            override fun initialWeather(token: String) = current.takeIf { token == "token" }
+            override fun findInitialWeather(token: String) = current.takeIf { token == "token" }
         }
         val repo = FakeWeather({ DataResult.Failure(WeatherFailure.NETWORK) }, { DataResult.Empty })
         val vm = WeatherViewModel(repo, seededSessions, "token", clock = clock)
@@ -232,11 +232,9 @@ class WeatherViewModelTest {
         val devicePlace = place.copy(provider = DEVICE_LOCATION_PROVIDER, name = "")
         val initialName = CompletableDeferred<DataResult<Location>>()
         var calls = 0
-        val locations = object : LocationRepository {
-            // 提供可控的搜索响应，隔离真实网络与系统环境。
-            override suspend fun search(query: String, language: String) = DataResult.Empty
+        val locations = object : LocationNameRepository {
             // 提供可控的地点译名结果，隔离真实网络与系统环境。
-            override suspend fun refresh(
+            override suspend fun refreshLocationName(
                 location: Location,
                 language: String
             ): DataResult<Location> {
@@ -246,9 +244,9 @@ class WeatherViewModelTest {
         }
         val seeded = object : LocationSessionRepository by sessions {
             // 提供可控的会话解析结果，隔离真实网络与系统环境。
-            override fun resolve(token: String) = devicePlace
+            override fun findLocation(token: String) = devicePlace
             // 按有效会话读取启动天气，供天气页复用并减少重复请求。
-            override fun initialWeather(token: String) = current
+            override fun findInitialWeather(token: String) = current
         }
         val repo = FakeWeather({ DataResult.Success(current) }, { DataResult.Empty })
         val vm = WeatherViewModel(repo, seeded, "token", locations, clock)
@@ -394,11 +392,9 @@ class WeatherViewModelTest {
             val clock = clock()
             val oldName = CompletableDeferred<DataResult<Location>>()
             var offline = false
-            val locations = object : LocationRepository {
-                // 提供可控的搜索响应，隔离真实网络与系统环境。
-                override suspend fun search(query: String, language: String) = DataResult.Empty
+            val locations = object : LocationNameRepository {
                 // 提供可控的地点译名结果，隔离真实网络与系统环境。
-                override suspend fun refresh(
+                override suspend fun refreshLocationName(
                     location: Location,
                     language: String
                 ): DataResult<Location> = when {

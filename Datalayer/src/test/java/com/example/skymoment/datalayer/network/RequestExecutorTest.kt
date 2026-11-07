@@ -132,7 +132,7 @@ class RequestExecutorTest {
         )
         assertEquals(
             NetworkResult.Failure(NetworkFailure.QUOTA),
-            RequestExecutor(clock, quotaExceeded = { true }).execute { service.get() })
+            RequestExecutor(clock, errorClassifier = DefaultHttpErrorClassifier { true }).execute { service.get() })
         assertEquals(2, server.requestCount)
     }
 

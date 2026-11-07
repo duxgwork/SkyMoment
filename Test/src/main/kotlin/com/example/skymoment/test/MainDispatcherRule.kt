@@ -11,7 +11,8 @@ import org.junit.runner.Description
 
 /** 每个用例安装独立主线程调度器，并在失败时同样恢复全局状态。 */
 @OptIn(ExperimentalCoroutinesApi::class)
-class MainDispatcherRule(val dispatcher: TestDispatcher = StandardTestDispatcher()) : TestWatcher() {
+class MainDispatcherRule(val dispatcher: TestDispatcher = StandardTestDispatcher()) :
+    TestWatcher() {
     override fun starting(description: Description) = Dispatchers.setMain(dispatcher)
     override fun finished(description: Description) = Dispatchers.resetMain()
 }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- 候选地点列表项，同时展示名称和行政路径以区分同名地点。 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="8dp"
@@ -18,7 +19,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:saveEnabled="false"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        tools:text="成都" />
 
     <TextView
         android:id="@+id/location_path"
@@ -26,5 +28,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:saveEnabled="false"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        tools:text="四川省 · 中国" />
 </LinearLayout>

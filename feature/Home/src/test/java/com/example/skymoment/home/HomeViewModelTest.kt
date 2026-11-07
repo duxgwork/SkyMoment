@@ -9,7 +9,7 @@ import com.example.skymoment.domain.DeviceLocationProvider
 import com.example.skymoment.domain.LocatedWeather
 import com.example.skymoment.domain.Location
 import com.example.skymoment.domain.WeatherFailure
-import com.example.skymoment.domain.WeatherRepository
+import com.example.skymoment.domain.CoordinateWeatherRepository
 import java.time.Instant
 import java.time.ZoneId
 import kotlinx.coroutines.CompletableDeferred
@@ -54,21 +54,16 @@ class HomeViewModelTest {
             locationCalls++; return locate.invoke()
         }
     }
-    private val weather = object : WeatherRepository {
+    private val weather = object : CoordinateWeatherRepository {
         // 提供可控的定位天气响应，隔离真实网络与系统环境。
-        override suspend fun currentAt(
+        override suspend fun getWeatherAt(
             coordinates: Coordinates,
             language: String
         ): DataResult<LocatedWeather> {
             weatherCalls++; return query()
         }
 
-        // 提供可控的当前天气样本，隔离真实网络与系统环境。
-        override suspend fun current(location: Location, language: String) = DataResult.Empty
-        // 提供可控的七日预报样本，隔离真实网络与系统环境。
-        override suspend fun forecast(location: Location, language: String) = DataResult.Empty
-        // 提供可控的小时预报样本，隔离真实网络与系统环境。
-        override suspend fun hourly(location: Location, language: String) = DataResult.Empty
+
     }
 
 
@@ -139,7 +134,7 @@ class HomeViewModelTest {
             next.complete(DataResult.Success(LocatedWeather(place, current))); runCurrent()
             assertEquals(HomePhase.READY, vm.state.value.phase)
             assertNull(vm.state.value.weatherFailure)
-            assertEquals(current, sessions.initialWeather(vm.state.value.sessionToken))
+            assertEquals(current, sessions.findInitialWeather(vm.state.value.sessionToken))
             vm.onForeground("zh-Hans"); runCurrent()
             assertEquals(callsBeforeRetry + 1, weatherCalls)
         }
@@ -186,9 +181,9 @@ class HomeViewModelTest {
         val vm = model(); vm.onForeground("en"); runCurrent()
         assertEquals(HomePhase.READY, vm.state.value.phase)
         val token = vm.state.value.sessionToken
-        assertEquals(place, sessions.resolve(token)); assertEquals(
+        assertEquals(place, sessions.findLocation(token)); assertEquals(
         current,
-        sessions.initialWeather(token)
+        sessions.findInitialWeather(token)
     )
         vm.onForeground("en"); runCurrent()
         val restored = model(token); restored.onForeground("en"); runCurrent()
@@ -205,11 +200,11 @@ class HomeViewModelTest {
         query = { withContext(NonCancellable) { late.await() } }
         val vm = model(); vm.onForeground("en"); runCurrent()
         val manualPlace = place.copy(provider = "test", id = "selected")
-        val manualToken = sessions.select(manualPlace)
+        val manualToken = sessions.createSession(manualPlace)
         vm.onSessionReceived(manualToken)
         late.complete(DataResult.Success(LocatedWeather(place, current))); runCurrent()
         assertEquals(manualToken, vm.state.value.sessionToken)
-        assertEquals(manualPlace, sessions.resolve(manualToken))
+        assertEquals(manualPlace, sessions.findLocation(manualToken))
     }
 
     @Test
@@ -300,10 +295,10 @@ class HomeViewModelTest {
         assertEquals(listOf(HomeUiEffect.OpenLocationSearch), effects)
         assertEquals(1, locationCalls)
         val chosen = place.copy(provider = "test", id = "chosen")
-        val token = sessions.select(chosen)
+        val token = sessions.createSession(chosen)
         // 搜索已创建会话而首页尚未收到结果时，也不能让旧自动请求替换会话。
         late.complete(DataResult.Success(LocatedWeather(place, current))); runCurrent()
-        assertEquals(chosen, sessions.resolve(token))
+        assertEquals(chosen, sessions.findLocation(token))
         vm.onLocationSearchResult(token, "en")
         assertEquals(HomeUiState(HomePhase.READY, token), vm.state.value)
         assertFalse(vm.isChangingLocation)
@@ -312,7 +307,7 @@ class HomeViewModelTest {
     @Test
     // 已有天气时取消切换不重载，后台重建仍等待结果而不会重新打开搜索。
     fun restoredSelectionWaitsForResultAndCancelKeepsExistingWeather() = runTest(dispatcher) {
-        val token = sessions.select(place, current)
+        val token = sessions.createSession(place, current)
         val vm = HomeViewModel(device, weather, sessions, token, restoredChangingLocation = true)
         val effects = mutableListOf<HomeUiEffect>()
         backgroundScope.launch { vm.effects.collect { effects += it } }

@@ -4,7 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:background="@color/home_background"
+    tools:context="com.example.skymoment.weather.WeatherFragment">
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/weather_content"
@@ -42,7 +44,8 @@
                     android:layout_marginTop="4dp"
                     android:saveEnabled="false"
                     android:textColor="@color/home_secondary"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    tools:text="四川省 · 中国" />
 
                 <TextView
                     android:id="@+id/name_notice"
@@ -72,7 +75,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:saveEnabled="false"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    tools:text="☁ 多云" />
 
                 <TextView
                     android:id="@+id/high_low"
@@ -81,7 +85,8 @@
                     android:layout_marginTop="8dp"
                     android:saveEnabled="false"
                     android:textColor="@color/home_secondary"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    tools:text="今日预报 · 最高 23°C · 最低 15°C" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -109,7 +114,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
                             android:saveEnabled="false"
-                            android:textSize="18sp" />
+                            android:textSize="18sp"
+                            tools:text="65%" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -131,7 +137,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
                             android:saveEnabled="false"
-                            android:textSize="18sp" />
+                            android:textSize="18sp"
+                            tools:text="3.2 m/s" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -141,12 +148,15 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:saveEnabled="false"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    tools:text="@string/partial_data"
+                    tools:visibility="gone" />
 
                 <com.example.skymoment.framework.StatusPanel
                     android:id="@+id/current_status"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    tools:visibility="gone" />
             </LinearLayout>
 
             <LinearLayout
@@ -172,12 +182,17 @@
                     android:layout_marginTop="12dp"
                     android:nestedScrollingEnabled="false"
                     android:saveEnabled="false"
-                    android:scrollbars="horizontal" />
+                    android:scrollbars="horizontal"
+                    tools:itemCount="6"
+                    tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/item_hourly_forecast"
+                    tools:orientation="horizontal" />
 
                 <com.example.skymoment.framework.StatusPanel
                     android:id="@+id/hourly_status"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    tools:visibility="gone" />
             </LinearLayout>
 
             <LinearLayout
@@ -217,12 +232,17 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:nestedScrollingEnabled="false"
-                    android:saveEnabled="false" />
+                    android:saveEnabled="false"
+                    tools:itemCount="7"
+                    tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/item_forecast"
+                    tools:orientation="vertical" />
 
                 <com.example.skymoment.framework.StatusPanel
                     android:id="@+id/forecast_status"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    tools:visibility="gone" />
             </LinearLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

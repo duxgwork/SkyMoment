@@ -2,6 +2,7 @@
 <!-- 单条历史搜索标签，文本和点击行为由搜索渲染器绑定。 -->
 <com.google.android.material.chip.Chip xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     style="@style/Widget.MaterialComponents.Chip.Action"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -16,4 +17,5 @@
     app:chipBackgroundColor="@android:color/white"
     app:chipCornerRadius="16dp"
     app:chipStrokeWidth="0dp"
-    app:ensureMinTouchTargetSize="true" />
+    app:ensureMinTouchTargetSize="true"
+    tools:text="上海" />
