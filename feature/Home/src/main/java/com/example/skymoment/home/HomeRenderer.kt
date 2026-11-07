@@ -1,6 +1,7 @@
 package com.example.skymoment.home
 
 import androidx.core.view.isVisible
+import com.example.skymoment.common.messageRes
 import com.example.skymoment.common.R as WeatherUiR
 import com.example.skymoment.home.databinding.ActivityHomeBinding
 
@@ -29,7 +30,7 @@ internal class HomeRenderer(
             )
             HomeEmptyReason.WEATHER -> views.homeEmpty.render(
                 WeatherUiR.string.empty_weather_title,
-                WeatherUiR.string.empty_weather_message,
+                state.weatherFailure?.messageRes() ?: WeatherUiR.string.empty_weather_message,
                 WeatherUiR.string.empty_retry_weather
             )
             else -> views.homeEmpty.render(

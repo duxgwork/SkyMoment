@@ -110,12 +110,58 @@ class HomeViewModelTest {
             val vm = model(); vm.onForeground("en"); runCurrent()
             assertEquals(HomePhase.FALLBACK, vm.state.value.phase)
             assertEquals(HomeEmptyReason.WEATHER, vm.state.value.emptyReason)
+            assertEquals((result as? DataResult.Failure)?.reason, vm.state.value.weatherFailure)
         }
         query = { awaitCancellation() }
         val timedOut = model(); timedOut.onForeground("en"); runCurrent()
         assertEquals(HomePhase.WEATHER, timedOut.state.value.phase)
         advanceTimeBy(30_000); runCurrent()
         assertEquals(HomePhase.FALLBACK, timedOut.state.value.phase)
+        assertEquals(WeatherFailure.TIMEOUT, timedOut.state.value.weatherFailure)
+    }
+
+    @Test
+    // 网络故障恢复后回到前台会自动定位取天气；在途请求及已显示的天气不会被重复启动。
+    fun returningAfterNetworkFailureAutomaticallyResumesStartup() = runTest(dispatcher) {
+        for (failure in listOf(WeatherFailure.NETWORK, WeatherFailure.TIMEOUT)) {
+            query = { DataResult.Failure(failure) }
+            val vm = model()
+            vm.onForeground("zh-Hans"); runCurrent()
+            assertEquals(failure, vm.state.value.weatherFailure)
+            val next = CompletableDeferred<DataResult<LocatedWeather>>()
+            query = { next.await() }
+            val callsBeforeRetry = weatherCalls
+            vm.onBackground(changingConfigurations = false)
+            vm.onForeground("zh-Hans"); runCurrent()
+            vm.onForeground("zh-Hans"); runCurrent()
+            assertEquals(HomePhase.WEATHER, vm.state.value.phase)
+            assertEquals(callsBeforeRetry + 1, weatherCalls)
+            next.complete(DataResult.Success(LocatedWeather(place, current))); runCurrent()
+            assertEquals(HomePhase.READY, vm.state.value.phase)
+            assertNull(vm.state.value.weatherFailure)
+            assertEquals(current, sessions.initialWeather(vm.state.value.sessionToken))
+            vm.onForeground("zh-Hans"); runCurrent()
+            assertEquals(callsBeforeRetry + 1, weatherCalls)
+        }
+    }
+
+    @Test
+    // 保留每种失败的可解释原因；返回前台不绕过限流、配额或重试非网络错误。
+    fun nonNetworkFailuresAndEmptyWeatherWaitForExplicitRetry() = runTest(dispatcher) {
+        val results = WeatherFailure.entries
+            .filterNot { it == WeatherFailure.NETWORK || it == WeatherFailure.TIMEOUT }
+            .map { DataResult.Failure(it) } + DataResult.Empty
+        for (result in results) {
+            query = { result }
+            val vm = model()
+            vm.onForeground("en"); runCurrent()
+            val fallback = vm.state.value
+            val callsBeforeForeground = weatherCalls
+            vm.onForeground("en"); runCurrent()
+            assertEquals(fallback, vm.state.value)
+            assertEquals((result as? DataResult.Failure)?.reason, fallback.weatherFailure)
+            assertEquals(callsBeforeForeground, weatherCalls)
+        }
     }
 
     @Test

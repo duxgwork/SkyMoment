@@ -1,5 +1,23 @@
 # 工程基础验证
 
+## 启动天气失败与模拟器 DNS 修复（2026-11-07）
+
+- 用户截图为天气请求失败空态。API 35 模拟器已授予前台位置权限，定位服务日志确认向应用交付坐标；同时域名探测返回 `unknown host`，直接 IP 可达，主机请求天气接口返回 HTTP 200。故障位于模拟器 DNS 链路。
+- 使用主机当前可用的 IPv4 DNS 显式启动原 AVD 并冷启动，保留原应用数据和权限。恢复后模拟器能够解析天气服务域名；生产应用使用系统坐标及真实 Open-Meteo 响应，自动显示当前天气、24 小时和七日预报，强制停止后再次启动也成功。模拟器坐标是已有的模拟位置，不代表真实设备定位覆盖。
+- HomeUiState 保留网络、超时、限流等天气失败原因，首页复用三语错误文案；合法空响应仍使用空数据文案。网络错误或超时后，恢复连接并回到前台会重新启动定位和天气请求；不会重复启动在途请求、替换已就绪天气，或绕过限流／配额的显式重试。
+- 设备回归确认：关闭移动数据后显示“请检查网络后重试。”；返回桌面、恢复网络并确认域名可达后，再进入同一首页可自动恢复当前天气和预报，无需点击重试。若在网络尚未恢复时就回到首页，仍可能请求失败，需要连接恢复后重试或重新进入前台。
+- `./gradlew testDebugUnitTest :app:assembleDebug :feature:Home:lintDebug --console=plain` 成功。106 项单元测试，0 失败、0 错误、0 跳过；新增覆盖错误分类保留、超时原因、返回前台恢复和非网络失败不自动重试。
+
+如果重启模拟器或切换主机网络后复现域名解析失败，关闭该 AVD 后按 [Android 官方 DNS 配置说明](https://developer.android.com/studio/run/emulator-networking-dns)，使用当前网络可用的 DNS 启动（替换下面的占位值）：
+
+```bash
+"$ANDROID_HOME/emulator/emulator" -avd Pixel_8_API_35 \
+  -dns-server <当前网络可用的IPv4_DNS> \
+  -no-snapshot-load -netdelay none -netspeed full
+```
+
+`-dns-server` 是模拟器启动参数，需要在之后的模拟器启动命令中保留；本次没有修改主机全局 DNS，也没有在应用内硬编码 DNS、IP、代理或天气数据。
+
 ## 全组件本地单元测试（2026-11-06）
 
 - 新增 Test Android Library，位于生产分层之外，仅供 testImplementation 使用；共享主线程规则、虚拟时钟、领域样本与会话替身。Home 单元测试不再依赖 Datalayer。

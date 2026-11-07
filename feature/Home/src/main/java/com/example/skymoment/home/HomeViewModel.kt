@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.skymoment.domain.DataResult
 import com.example.skymoment.domain.DeviceLocationProvider
 import com.example.skymoment.domain.LocationSessionRepository
+import com.example.skymoment.domain.WeatherFailure
 import com.example.skymoment.domain.WeatherRepository
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Job
@@ -45,6 +46,10 @@ class HomeViewModel(
         if (isChangingLocation) return
         val granted = location.hasPermission()
         if (granted && state.value.emptyReason == HomeEmptyReason.PERMISSION) retryStartup()
+        // 用户修复网络后回到首页时恢复自动启动；配额、限流和数据错误仍由显式重试处理。
+        if (granted && state.value.weatherFailure in setOf(WeatherFailure.NETWORK, WeatherFailure.TIMEOUT)) {
+            retryStartup()
+        }
         if (granted) permissionResult(true, language)
         else if (shouldRequestPermission()) effectChannel.trySend(HomeUiEffect.RequestLocationPermission)
     }
@@ -136,7 +141,12 @@ class HomeViewModel(
                         HomePhase.READY,
                         sessions.select(result.data.location, result.data.current)
                     )
-                } else HomeUiState(HomePhase.FALLBACK, emptyReason = HomeEmptyReason.WEATHER)
+                } else HomeUiState(
+                    HomePhase.FALLBACK,
+                    emptyReason = HomeEmptyReason.WEATHER,
+                    weatherFailure = if (result == null) WeatherFailure.TIMEOUT
+                        else (result as? DataResult.Failure)?.reason,
+                )
             } catch (cancelled: CancellationException) {
                 throw cancelled
             } catch (_: Exception) {

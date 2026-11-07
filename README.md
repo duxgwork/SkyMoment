@@ -2,21 +2,19 @@
 
 一款无需登录的 Android 天气应用，提供当前位置天气、全球地点搜索、24 小时预报和七日预报。
 
-基于 **Kotlin · XML / ViewBinding · MVVM**，直接访问 Open-Meteo 公共 HTTPS 接口。无需 API Key、服务账号或自建后端，支持 **Android 7.0（API 24）及以上版本**。
-
 [下载 APK](#下载安装) · [功能与界面](#功能与界面) · [项目架构](#项目架构) · [源码运行](#源码运行) · [开发与验证](#开发与验证) · [项目文档](#项目文档)
 
 ## 下载安装
 
 **[下载 SkyMoment 1.0 Debug APK](docs/downloads/skymoment-1.0-debug.apk?raw=true)** · [SHA-256 校验文件](docs/downloads/skymoment-1.0-debug.apk.sha256)
 
-| 项目 | 安装包信息 |
-| --- | --- |
-| 版本 | `1.0`（versionCode `4`） |
-| 构建日期 | 2026-11-06 |
-| 类型 | Debug，使用调试签名 |
-| 大小 | 21.2 MiB（22,186,287 字节） |
-| 应用 ID | `com.example.skymoment` |
+| 项目 | 安装包信息                    |
+| --- |--------------------------|
+| 版本 | `1.0`（versionCode `1`）   |
+| 构建日期 | 2026-11-06               |
+| 类型 | Debug，使用调试签名             |
+| 大小 | 21.2 MiB（22,186,287 字节）  |
+| 应用 ID | `com.example.skymoment`  |
 | 系统要求 | Android 7.0 / API 24 及以上 |
 
 在 Android 设备上下载并打开 APK，按系统提示允许当前浏览器或文件管理器安装应用。安装后可授权前台定位查看当地天气，也可使用首页右上角的“切换”搜索其他地点。
@@ -56,11 +54,13 @@ shasum -a 256 -c skymoment-1.0-debug.apk.sha256
 
 温度、风速、湿度单位固定为 `°C`、`m/s`、`%`。天气按前台恢复时效、地点整点和跨日规则自动更新。
 
-| 启动加载 | 地点搜索 | 定位引导 |
+| 天气首页 | 地点搜索 | 定位引导 |
 | :---: | :---: | :---: |
-| <img src="docs/screenshots/immersive-evidence/startup-weather.png" width="240" alt="启动时正在获取当地天气"> | <img src="docs/screenshots/home-evidence/search-history-back.png" width="240" alt="地点搜索与历史关键词"> | <img src="docs/screenshots/home-evidence/home-permission-empty.png" width="240" alt="未授权定位时的引导界面"> |
+| <a href="docs/screenshots/weather-current.png"><img src="docs/screenshots/weather-current.png" width="240" alt="自动定位后的天气首页，正常展示当前天气、24小时预报与七日预报"></a> | <img src="docs/screenshots/home-evidence/search-history-back.png" width="240" alt="地点搜索与历史关键词"> | <img src="docs/screenshots/home-evidence/home-permission-empty.png" width="240" alt="未授权定位时的引导界面"> |
 
-以上为历史模拟器截图，用于展示界面方向。当前版本统一通过首页右上角“切换”打开搜索，空态内不再重复提供搜索按钮。
+天气首页截图摄于 **2026-11-07**：应用启动后自动获取模拟器位置，展示 Open-Meteo 返回的真实天气数据，包括当前温度、天气概况、湿度、风速、24 小时预报与七日预报。点击截图可查看原图；截图中的位置由模拟器提供。
+
+地点搜索与定位引导为历史模拟器截图。当前版本统一通过首页右上角“切换”打开搜索，空态内不再重复提供搜索按钮。
 
 ## 项目架构
 
